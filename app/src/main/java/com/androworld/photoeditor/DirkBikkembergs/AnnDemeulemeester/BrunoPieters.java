@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androworld.photoeditor.DirkBikkembergs.RafSimons.OlivierStrelli;
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.R;
@@ -23,12 +23,12 @@ public class BrunoPieters extends RecyclerView.Adapter<BrunoPieters.MyViewHolder
     public ArrayList<SusienChong> dataSet;
     private Context mContext;
 
-    DeanandDanCaten appPrefs;
+    SharedPreferenceManager appPrefs;
 
     public BrunoPieters(ArrayList<SusienChong> data, Context mContext) {
         this.dataSet = data;
         this.mContext = mContext;
-        appPrefs = new DeanandDanCaten(mContext);
+        appPrefs = new SharedPreferenceManager(mContext);
     }
 
 

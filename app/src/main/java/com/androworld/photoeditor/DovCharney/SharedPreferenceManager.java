@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class DeanandDanCaten {
+public class SharedPreferenceManager {
 
     public static final String USER_PREFS = "USER PREFS";
     public SharedPreferences appSharedPref;
@@ -121,7 +121,7 @@ public class DeanandDanCaten {
         this.prefEditor.putString(isTutorialDialog, _isTutorialDialog).commit();
     }
 
-    public DeanandDanCaten(Context context) {
+    public SharedPreferenceManager(Context context) {
         this.appSharedPref = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
         this.prefEditor = appSharedPref.edit();
     }

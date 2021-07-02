@@ -1,4 +1,4 @@
-package com.androworld.photoeditor.Cantista;
+package com.androworld.photoeditor.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,11 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.R;
 
 
-public class Lantesta extends Activity {
+public class SplashActivity extends Activity {
 
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
     private static final int REQUEST_PERMISSION_SETTING = 101;
@@ -30,32 +30,32 @@ public class Lantesta extends Activity {
     private SharedPreferences permissionStatus;
     private boolean sentToSettings = false;
 
-    DeanandDanCaten objPref;
+    SharedPreferenceManager objPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        objPref = new DeanandDanCaten(this);
+        objPref = new SharedPreferenceManager(this);
 
         if (android.os.Build.VERSION.SDK_INT > 22) {
             permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
 
-            if (ActivityCompat.checkSelfPermission(Lantesta.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(Lantesta.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(Lantesta.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(Lantesta.this, permissionsRequired[0])
-                        || ActivityCompat.shouldShowRequestPermissionRationale(Lantesta.this, permissionsRequired[1])
-                        || ActivityCompat.shouldShowRequestPermissionRationale(Lantesta.this, permissionsRequired[2])) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Lantesta.this);
+            if (ActivityCompat.checkSelfPermission(SplashActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(SplashActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(SplashActivity.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[0])
+                        || ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[1])
+                        || ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[2])) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
                     builder.setTitle("Need Multiple Permissions");
                     builder.setMessage("This app needs Camera and Location permissions.");
                     builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            ActivityCompat.requestPermissions(Lantesta.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
+                            ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -66,7 +66,7 @@ public class Lantesta extends Activity {
                     });
                     builder.show();
                 } else if (permissionStatus.getBoolean(permissionsRequired[0], false)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Lantesta.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
                     builder.setTitle("Need Multiple Permissions");
                     builder.setMessage("This app needs Camera and Location permissions.");
                     builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
@@ -89,7 +89,7 @@ public class Lantesta extends Activity {
                     });
                     builder.show();
                 } else {
-                    ActivityCompat.requestPermissions(Lantesta.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
+                    ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
                 }
 
 
@@ -102,7 +102,7 @@ public class Lantesta extends Activity {
         } else {
             Log.e("Lower Version","Lower Version");
             this.finish();
-            startActivity(new Intent(Lantesta.this, Lajavab.class));
+            startActivity(new Intent(SplashActivity.this, StartActivity.class));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
     }
@@ -123,17 +123,17 @@ public class Lantesta extends Activity {
 
             if (allgranted) {
                 proceedAfterPermission();
-            } else if (ActivityCompat.shouldShowRequestPermissionRationale(Lantesta.this, permissionsRequired[0])
-                    || ActivityCompat.shouldShowRequestPermissionRationale(Lantesta.this, permissionsRequired[1])
-                    || ActivityCompat.shouldShowRequestPermissionRationale(Lantesta.this, permissionsRequired[2])) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Lantesta.this);
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[0])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[1])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[2])) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
                 builder.setTitle("Need Multiple Permissions");
                 builder.setMessage("This app needs Camera and Location permissions.");
                 builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        ActivityCompat.requestPermissions(Lantesta.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
+                        ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -153,7 +153,7 @@ public class Lantesta extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PERMISSION_SETTING) {
-            if (ActivityCompat.checkSelfPermission(Lantesta.this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(SplashActivity.this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
                 proceedAfterPermission();
             }
         }
@@ -161,7 +161,7 @@ public class Lantesta extends Activity {
 
     private void proceedAfterPermission() {
         this.finish();
-        startActivity(new Intent(Lantesta.this, Lajavab.class));
+        startActivity(new Intent(SplashActivity.this, StartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
     }
@@ -170,7 +170,7 @@ public class Lantesta extends Activity {
     protected void onPostResume() {
         super.onPostResume();
         if (sentToSettings) {
-            if (ActivityCompat.checkSelfPermission(Lantesta.this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(SplashActivity.this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
                 proceedAfterPermission();
             }
         }

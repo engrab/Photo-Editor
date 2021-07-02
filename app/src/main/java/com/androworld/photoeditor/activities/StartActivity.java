@@ -1,4 +1,4 @@
-package com.androworld.photoeditor.Cantista;
+package com.androworld.photoeditor.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,19 +8,19 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.androworld.photoeditor.ClaudiaChanShaw.LindaBritten;
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.DovCharney.SimonChang;
 import com.androworld.photoeditor.JuliGrbac.FrederickFox.AlannahHill;
 import com.androworld.photoeditor.R;
 
 
-public class Lajavab extends Activity {
+public class StartActivity extends Activity {
 
     AlannahHill cd;
 
     public static String name = "";
-    DeanandDanCaten objPref;
+    SharedPreferenceManager objPref;
     LindaBritten objDb;
     private boolean isFirstTime = true;
 
@@ -30,10 +30,10 @@ public class Lajavab extends Activity {
         setContentView(R.layout.activity_splash);
 
 
-        objPref = new DeanandDanCaten(Lajavab.this);
+        objPref = new SharedPreferenceManager(StartActivity.this);
         PatrickCox.SDCardPath = objPref.getSaveDirURL();
         cd = new AlannahHill(this);
-        objDb = new LindaBritten(Lajavab.this);
+        objDb = new LindaBritten(StartActivity.this);
 
 
         new BASE_AGREEMENT_CIPHER().execute();
@@ -76,8 +76,8 @@ public class Lajavab extends Activity {
 
                 if (isFirstTime) {
                     isFirstTime = false;
-                    Intent localIntent = new Intent(Lajavab.this, Mantid.class);
-                    Lajavab.this.startActivity(localIntent);
+                    Intent localIntent = new Intent(StartActivity.this, MainActivity.class);
+                    StartActivity.this.startActivity(localIntent);
                     finish();
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }

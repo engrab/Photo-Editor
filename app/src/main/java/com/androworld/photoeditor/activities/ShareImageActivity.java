@@ -1,4 +1,4 @@
-package com.androworld.photoeditor.Cantista;
+package com.androworld.photoeditor.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -39,9 +38,8 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class Prexissesta extends LocalBaseActivity implements View.OnClickListener {
+public class ShareImageActivity extends LocalBaseActivity implements View.OnClickListener {
     private static final String ADMOB_AD_UNIT_ID = "ca-app-pub-3940256099942544/2247696110";
 
     private UnifiedNativeAd nativeAd;
@@ -62,7 +60,7 @@ public class Prexissesta extends LocalBaseActivity implements View.OnClickListen
         showRatingDialog(true, new OnRateListner() {
             @Override
             public void onReminderLater() {
-                startActivity(new Intent(getActivity(), Mantid.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
@@ -86,8 +84,8 @@ public class Prexissesta extends LocalBaseActivity implements View.OnClickListen
         ArrayList<Uri> streamUris = new ArrayList<Uri>();
         for (int i = 0; i < 10; i++) {
             File tmpFile = new File(imagePath);
-            String authority = getPackageName() + ".fileprovider";
-            Uri tmp = FileProvider.getUriForFile(Prexissesta.this,authority, tmpFile);
+            String authority = getPackageName() + ".provider";
+            Uri tmp = FileProvider.getUriForFile(ShareImageActivity.this,authority, tmpFile);
             streamUris.add(tmp);
         }
         switch (v.getId()) {
@@ -98,11 +96,11 @@ public class Prexissesta extends LocalBaseActivity implements View.OnClickListen
                 shareImage(streamUris);
                 break;
             case R.id.BackImage:
-                startActivity(new Intent(this, Jentalmenata.class));
+                startActivity(new Intent(this, MyWorkActivity.class));
                 this.finish();
                 break;
             case R.id.imgButtonImage:
-                startActivity(new Intent(getActivity(), Mantid.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 finish();
                 break;
             case R.id.imgWhatsup:
@@ -168,7 +166,7 @@ public class Prexissesta extends LocalBaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_final_image);
+        setContentView(R.layout.activity_image_share);
 
         objDb = new LindaBritten(getActivity());
 
@@ -199,7 +197,7 @@ public class Prexissesta extends LocalBaseActivity implements View.OnClickListen
         BackImage = (ImageView) findViewById(R.id.BackImage);
         BackImage.setOnClickListener(this);
 
-        mContext = Prexissesta.this;
+        mContext = ShareImageActivity.this;
 
         try {
             BackImage.setImageBitmap(PatrickCox.FinalBitmap);
@@ -385,7 +383,7 @@ public class Prexissesta extends LocalBaseActivity implements View.OnClickListen
         AdLoader adLoader = builder.withAdListener(new AdListener() {
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                Toast.makeText(Prexissesta.this, "Failed to load native ad: "
+                Toast.makeText(ShareImageActivity.this, "Failed to load native ad: "
                         + errorCode, Toast.LENGTH_SHORT).show();
             }
         }).build();

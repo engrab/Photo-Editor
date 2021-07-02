@@ -36,8 +36,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.Cantista.Mantid;
-import com.androworld.photoeditor.Cantista.Prexissesta;
+import com.androworld.photoeditor.activities.MainActivity;
+import com.androworld.photoeditor.activities.ShareImageActivity;
 import com.androworld.photoeditor.ChristopherEssex.JohnCrittle;
 import com.androworld.photoeditor.ChristopherEssex.LizDavenport;
 import com.androworld.photoeditor.ChristopherEssex.WayneCooper;
@@ -1235,7 +1235,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                     Ads.Loadd(new Ads.Ad_lisoner() {
                         @Override
                         public void onSucssec(InterstitialAd mInterstitialAd) {
-                            Intent intent = new Intent(getActivity(), Prexissesta.class);
+                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
                             intent.putExtra("FinalURI", FinalURI);
                             startActivity(intent);
                             Pnanterist.activity.finish();
@@ -1243,7 +1243,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
                         @Override
                         public void onun() {
-                            Intent intent = new Intent(getActivity(), Prexissesta.class);
+                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
                             intent.putExtra("FinalURI", FinalURI);
                             startActivity(intent);
                             Pnanterist.activity.finish();
@@ -1321,7 +1321,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             ((Pnanterist) mContext).showResetDialog(mContext, new LocalBaseActivity.OnResetListner() {
                 @Override
                 public void onReset() {
-                    mContext.startActivity(new Intent(mContext, Mantid.class));
+                    mContext.startActivity(new Intent(mContext, MainActivity.class));
                     Pnanterist.activity.finish();
                     Pnanterist.activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }

@@ -23,10 +23,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.Cantista.Mantid;
+import com.androworld.photoeditor.activities.MainActivity;
 import com.androworld.photoeditor.DirkBikkembergs.RafSimons.OlivierStrelli;
 import com.androworld.photoeditor.DirkBikkembergs.RafSimons.OlivierTheyskens;
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.LocalBaseActivity;
@@ -80,7 +80,7 @@ public class Dabdea extends LocalBaseActivity {
         setContentView(R.layout.frame_activity_main2);
 
         activity = Dabdea.this;
-        appPrefs = new DeanandDanCaten(getActivity());
+        appPrefs = new SharedPreferenceManager(getActivity());
         handler = new Handler();
         getDownloadCompleted = new GetDownloadCompleted();
 
@@ -102,7 +102,7 @@ public class Dabdea extends LocalBaseActivity {
             showResetDialog(getActivity(), new OnResetListner() {
                 @Override
                 public void onReset() {
-                    startActivity(new Intent(Dabdea.this, Mantid.class));
+                    startActivity(new Intent(Dabdea.this, MainActivity.class));
                     finish();
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
@@ -155,7 +155,7 @@ public class Dabdea extends LocalBaseActivity {
                     showResetDialog(getActivity(), new OnResetListner() {
                         @Override
                         public void onReset() {
-                            startActivity(new Intent(Dabdea.this, Mantid.class));
+                            startActivity(new Intent(Dabdea.this, MainActivity.class));
                             finish();
                             overridePendingTransition(R.anim.right_in, R.anim.left_out);
                         }
@@ -180,7 +180,7 @@ public class Dabdea extends LocalBaseActivity {
     private int Ads = -1;
     ActionProcessButton btnDownload;
 
-    DeanandDanCaten appPrefs;
+    SharedPreferenceManager appPrefs;
     ArrayList<SusienChong> arrayListprev;
     String effectName[] = {"Adonias", "Bacchus", "Blackflower", "Boxingstar", "Browndown", "Dacey", "Ealasaid", "Earleen", "Flyingman", "fotospot",
             "Gotulost", "haddley", "Heriwarm", "jumpket", "kulamt", "librotus", "potruzone", "purpcore", "viscotta", "albormentio"};

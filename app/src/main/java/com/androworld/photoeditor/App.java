@@ -6,11 +6,11 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.androworld.photoeditor.ClaudiaChanShaw.LindaBritten;
-public class ArielGarten extends MultiDexApplication {
+public class App extends MultiDexApplication {
 
     private static Context mContext;
 
-    private static ArielGarten mInstance;
+    private static App mInstance;
     LindaBritten objDb;
 
 

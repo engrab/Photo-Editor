@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androworld.photoeditor.ClaudiaChanShaw.LindaBritten;
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.ChristopherChronis;
 import com.androworld.photoeditor.MaskableFrameLayout.MaskableFrameLayout;
@@ -91,7 +91,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
     private static RelativeLayout FL_ImageFinal, RL_EditView, RL_GPU;
     private static GPUImageView GPUImageViewCroppedImage;
 
-    public static DeanandDanCaten appPrefs;
+    public static SharedPreferenceManager appPrefs;
     static String PipName;
 
 //    Button menu Controls
@@ -1400,7 +1400,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
             FL_ImageFinal.setDrawingCacheEnabled(true);
             FL_ImageFinal.buildDrawingCache();
 
-            appPrefs = new DeanandDanCaten(getActivity());
+            appPrefs = new SharedPreferenceManager(getActivity());
             PipName = appPrefs.getPipName().trim();
 
             showProgress();

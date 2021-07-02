@@ -1,4 +1,4 @@
-package com.androworld.photoeditor.Cantista;
+package com.androworld.photoeditor.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
-public class Jentalmenata extends LocalBaseActivity implements View.OnClickListener {
+public class MyWorkActivity extends LocalBaseActivity implements View.OnClickListener {
 
 
     private RecyclerView recyclerView;
@@ -93,7 +93,7 @@ public class Jentalmenata extends LocalBaseActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(this, Mantid.class));
+        startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
@@ -105,7 +105,7 @@ public class Jentalmenata extends LocalBaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery_view);
+        setContentView(R.layout.activity_my_work);
 
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -116,7 +116,7 @@ public class Jentalmenata extends LocalBaseActivity implements View.OnClickListe
         imgButtonImage.setOnClickListener(this);
 
 
-        activity = Jentalmenata.this;
+        activity = MyWorkActivity.this;
 
         LL_NoDataFound = (LinearLayout) findViewById(R.id.LL_NoDataFound);
         LL_NoDataFound.setOnClickListener(this);
@@ -150,12 +150,12 @@ public class Jentalmenata extends LocalBaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.LL_NoDataFound:
                 finish();
-                startActivity(new Intent(Jentalmenata.this, Mantid.class));
+                startActivity(new Intent(MyWorkActivity.this, MainActivity.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.imgButtonImage:
                 finish();
-                startActivity(new Intent(this, Mantid.class));
+                startActivity(new Intent(this, MainActivity.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
         }
@@ -182,7 +182,7 @@ public class Jentalmenata extends LocalBaseActivity implements View.OnClickListe
                     @Override
                     public void onClick(final View v) {
 
-                        Intent intent = new Intent(Jentalmenata.this, Zeqale.class);
+                        Intent intent = new Intent(MyWorkActivity.this, Zeqale.class);
                         intent.putExtra("FileName", "" + arListGallery.get(Integer.parseInt(v.getTag().toString())).ImageName);
                         startActivity(intent);
                         activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);

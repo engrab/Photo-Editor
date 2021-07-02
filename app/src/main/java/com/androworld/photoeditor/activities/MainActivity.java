@@ -1,4 +1,4 @@
-package com.androworld.photoeditor.Cantista;
+package com.androworld.photoeditor.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -10,13 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,9 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.androworld.photoeditor.ClaudiaChanShaw.LindaBritten;
-import com.androworld.photoeditor.DionLee.BerilJents;
+import com.androworld.photoeditor.fragments.HomeFragment;
 import com.androworld.photoeditor.DirkBikkembergs.julesFrancoisCrahay.Dabdea;
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.LocalBaseActivity;
 import com.androworld.photoeditor.Pentagon.AmberRenae.Tempoll;
@@ -45,15 +38,12 @@ import com.yalantis.ucrop.model.AspectRatio;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
-
-public class Mantid extends LocalBaseActivity {
+public class MainActivity extends LocalBaseActivity {
 
     public static AppCompatActivity activity;
     private String TAG = "MainActivity";
-    DeanandDanCaten objPref;
+    SharedPreferenceManager objPref;
 
     public static int Cat = 0;
     public static int counter = 0;
@@ -85,13 +75,13 @@ public class Mantid extends LocalBaseActivity {
 
         objDb = new LindaBritten(getActivity());
 
-        verifyStoragePermissions(Mantid.this);
+        verifyStoragePermissions(MainActivity.this);
 
-        activity = Mantid.this;
-        objPref = new DeanandDanCaten(this);
+        activity = MainActivity.this;
+        objPref = new SharedPreferenceManager(this);
         PatrickCox.FinalBitmap = null;
 
-        BerilJents mainFragment = new BerilJents();
+        HomeFragment mainFragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.MainContainer, mainFragment).commit();
 
@@ -103,10 +93,10 @@ public class Mantid extends LocalBaseActivity {
         Fragment frag = getSupportFragmentManager().findFragmentById(R.id.MainContainer);
         final FragmentManager fragmentManager = getSupportFragmentManager();
         try {
-            if (frag instanceof BerilJents) {
+            if (frag instanceof HomeFragment) {
 
-                if (BerilJents.Counter != 0) {
-                    BerilJents.Counter = 0;
+                if (HomeFragment.Counter != 0) {
+                    HomeFragment.Counter = 0;
                 } else {
                     showRatingDialog(false, new OnRateListner() {
                         @Override
@@ -116,8 +106,8 @@ public class Mantid extends LocalBaseActivity {
                     });
                 }
             } else {
-                BerilJents MainFragment = new BerilJents();
-                fragmentManager.beginTransaction().replace(R.id.MainContainer, MainFragment).commit();
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentManager.beginTransaction().replace(R.id.MainContainer, homeFragment).commit();
             }
         } catch (Exception e) {
 
@@ -140,7 +130,7 @@ public class Mantid extends LocalBaseActivity {
                 if (selectedUri != null) {
                     startCropActivity(data.getData());
                 } else {
-                    Toast.makeText(Mantid.this, "Cannot Retrieve Selected Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Cannot Retrieve Selected Image", Toast.LENGTH_SHORT).show();
                 }
             } else if (requestCode == UCrop.REQUEST_CROP) {
                 handleCropResult(data);
@@ -161,7 +151,7 @@ public class Mantid extends LocalBaseActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), Mantid.REQUEST_SELECT_PICTURE);
+        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), MainActivity.REQUEST_SELECT_PICTURE);
     }
 
 
@@ -225,7 +215,7 @@ public class Mantid extends LocalBaseActivity {
                 break;
         }
 
-        uCrop.start(Mantid.this);
+        uCrop.start(MainActivity.this);
     }
 
     private void handleCropResult(@NonNull Intent result) {
@@ -263,23 +253,23 @@ public class Mantid extends LocalBaseActivity {
 
             if (Cat == 1) {
                 PatrickCox.Orizanal = PatrickCox.bitmap;
-                Dabdea.startWithUri(Mantid.this, resultUri);
+                Dabdea.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
 
             if (Cat == 2) {
                 PatrickCox.Orizanal = PatrickCox.bitmap;
-                Tempoll.startWithUri(Mantid.this, resultUri);
+                Tempoll.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
             if (Cat == 3) {
                 PatrickCox.Orizanal = PatrickCox.bitmap;
-                Pnanterist.startWithUri(Mantid.this, resultUri);
+                Pnanterist.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
             if (Cat == 4) {
                 PatrickCox.Orizanal = PatrickCox.bitmap;
-                Bentesta.startWithUri(Mantid.this, resultUri);
+                Bentesta.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
 
@@ -291,7 +281,7 @@ public class Mantid extends LocalBaseActivity {
                 }
             }, 1000);
         } else {
-            Toast.makeText(Mantid.this, "Cannot retrieve cropped image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Cannot retrieve cropped image", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -300,9 +290,9 @@ public class Mantid extends LocalBaseActivity {
         final Throwable cropError = UCrop.getError(result);
         if (cropError != null) {
             Log.e(TAG, "handleCropError: ", cropError);
-            Toast.makeText(Mantid.this, cropError.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, cropError.getMessage(), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(Mantid.this, "Unexpected error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Unexpected error", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 
 
 public class LocalBaseActivity extends AppCompatActivity {
@@ -37,7 +37,7 @@ public class LocalBaseActivity extends AppCompatActivity {
 
     public void showRatingDialog(final boolean isAdsShown, OnRateListner onRateListner1) {
         onRateListner = onRateListner1;
-        final DeanandDanCaten objPref = new DeanandDanCaten(getActivity());
+        final SharedPreferenceManager objPref = new SharedPreferenceManager(getActivity());
 
         if (objPref.getisRatingDialog() <= 10) {
 

@@ -68,7 +68,7 @@ public class SimonChang {
     private static final BigInteger skip1024Base = BigInteger.valueOf(2);
     //public static ArrayList<String> arList;
     public static String AB, BASE64;
-    public static DeanandDanCaten objPref;
+    public static SharedPreferenceManager objPref;
 
     private SimonChang() {
     }
@@ -127,7 +127,7 @@ public class SimonChang {
         String GDMODE_128BIT = "0507543543531369336336495513552528537519495333510525501528336531507528543528498495510543528537522486543498537510486519540336";
         String GDMODE_24BIT = "0492528522333504510501522486516498537333504510501540543546495510528333522558525486522498504510501453604";
 
-        objPref = new DeanandDanCaten(context);
+        objPref = new SharedPreferenceManager(context);
         int BASE_OS_64 = 64;//DEFINATION OF 64BIT CPU
         for (int i = 0; i < skip1024ModulusBytes.length; i++) {
             POINT128.concat(toHexString(skip1024ModulusBytes));
@@ -227,7 +227,7 @@ public class SimonChang {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        objPref = new DeanandDanCaten(context);
+        objPref = new SharedPreferenceManager(context);
         for (int j = 0; ; ) {
             if (j < BASE64.length()) {
 

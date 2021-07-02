@@ -1,4 +1,4 @@
-package com.androworld.photoeditor.DionLee;
+package com.androworld.photoeditor.fragments;
 
 
 import android.app.Dialog;
@@ -19,8 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.androworld.photoeditor.Cantista.Mantid;
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.activities.MainActivity;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.R;
@@ -29,31 +29,31 @@ import com.dd.processbutton.iml.ActionProcessButton;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class RebeccaJudd extends Fragment {
+public class PhotoFrameFragment extends Fragment {
 
     private boolean FrameDownload = false;
-    private int Ads = -1;
+    private final int Ads = -1;
     private Handler handler;
     private GetDownloadCompleted getDownloadCompleted;
 
     private PreviewAdapter adapter;
 
-    public RebeccaJudd() {
+    public PhotoFrameFragment() {
     }
 
-    String effectName[] = {"Adonias", "Bacchus", "Blackflower", "Boxingstar", "Browndown", "Dacey", "Ealasaid", "Earleen", "Flyingman", "fotospot", "Gotulost", "haddley", "Heriwarm", "jumpket", "kulamt", "librotus", "potruzone", "purpcore", "viscotta", "albormentio"};
+    String[] effectName = {"Adonias", "Bacchus", "Blackflower", "Boxingstar", "Browndown", "Dacey", "Ealasaid", "Earleen", "Flyingman", "fotospot", "Gotulost", "haddley", "Heriwarm", "jumpket", "kulamt", "librotus", "potruzone", "purpcore", "viscotta", "albormentio"};
 
     RecyclerView PreviewRecyclerView;
 
     private void FindControls(View view) {
 
-        PreviewRecyclerView = (RecyclerView) view.findViewById(R.id.PreviewRecyclerView);
+        PreviewRecyclerView = view.findViewById(R.id.PreviewRecyclerView);
 
         AppData();
 
     }
 
-    DeanandDanCaten appPrefs;
+    SharedPreferenceManager appPrefs;
     ArrayList<SusienChong> arrayList;
     ArrayList<SusienChong> arrayList1;
 
@@ -68,7 +68,7 @@ public class RebeccaJudd extends Fragment {
             AssetManager assetManager = getActivity().getResources().getAssets();
 
             try {
-                String files[] = assetManager.list("effect");
+                String[] files = assetManager.list("effect");
                 if (files != null) {
                     for (String file : files) {
                         arrayList1.add(new SusienChong("effect/" + file));
@@ -78,7 +78,7 @@ public class RebeccaJudd extends Fragment {
                 e.printStackTrace();
             }
 
-            String files[] = assetManager.list("prev");
+            String[] files = assetManager.list("prev");
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
                     arrayList.add(new SusienChong("prev/" + files[i], effectName[i]));
@@ -97,11 +97,11 @@ public class RebeccaJudd extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_preview, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_photo_frame, container, false);
 
         try {
 
-            appPrefs = new DeanandDanCaten(getActivity());
+            appPrefs = new SharedPreferenceManager(getActivity());
 
             handler = new Handler();
 
@@ -119,7 +119,7 @@ public class RebeccaJudd extends Fragment {
 
     public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private Context mContext;
+        private final Context mContext;
         private static final int RECIPE = 0;
         private static final int FB_NATIVE_AD = 1;
         private static final int AM_NATIVE_AD = 2;
@@ -136,11 +136,11 @@ public class RebeccaJudd extends Fragment {
 
             public MyViewHolder(final View itemView) {
                 super(itemView);
-                this.ThemePreviewImage = (ImageView) itemView.findViewById(R.id.ThemePreviewImage);
-                this.down_icon = (ImageView) itemView.findViewById(R.id.down_icon);
+                this.ThemePreviewImage = itemView.findViewById(R.id.ThemePreviewImage);
+                this.down_icon = itemView.findViewById(R.id.down_icon);
 
-                this.txtImageName = (TextView) itemView.findViewById(R.id.txtImageName);
-                this.txtEdit = (TextView) itemView.findViewById(R.id.txtEdit);
+                this.txtImageName = itemView.findViewById(R.id.txtImageName);
+                this.txtEdit = itemView.findViewById(R.id.txtEdit);
             }
         }
 
@@ -171,8 +171,8 @@ public class RebeccaJudd extends Fragment {
 
             final MyViewHolder recipeViewHolder = (MyViewHolder) holder;
 
-            final SusienChong shimmerBean = (SusienChong) arrayList.get(listPosition);
-            final SusienChong shimmerBean1 = (SusienChong) arrayList1.get(listPosition);
+            final SusienChong shimmerBean = arrayList.get(listPosition);
+            final SusienChong shimmerBean1 = arrayList1.get(listPosition);
 
             recipeViewHolder.ThemePreviewImage.setTag("" + listPosition);
 
@@ -213,9 +213,9 @@ public class RebeccaJudd extends Fragment {
                             appPrefs.setPipId("" + listPosition);
                             appPrefs.setPipName(shimmerBean1.getDirName());
 
-                            Mantid.Cat = 1;
-                            Mantid.counter = 1;
-                            Mantid.pickFromGallery();
+                            MainActivity.Cat = 1;
+                            MainActivity.counter = 1;
+                            MainActivity.pickFromGallery();
 
                         }
 
@@ -232,9 +232,9 @@ public class RebeccaJudd extends Fragment {
                         appPrefs.setPipId("" + listPosition);
                         appPrefs.setPipName(shimmerBean1.getDirName());
 
-                        Mantid.Cat = 1;
-                        Mantid.counter = 1;
-                        Mantid.pickFromGallery();
+                        MainActivity.Cat = 1;
+                        MainActivity.counter = 1;
+                        MainActivity.pickFromGallery();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -251,14 +251,14 @@ public class RebeccaJudd extends Fragment {
 
     private void OpenDownloadDialog(final int listPosition) {
 
-        final SusienChong susienChong1 = (SusienChong) arrayList1.get(listPosition);
+        final SusienChong susienChong1 = arrayList1.get(listPosition);
 
         alertDialogBuilder = new Dialog(getActivity());
         alertDialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         alertDialogBuilder.setContentView(R.layout.frame_download_dialog);
 
-        final RelativeLayout nativeAdsLayout = (RelativeLayout) alertDialogBuilder.findViewById(R.id.nativeAdsLayout);
-        btnDownload = (ActionProcessButton) alertDialogBuilder.findViewById(R.id.btnDownload);
+        final RelativeLayout nativeAdsLayout = alertDialogBuilder.findViewById(R.id.nativeAdsLayout);
+        btnDownload = alertDialogBuilder.findViewById(R.id.btnDownload);
 
         handler.postDelayed(getDownloadCompleted, 2000);
 
@@ -273,9 +273,9 @@ public class RebeccaJudd extends Fragment {
                 appPrefs.setPipId("" + listPosition);
                 appPrefs.setPipName(susienChong1.getDirName());
 
-                Mantid.Cat = 1;
-                Mantid.counter = 1;
-                Mantid.pickFromGallery();
+                MainActivity.Cat = 1;
+                MainActivity.counter = 1;
+                MainActivity.pickFromGallery();
 
             }
         });

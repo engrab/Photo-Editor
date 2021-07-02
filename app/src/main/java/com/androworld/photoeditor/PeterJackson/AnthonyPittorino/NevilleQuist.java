@@ -31,8 +31,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.Cantista.Mantid;
-import com.androworld.photoeditor.Cantista.Prexissesta;
+import com.androworld.photoeditor.activities.MainActivity;
+import com.androworld.photoeditor.activities.ShareImageActivity;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.LocalBaseActivity;
@@ -375,7 +375,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
             ((Bentesta) mContext).showResetDialog(mContext, new LocalBaseActivity.OnResetListner() {
                 @Override
                 public void onReset() {
-                    mContext.startActivity(new Intent(mContext, Mantid.class));
+                    mContext.startActivity(new Intent(mContext, MainActivity.class));
                     Bentesta.activity.finish();
                     Bentesta.activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
@@ -755,7 +755,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
                     Ads.Loadd(new Ads.Ad_lisoner() {
                         @Override
                         public void onSucssec(InterstitialAd mInterstitialAd) {
-                            Intent intent = new Intent(getActivity(), Prexissesta.class);
+                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
                             intent.putExtra("FinalURI", FinalURI);
                             startActivity(intent);
                             Bentesta.activity.finish();
@@ -764,7 +764,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
 
                         @Override
                         public void onun() {
-                            Intent intent = new Intent(getActivity(), Prexissesta.class);
+                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
                             intent.putExtra("FinalURI", FinalURI);
                             startActivity(intent);
                             Bentesta.activity.finish();

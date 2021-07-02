@@ -35,7 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.Cantista.Prexissesta;
+import com.androworld.photoeditor.activities.ShareImageActivity;
 import com.androworld.photoeditor.ChristopherEssex.JohnCrittle;
 import com.androworld.photoeditor.ChristopherEssex.LizDavenport;
 import com.androworld.photoeditor.ChristopherEssex.WayneCooper;
@@ -269,16 +269,16 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
     }
 
     public void HeaderControl(View view) {
-        imgButtonImage = (ImageView) view.findViewById(R.id.imgButtonImage);
-        imgReset = (ImageView) view.findViewById(R.id.imgReset);
+        imgButtonImage = view.findViewById(R.id.imgButtonImage);
+        imgReset = view.findViewById(R.id.imgReset);
         imgReset.setVisibility(View.VISIBLE);
         imgButtonImage.setImageResource(R.drawable.ic_next);
         imgButtonImage.setOnClickListener(this);
         imgReset.setOnClickListener(this);
-        TextView txtHeaderName = (TextView) view.findViewById(R.id.txtHeaderName);
+        TextView txtHeaderName = view.findViewById(R.id.txtHeaderName);
 //        txtHeaderName.setText("");
 
-        MainContainer = (RelativeLayout) view.findViewById(R.id.MainContainer);
+        MainContainer = view.findViewById(R.id.MainContainer);
 
     }
 
@@ -327,7 +327,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
             e.printStackTrace();
         }
 
-        adViewContainer = (RelativeLayout) rootView.findViewById(R.id.adViewContainer);
+        adViewContainer = rootView.findViewById(R.id.adViewContainer);
 
 // END OF BANNER
 
@@ -397,33 +397,33 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
             MainMenu = inflater.inflate(R.layout.shimmer_final_image_menu, MainMenuContainer, false);
             MainMenuContainer.addView(MainMenu);
 
-            LL_MainMenu = (LinearLayout) MainMenu.findViewById(R.id.LL_MainMenu);
-            fragment_Blur = (LinearLayout) MainMenu.findViewById(R.id.fragment_Blur);
+            LL_MainMenu = MainMenu.findViewById(R.id.LL_MainMenu);
+            fragment_Blur = MainMenu.findViewById(R.id.fragment_Blur);
 
-            LL_Brightness = (LinearLayout) MainMenu.findViewById(R.id.LL_Brightness);
-            LL_Contrast = (LinearLayout) MainMenu.findViewById(R.id.LL_Contrast);
-            LL_Saturation = (LinearLayout) MainMenu.findViewById(R.id.LL_Saturation);
-            LL_Vignette = (LinearLayout) MainMenu.findViewById(R.id.LL_Vignette);
-            LL_Sharpness = (LinearLayout) MainMenu.findViewById(R.id.LL_Sharpness);
-            LL_Text = (LinearLayout) MainMenu.findViewById(R.id.LL_Text);
-            LL_Curve = (LinearLayout) MainMenu.findViewById(R.id.LL_Curve);
-            LL_Sticker = (LinearLayout) MainMenu.findViewById(R.id.LL_Sticker);
-            LL_Abc = (LinearLayout) MainMenu.findViewById(R.id.LL_Abc);
-            Sticker_recycler_view = (RecyclerView) MainMenu.findViewById(R.id.Sticker_recycler_view);
-            Abc_recycler_view = (RecyclerView) MainMenu.findViewById(R.id.Abc_recycler_view);
+            LL_Brightness = MainMenu.findViewById(R.id.LL_Brightness);
+            LL_Contrast = MainMenu.findViewById(R.id.LL_Contrast);
+            LL_Saturation = MainMenu.findViewById(R.id.LL_Saturation);
+            LL_Vignette = MainMenu.findViewById(R.id.LL_Vignette);
+            LL_Sharpness = MainMenu.findViewById(R.id.LL_Sharpness);
+            LL_Text = MainMenu.findViewById(R.id.LL_Text);
+            LL_Curve = MainMenu.findViewById(R.id.LL_Curve);
+            LL_Sticker = MainMenu.findViewById(R.id.LL_Sticker);
+            LL_Abc = MainMenu.findViewById(R.id.LL_Abc);
+            Sticker_recycler_view = MainMenu.findViewById(R.id.Sticker_recycler_view);
+            Abc_recycler_view = MainMenu.findViewById(R.id.Abc_recycler_view);
 
-            ic_clear = (ImageView) MainMenu.findViewById(R.id.ic_clear);
-            seekbar = (SeekBar) MainMenu.findViewById(R.id.seekbar);
-            txtProgressValue = (TextView) MainMenu.findViewById(R.id.txtProgressValue);
+            ic_clear = MainMenu.findViewById(R.id.ic_clear);
+            seekbar = MainMenu.findViewById(R.id.seekbar);
+            txtProgressValue = MainMenu.findViewById(R.id.txtProgressValue);
 
 //            Find TextFragment Controls
 
-            LL_TextMainLayout = (LinearLayout) MainMenu.findViewById(R.id.LL_TextMainLayout);
-            LL_AddText = (LinearLayout) MainMenu.findViewById(R.id.LL_AddText);
-            LL_FontStyle = (LinearLayout) MainMenu.findViewById(R.id.LL_FontStyle);
-            LL_TextColor = (LinearLayout) MainMenu.findViewById(R.id.LL_TextColor);
-            LL_TextOpacity = (LinearLayout) MainMenu.findViewById(R.id.LL_TextOpacity);
-            ABCFont = (RecyclerView) MainMenu.findViewById(R.id.ABCFont);
+            LL_TextMainLayout = MainMenu.findViewById(R.id.LL_TextMainLayout);
+            LL_AddText = MainMenu.findViewById(R.id.LL_AddText);
+            LL_FontStyle = MainMenu.findViewById(R.id.LL_FontStyle);
+            LL_TextColor = MainMenu.findViewById(R.id.LL_TextColor);
+            LL_TextOpacity = MainMenu.findViewById(R.id.LL_TextOpacity);
+            ABCFont = MainMenu.findViewById(R.id.ABCFont);
 
             mBubbleInputDialog = new BubbleInputDialog(getActivity());
 
@@ -520,7 +520,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
             Uri result = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
 
 
-            return file2.getPath().toString();
+            return file2.getPath();
         } catch (NullPointerException e) {
             // TODO: handle exception
             Log.e("error", "SAve to disk");
@@ -542,7 +542,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
             case R.id.LL_Curve:
 
-                flyOut((View) MainMenu, (View) curveList);
+                flyOut(MainMenu, curveList);
                 if (mContrastFilterAdjuster != null) {
                     mContrastFilterAdjuster.adjust(PrevContrast);
                 }
@@ -568,7 +568,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
             case R.id.LL_Brightness:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Brightness";
 
                 seekbar.setProgress(PrevBrightness);
@@ -579,7 +579,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                 break;
             case R.id.LL_Contrast:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Contrast";
 
                 seekbar.setProgress(PrevContrast);
@@ -591,7 +591,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
             case R.id.LL_Saturation:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Saturation";
 
                 seekbar.setProgress(PrevSaturation);
@@ -603,7 +603,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
             case R.id.LL_Vignette:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Vignette";
 
                 seekbar.setProgress(PrevVignette);
@@ -615,7 +615,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
             case R.id.LL_Sharpness:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Sharpness";
 
                 seekbar.setProgress(PrevSharpness);
@@ -628,7 +628,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 //            Bubble text Code
             case R.id.LL_Text:
 
-                flyOut((View) LL_MainMenu, (View) LL_TextMainLayout);
+                flyOut(LL_MainMenu, LL_TextMainLayout);
                 Counter = 5;
 
                 if (!textbubble.getText().toString().equals("")) {
@@ -649,7 +649,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                 break;
 
             case R.id.LL_FontStyle:
-                flyOut((View) LL_TextMainLayout, (View) ABCFont);
+                flyOut(LL_TextMainLayout, ABCFont);
                 Counter = 8;
                 break;
 
@@ -658,7 +658,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                 break;
 
             case R.id.LL_TextOpacity:
-                flyOut((View) LL_TextMainLayout, (View) fragment_Blur);
+                flyOut(LL_TextMainLayout, fragment_Blur);
                 flag = "Opacity";
                 seekbar.setProgress(PrevOpacity);
                 seekbar.setMax(255);
@@ -673,12 +673,12 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                 break;
 
             case R.id.LL_Sticker:
-                flyOut((View) LL_MainMenu, (View) Sticker_recycler_view);
+                flyOut(LL_MainMenu, Sticker_recycler_view);
                 Counter = 3;
 
                 break;
             case R.id.LL_Abc:
-                flyOut((View) LL_MainMenu, (View) Abc_recycler_view);
+                flyOut(LL_MainMenu, Abc_recycler_view);
                 Counter = 4;
 
                 break;
@@ -724,35 +724,35 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                 imgButtonImage.setImageResource(R.drawable.ic_next);
                 if (Counter != 0) {
                     if (Counter == 1) {
-                        flyOut((View) curveList, (View) MainMenu);
+                        flyOut(curveList, MainMenu);
                         Counter = 0;
                     }
                     if (Counter == 2) {
-                        flyOut((View) fragment_Blur, (View) LL_MainMenu);
+                        flyOut(fragment_Blur, LL_MainMenu);
                         Counter = 0;
                     }
                     if (Counter == 3) {
-                        flyOut((View) Sticker_recycler_view, (View) LL_MainMenu);
+                        flyOut(Sticker_recycler_view, LL_MainMenu);
                         Counter = 0;
                     }
                     if (Counter == 4) {
 
-                        flyOut((View) Abc_recycler_view, (View) LL_MainMenu);
+                        flyOut(Abc_recycler_view, LL_MainMenu);
                         Counter = 0;
                     }
 
                     if (Counter == 5) {
-                        flyOut((View) LL_TextMainLayout, (View) LL_MainMenu);
+                        flyOut(LL_TextMainLayout, LL_MainMenu);
                         Counter = 0;
                     }
                     if (Counter == 7) {
                         imgButtonImage.setImageResource(R.drawable.ic_true);
-                        flyOut((View) fragment_Blur, (View) LL_TextMainLayout);
+                        flyOut(fragment_Blur, LL_TextMainLayout);
                         Counter = 5;
                     }
                     if (Counter == 8) {
                         imgButtonImage.setImageResource(R.drawable.ic_true);
-                        flyOut((View) ABCFont, (View) LL_TextMainLayout);
+                        flyOut(ABCFont, LL_TextMainLayout);
                         Counter = 5;
                     }
                 } else {
@@ -765,7 +765,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                             Ads.Loadd(new Ads.Ad_lisoner() {
                                 @Override
                                 public void onSucssec(InterstitialAd mInterstitialAd) {
-                                    Intent intent = new Intent(getActivity(), Prexissesta.class);
+                                    Intent intent = new Intent(getActivity(), ShareImageActivity.class);
                                     intent.putExtra("FinalURI", FinalURI);
                                     startActivity(intent);
                                     Dabdea.activity.finish();
@@ -773,7 +773,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
                                 @Override
                                 public void onun() {
-                                    Intent intent = new Intent(getActivity(), Prexissesta.class);
+                                    Intent intent = new Intent(getActivity(), ShareImageActivity.class);
                                     intent.putExtra("FinalURI", FinalURI);
                                     startActivity(intent);
                                     Dabdea.activity.finish();
@@ -814,7 +814,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
             ArrayList<SusienChong> arrayList = new ArrayList<>();
             AssetManager assetManager = getActivity().getResources().getAssets();
 
-            String files[] = assetManager.list("fonts");
+            String[] files = assetManager.list("fonts");
             if (files != null) {
                 for (String file : files) {
                     arrayList.add(new SusienChong("fonts/" + file));
@@ -831,14 +831,14 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
 
 
     public void FindControls(View view) {
-        MainGPUImageView = (GPUImageView) view.findViewById(R.id.MainGPUImageView);
-        curveList = (HListView) view.findViewById(R.id.curve_List);
-        MainMenuContainer = (LinearLayout) view.findViewById(R.id.toolbar_area);
-        drawing_view_container = (RelativeLayout) view.findViewById(R.id.drawing_view_container);
-        sticker_view = (StickerView) view.findViewById(R.id.sticker_view);
-        FrameLayoutText = (FrameLayout) view.findViewById(R.id.FrameLayoutText);
-        imgTextClose = (ImageView) view.findViewById(R.id.imgTextClose);
-        textbubble = (TextView) view.findViewById(R.id.textbubble);
+        MainGPUImageView = view.findViewById(R.id.MainGPUImageView);
+        curveList = view.findViewById(R.id.curve_List);
+        MainMenuContainer = view.findViewById(R.id.toolbar_area);
+        drawing_view_container = view.findViewById(R.id.drawing_view_container);
+        sticker_view = view.findViewById(R.id.sticker_view);
+        FrameLayoutText = view.findViewById(R.id.FrameLayoutText);
+        imgTextClose = view.findViewById(R.id.imgTextClose);
+        textbubble = view.findViewById(R.id.textbubble);
 
         FrameLayoutText.setOnTouchListener(new MultiTouchListener());
         imgTextClose.setOnClickListener(this);
@@ -854,7 +854,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
             ArrayList<SusienChong> arrayList = new ArrayList<>();
             AssetManager assetManager = getActivity().getResources().getAssets();
 
-            String files[] = assetManager.list("sticker");
+            String[] files = assetManager.list("sticker");
             if (files != null) {
                 for (String file : files) {
                     arrayList.add(new SusienChong("sticker/" + file));
@@ -877,7 +877,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
             ArrayList<SusienChong> arrayList = new ArrayList<>();
             AssetManager assetManager = getActivity().getResources().getAssets();
 
-            String files[] = assetManager.list("abc");
+            String[] files = assetManager.list("abc");
             if (files != null) {
                 for (String file : files) {
                     arrayList.add(new SusienChong("abc/" + file));

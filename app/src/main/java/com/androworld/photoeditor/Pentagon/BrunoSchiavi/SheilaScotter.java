@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.Pentagon.SophiaTolli.AndyTruong;
@@ -23,12 +23,12 @@ public class SheilaScotter extends RecyclerView.Adapter<SheilaScotter.MyViewHold
     public ArrayList<SusienChong> dataSet;
     private Context mContext;
 
-    DeanandDanCaten appPrefs;
+    SharedPreferenceManager appPrefs;
 
     public SheilaScotter(ArrayList<SusienChong> data, Context mContext) {
         this.dataSet = data;
         this.mContext = mContext;
-        appPrefs = new DeanandDanCaten(mContext);
+        appPrefs = new SharedPreferenceManager(mContext);
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

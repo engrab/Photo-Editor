@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.R;
@@ -23,7 +23,7 @@ public class BowieWong extends RecyclerView.Adapter<BowieWong.MyViewHolder> {
     public ArrayList<SusienChong> dataSet;
     private Context mContext;
 
-    DeanandDanCaten appPrefs;
+    SharedPreferenceManager appPrefs;
 
     @Override
     public int getItemCount() {
@@ -45,7 +45,7 @@ public class BowieWong extends RecyclerView.Adapter<BowieWong.MyViewHolder> {
     public BowieWong(ArrayList<SusienChong> data, Context mContext) {
         this.dataSet = data;
         this.mContext = mContext;
-        appPrefs = new DeanandDanCaten(mContext);
+        appPrefs = new SharedPreferenceManager(mContext);
     }
 
     @Override

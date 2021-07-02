@@ -4,23 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Cantista.Mantid">
+    tools:context=".activities.MainActivity">
 
     <FrameLayout
-        android:layout_above="@+id/adView"
         android:id="@+id/MainContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/adView" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner"
-        >
-    </com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/banner"/>
 
 </RelativeLayout>

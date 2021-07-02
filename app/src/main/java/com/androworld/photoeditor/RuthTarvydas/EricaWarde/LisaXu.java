@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androworld.photoeditor.DovCharney.DeanandDanCaten;
+import com.androworld.photoeditor.DovCharney.SharedPreferenceManager;
 import com.androworld.photoeditor.DovCharney.PatrickCox;
 import com.androworld.photoeditor.KayCohen.SusienChong;
 import com.androworld.photoeditor.R;
@@ -23,7 +23,7 @@ public class LisaXu extends RecyclerView.Adapter<LisaXu.MyViewHolder> {
     public ArrayList<SusienChong> dataSet;
     private Context mContext;
 
-    DeanandDanCaten appPrefs;
+    SharedPreferenceManager appPrefs;
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,7 +36,7 @@ public class LisaXu extends RecyclerView.Adapter<LisaXu.MyViewHolder> {
     public LisaXu(ArrayList<SusienChong> data, Context mContext) {
         this.dataSet = data;
         this.mContext = mContext;
-        appPrefs = new DeanandDanCaten(mContext);
+        appPrefs = new SharedPreferenceManager(mContext);
     }
 
     @Override
