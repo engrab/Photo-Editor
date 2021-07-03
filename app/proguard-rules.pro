@@ -21,8 +21,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 # support-design
--keep class com.androworld.photoeditor.AVLoadingIndicatorView.** { *; }
--keep class com.androworld.photoeditor.AVLoadingIndicatorView.Indicator.** { *; }
+-keep class com.oga.photoeditor.pro.beauty.face.filters.effects.AVLoadingIndicatorView.** { *; }
+-keep class com.oga.photoeditor.pro.beauty.face.filters.effects.AVLoadingIndicatorView.Indicator.** { *; }
 
 -dontwarn android.support.design.**
 -keep class android.support.design.** { *; }

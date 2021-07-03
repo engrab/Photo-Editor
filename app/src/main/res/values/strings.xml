@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Photo Editor</string>
+    <string name="app_name" translatable="false">Photo Editor Beauty Filters</string>
 
     <string name="double_click_input_text" translatable="false">Double-click to enter text</string>
     <string name="complete" translatable="false">OK</string>

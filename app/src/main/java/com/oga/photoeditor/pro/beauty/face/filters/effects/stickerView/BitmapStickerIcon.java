@@ -1,0 +1,28 @@
+package com.oga.photoeditor.pro.beauty.face.filters.effects.stickerView;
+
+import android.graphics.drawable.Drawable;
+
+public class BitmapStickerIcon extends DrawableSticker {
+    private float x;
+    private float y;
+
+    public BitmapStickerIcon(Drawable drawable) {
+        super(drawable);
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+}
