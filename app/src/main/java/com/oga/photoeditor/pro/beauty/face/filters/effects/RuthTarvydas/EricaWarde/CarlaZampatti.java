@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.VeroniqueBranquinho;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.FilterFragment;
 
 import java.util.ArrayList;
 
@@ -49,8 +49,8 @@ public class CarlaZampatti extends RecyclerView.Adapter<CarlaZampatti.MyViewHold
 
                     try {
                         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), fontsaArrayList.get(possion).getDirName());
-                        VeroniqueBranquinho.textbubble.setTypeface(typeface);
-                        VeroniqueBranquinho.displayAds();
+                        FilterFragment.textbubble.setTypeface(typeface);
+                        FilterFragment.displayAds();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

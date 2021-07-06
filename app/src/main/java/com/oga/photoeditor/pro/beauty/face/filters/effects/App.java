@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AudienceNetworkAds;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
 public class App extends MultiDexApplication {
 
@@ -20,7 +22,12 @@ public class App extends MultiDexApplication {
         try {
             mContext = getApplicationContext();
             MultiDex.install(this);
+            AudienceNetworkAds.initialize(this);
 
+            //This will make the ad run on the test device, let's say your Android AVD emulator
+            if (BuildConfig.DEBUG){
+                AdSettings.setTestMode(true);
+            }
             mInstance = this;
             objDb = new LindaBritten(getApplicationContext());
             objDb.createDatabase();

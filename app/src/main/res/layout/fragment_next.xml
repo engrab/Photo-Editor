@@ -1,9 +1,8 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/backgroundset">
+    android:background="@color/backgroundset"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/MainContainer"
@@ -16,17 +15,16 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:orientation="vertical">
 
-            <include
-                layout="@layout/header"/>
+            <include layout="@layout/header" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/buttom_layout"
             android:layout_below="@+id/header"
             android:orientation="vertical">
 
@@ -38,8 +36,8 @@
                     android:id="@+id/drawing_view_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:gravity="center">
 
@@ -47,7 +45,7 @@
                         android:id="@+id/MainGPUImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" />
 
                     <ImageView
                         android:id="@+id/MainImageView"
@@ -55,7 +53,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -63,40 +61,40 @@
                     android:id="@+id/LL_Recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
                     android:layout_alignParentBottom="true"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <SeekBar
                         android:id="@+id/seekbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="5dp"
                         android:backgroundTint="@color/white"
                         android:max="255"
-                        android:visibility="visible"
                         android:progress="128"
-                        android:layout_marginBottom="5dp"
                         android:progressBackgroundTint="@color/colorPrimaryDark"
                         android:progressTint="@color/colorPrimaryDark"
-                        android:thumbTint="@color/colorPrimaryDark"/>
+                        android:thumbTint="@color/colorPrimaryDark"
+                        android:visibility="visible" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:visibility="visible"
                         android:layout_marginLeft="5dp"
-                        android:scrollbars="none"/>
+                        android:scrollbars="none"
+                        android:visibility="visible" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView2"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:scrollbars="none"/>
+                        android:scrollbars="none"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -108,7 +106,7 @@
             android:id="@+id/buttom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@id/LL_Ads"
             android:orientation="vertical">
 
             <LinearLayout
@@ -116,19 +114,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/toolbar">
+                    android:background="@color/toolbar"
+                    android:orientation="horizontal">
 
-                    <include
-                        layout="@layout/fragment_next_menu"/>
+                    <include layout="@layout/fragment_next_menu" />
 
                 </LinearLayout>
 
@@ -137,20 +134,16 @@
             <RelativeLayout
                 android:id="@+id/adViewContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL_Ads"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical">
-
-
-
-        </LinearLayout>
+            android:orientation="vertical" />
 
     </RelativeLayout>
 

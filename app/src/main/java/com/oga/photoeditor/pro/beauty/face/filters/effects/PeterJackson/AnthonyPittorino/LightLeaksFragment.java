@@ -21,17 +21,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.ads.AbstractAdListener;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MyWorkActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
@@ -42,8 +53,6 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JacobLup
 import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JacobLuppino.ToniMaticevski;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JennyKee.Bentesta;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.Ads;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,12 +73,12 @@ import jp.co.cyberagent.android.gpuimage.GPUImageSoftLightBlendFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
 
 
-public class NevilleQuist extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class LightLeaksFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-
+    InterstitialAd interstitialAd;
     private String FinalURI;
-
-    public NevilleQuist() {
+    LinearLayout adContainer;
+    public LightLeaksFragment() {
         // Required empty public constructor
     }
 
@@ -98,26 +107,26 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
     static RecyclerView recyclerView2;
 
     public void HeaderControl(View rootView) {
-        imgButtonImage = (ImageView) rootView.findViewById(R.id.imgButtonImage);
+        imgButtonImage = rootView.findViewById(R.id.imgButtonImage);
         imgButtonImage.setVisibility(View.VISIBLE);
         imgButtonImage.setImageResource(R.drawable.ic_next);
         imgButtonImage.setOnClickListener(this);
 
-        TextView txtHeaderName = (TextView) rootView.findViewById(R.id.txtHeaderName);
+        TextView txtHeaderName = rootView.findViewById(R.id.txtHeaderName);
 
         AllBlendFilters();
     }
 
     public void ButtomMenuControl(View rootView) {
 
-        LL_Recycler = (LinearLayout) rootView.findViewById(R.id.LL_Recycler);
-        FL_Lighten = (LinearLayout) rootView.findViewById(R.id.FL_Lighten);
-        FL_Screen = (LinearLayout) rootView.findViewById(R.id.FL_Screen);
-        FL_Color = (LinearLayout) rootView.findViewById(R.id.FL_Color);
-        FL_SoftLight = (LinearLayout) rootView.findViewById(R.id.FL_SoftLight);
-        FL_Ies = (LinearLayout) rootView.findViewById(R.id.FL_Ies);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        recyclerView2 = (RecyclerView) rootView.findViewById(R.id.recyclerView2);
+        LL_Recycler = rootView.findViewById(R.id.LL_Recycler);
+        FL_Lighten = rootView.findViewById(R.id.FL_Lighten);
+        FL_Screen = rootView.findViewById(R.id.FL_Screen);
+        FL_Color = rootView.findViewById(R.id.FL_Color);
+        FL_SoftLight = rootView.findViewById(R.id.FL_SoftLight);
+        FL_Ies = rootView.findViewById(R.id.FL_Ies);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        recyclerView2 = rootView.findViewById(R.id.recyclerView2);
 
         FL_SoftLight.setOnClickListener(this);
         FL_Lighten.setOnClickListener(this);
@@ -125,24 +134,84 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
         FL_Color.setOnClickListener(this);
         FL_Ies.setOnClickListener(this);
 
-        seekbar = (SeekBar) rootView.findViewById(R.id.seekbar);
+        seekbar = rootView.findViewById(R.id.seekbar);
 
         seekbar.setMax(255);
         seekbar.setProgress(255);
         seekbar.setOnSeekBarChangeListener(this);
 
     }
+    private void loadBannerAd() {
 
+        AdView adView = new AdView(getContext(), AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
+        adContainer.addView(adView);
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(getContext(), "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Toast.makeText(getContext(), "Ad Loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+            }
+        };
+        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        adView.loadAd(loadAdConfig);
+    }
+    private void loadInterstitialAd(){
+        interstitialAd = new InterstitialAd(getContext(), AdsUnits.FB_INTERSTITIAL);
+        AbstractAdListener adListener = new AbstractAdListener() {
+            @Override
+            public void onError(Ad ad, AdError error) {
+
+                Toast.makeText(getContext(), "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                super.onError(ad, error);
+            }
+            @Override
+            public void onAdLoaded(Ad ad) {
+                super.onAdLoaded(ad);
+
+                interstitialAd.show();
+
+            }
+            @Override
+            public void onAdClicked(Ad ad) {
+                super.onAdClicked(ad);
+            }
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                super.onInterstitialDisplayed(ad);
+            }
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+
+            }
+        };
+        InterstitialAd.InterstitialLoadAdConfig interstitialLoadAdConfig = interstitialAd.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        interstitialAd.loadAd(interstitialLoadAdConfig);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_next, container, false);
-        if(Ads.mInterstitialAd == null){
-            Ads.LoadAd(getContext());
-        }
-
+        loadInterstitialAd();
+        adContainer = rootView.findViewById(R.id.LL_Ads);
 
         try {
 
@@ -154,12 +223,12 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        loadBannerAd();
         return rootView;
     }
 
     private void findControls(View rootView) {
-        drawing_view_container = (RelativeLayout) rootView.findViewById(R.id.drawing_view_container);
+        drawing_view_container = rootView.findViewById(R.id.drawing_view_container);
 
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         DisplayWidth = display.getWidth();
@@ -168,8 +237,8 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth);
         drawing_view_container.setLayoutParams(layoutParams);
 
-        MainGPUImageView = (GPUImageView) rootView.findViewById(R.id.MainGPUImageView);
-        MainImageView = (ImageView) rootView.findViewById(R.id.MainImageView);
+        MainGPUImageView = rootView.findViewById(R.id.MainGPUImageView);
+        MainImageView = rootView.findViewById(R.id.MainImageView);
 
         ButtomMenuControl(rootView);
         HeaderControl(rootView);
@@ -265,7 +334,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
                     arrayList = new ArrayList<>();
                     AssetManager assetManager = getActivity().getResources().getAssets();
 
-                    String files[] = assetManager.list("softlight/soft");
+                    String[] files = assetManager.list("softlight/soft");
                     if (files != null) {
                         for (String file : files) {
                             arrayList.add(new SusienChong("softlight/soft/" + file));
@@ -289,7 +358,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
                     arrayList = new ArrayList<>();
                     AssetManager assetManager = getActivity().getResources().getAssets();
 
-                    String files[] = assetManager.list("color/color");
+                    String[] files = assetManager.list("color/color");
                     if (files != null) {
                         for (String file : files) {
                             arrayList.add(new SusienChong("color/color/" + file));
@@ -313,7 +382,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
                     arrayList = new ArrayList<>();
                     AssetManager assetManager = getActivity().getResources().getAssets();
 
-                    String files[] = assetManager.list("screen/screen");
+                    String[] files = assetManager.list("screen/screen");
                     if (files != null) {
                         for (String file : files) {
                             arrayList.add(new SusienChong("screen/screen/" + file));
@@ -337,7 +406,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
                     arrayList = new ArrayList<>();
                     AssetManager assetManager = getActivity().getResources().getAssets();
 
-                    String files[] = assetManager.list("lighten/lighten");
+                    String[] files = assetManager.list("lighten/lighten");
                     if (files != null) {
                         for (String file : files) {
                             arrayList.add(new SusienChong("lighten/lighten/" + file));
@@ -690,7 +759,7 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
             Uri result = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
 
 
-            return file2.getPath().toString();
+            return file2.getPath();
         } catch (NullPointerException e) {
             // TODO: handle exception
             Log.e("error", "SAve to disk");
@@ -749,30 +818,12 @@ public class NevilleQuist extends Fragment implements View.OnClickListener, Seek
             super.onPostExecute(s);
             dia.dismiss();
 
-            ((Bentesta)getActivity()).showRatingDialog(true, new LocalBaseActivity.OnRateListner() {
-                @Override
-                public void onReminderLater() {
-                    Ads.Loadd(new Ads.Ad_lisoner() {
-                        @Override
-                        public void onSucssec(InterstitialAd mInterstitialAd) {
-                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-                            intent.putExtra("FinalURI", FinalURI);
-                            startActivity(intent);
-                            Bentesta.activity.finish();
-                            getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        }
+            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
+            intent.putExtra("FinalURI", FinalURI);
+            startActivity(intent);
+            Bentesta.activity.finish();
+            getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
-                        @Override
-                        public void onun() {
-                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-                            intent.putExtra("FinalURI", FinalURI);
-                            startActivity(intent);
-                            Bentesta.activity.finish();
-                            getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        }
-                    });
-                }
-            });
 
         }
     }

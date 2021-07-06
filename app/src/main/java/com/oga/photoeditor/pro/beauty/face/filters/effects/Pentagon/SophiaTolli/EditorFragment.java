@@ -1,4 +1,4 @@
-package com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti;
+package com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli;
 
 
 import android.app.ProgressDialog;
@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,12 +31,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.ads.AbstractAdListener;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.JohnCrittle;
@@ -45,12 +55,11 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.DianaVonGrüning;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.AmberRenae.Tempoll;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.BrunoSchiavi.JoeSaba;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.BrunoSchiavi.PaulaStafford;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.BrunoSchiavi.SheilaScotter;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.EricaWarde.BowieWong;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.EricaWarde.CarlaZampatti;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.EricaWarde.LisaXu;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.RichardTyler.Pnanterist;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.Ads;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.multiTouchLib.MultiTouchListener;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.stickerView.StickerView;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.textviewBubble.BubbleInputDialog;
@@ -58,7 +67,6 @@ import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -78,6 +86,7 @@ import jp.co.cyberagent.android.gpuimage.GPUImageBrightnessFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageColorBalanceFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageContrastFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageExposureFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageFilterGroup;
 import jp.co.cyberagent.android.gpuimage.GPUImageHueFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageLevelsFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageMonochromeFilter;
@@ -89,20 +98,18 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
 import jp.co.cyberagent.android.gpuimage.GPUImageVignetteFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageWhiteBalanceFilter;
 
-public class VeroniqueBranquinho extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, BubbleInputDialog.CompleteCallBack {
+public class EditorFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, BubbleInputDialog.CompleteCallBack {
 
-
+    InterstitialAd interstitialAd;
     private String FinalURI;
 
-    public VeroniqueBranquinho() {
-        // Required empty public constructor
+    public EditorFragment() {
     }
 
     GPUImageView MainGPUImageView;
 
     public static StickerView sticker_view;
 
-    //    text Area Controls
     FrameLayout FrameLayoutText;
 
     public static RelativeLayout MainContainer;
@@ -111,7 +118,6 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
     public static TextView textbubble;
     Boolean textflag = true;
 
-    //    Bottom Menu Layout Controls
     public static RecyclerView ABCsCategory, ABCFont;
     BubbleInputDialog mBubbleInputDialog;
 
@@ -124,7 +130,6 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
     String flag = "";
     int PrevCurvePosition = 0, PrevBrightness = 50, PrevContrast = 50, PrevSaturation = 50, PrevVignette = 75, PrevSharpness = 50, PrevHue = 0, PrevSepia = 0, PrevMonochrome = 0, PrevWhiteBalance = 100, PrevColorBalance = 0, PrevLevels = 100, PrevExposure = 50, PrevOpacity = 255;
 
-    //    Bottom Menu Layout Controls
     public static View MainMenu;
     LinearLayout LL_Brightness, LL_Contrast, LL_Saturation, LL_Vignette, LL_Curve, LL_Sharpness, LL_hue, LL_Sepia, LL_Monochrome, LL_WhiteBalance, LL_ColorBalance, LL_Level, LL_Exposure, LL_Text, LL_AddText, LL_FontStyle, LL_TextColor, LL_TextOpacity, LL_ABCs;
     public static LinearLayout LL_MainMenu, fragment_Blur, LL_Sticker, LL_TextMainLayout;
@@ -139,97 +144,60 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
     public static ImageView imgButtonImage, imgReset;
 
-    // Filter Contols
-    GPUImageBrightnessFilter brightnessFilter;
-    GPUImageContrastFilter contrastFilter;
-    GPUImageVignetteFilter vignetteFilter;
-    GPUImageSaturationFilter saturationFilter;
-    GPUImageToneCurveFilter curveFilter;
-    GPUImageSharpenFilter sharpnessFilter;
-
-    GPUImageHueFilter hueFilter;
-    GPUImageSepiaFilter sepiaFilter;
-    GPUImageMonochromeFilter monochromeFilter;
-    GPUImageWhiteBalanceFilter whiteBalanceFilter;
-    GPUImageColorBalanceFilter colorBalanceFilter;
-    GPUImageLevelsFilter levelsFilter;
-    GPUImageExposureFilter exposureFilter;
-
-    //    GPUImageFilterGroup filterGroup;
-    private DianaVonGrüning.FilterAdjuster mContrastFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mBrightnessFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mVignetteFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mSaturationFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mSharpnessFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mHueFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mSepiaFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mMonochromeFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mWhiteBalanceFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mColorBalanceFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mExposureFilterAdjuster;
-    private DianaVonGrüning.FilterAdjuster mLevelsFilterAdjuster;
-
     static RelativeLayout adViewContainer;
 
-    //    Progress
-
     ImageView imgTemp;
+
     boolean flagimgtemp = true;
 
-    public void HeaderControl(View view) {
-        imgButtonImage = (ImageView) view.findViewById(R.id.imgButtonImage);
-        imgReset = (ImageView) view.findViewById(R.id.imgReset);
-        imgReset.setVisibility(View.VISIBLE);
-        imgButtonImage.setImageResource(R.drawable.ic_next);
-        imgButtonImage.setOnClickListener(this);
-        imgReset.setOnClickListener(this);
-        TextView txtHeaderName = (TextView) view.findViewById(R.id.txtHeaderName);
-//        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Rochester-Regular.ttf");
-//        txtHeaderName.setTypeface(tf);
-    }
-
-    public void CurveImage() {
-
-        smallImageBackgroud = PatrickCox.bitmap;
-
-        initCurveFilterToolBar();
-
-    }
-
-    //    Initialize the Curve filter
-    private void initCurveFilterToolBar() {
-
-        final JohnCrittle adapter = new JohnCrittle(getActivity(), filters, smallImageBackgroud);
-        curveList.setAdapter(adapter);
-        curveList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void loadInterstitialAd() {
+        interstitialAd = new InterstitialAd(getContext(), AdsUnits.FB_INTERSTITIAL);
+        AbstractAdListener adListener = new AbstractAdListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                if (adapter.getSelectFilter() != arg2) {
+            public void onError(Ad ad, AdError error) {
 
-
-                    adapter.setSelectFilter(arg2);
-                    PrevCurvePosition = arg2;
-                    curveFilter.setFromCurveFileInputStream(getResources().openRawResource(filters.get(arg2).getFilterfileRaw()));
-
-                    MainGPUImageView.setFilter(curveFilter);
-                    VeroniqueBranquinho.displayAds();
-                }
+                Toast.makeText(getContext(), "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                super.onError(ad, error);
             }
-        });
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                super.onAdLoaded(ad);
+
+                interstitialAd.show();
+
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                super.onAdClicked(ad);
+            }
+
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                super.onInterstitialDisplayed(ad);
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+
+            }
+        };
+        InterstitialAd.InterstitialLoadAdConfig interstitialLoadAdConfig = interstitialAd.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        interstitialAd.loadAd(interstitialLoadAdConfig);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.photofilter_fragment_filters, container, false);
-        if(Ads.mInterstitialAd == null){
-            Ads.LoadAd(getContext());
-        }
+        View rootView = inflater.inflate(R.layout.photoeditor_fragment_filters, container, false);
 
-
-//        End Of FB ADD
+        loadInterstitialAd();
+        loadBannerAd();
 
         try {
             mContext = getActivity();
@@ -246,14 +214,11 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             DisplayWidth = display.getWidth();
             DisplayHeight = display.getHeight();
 
-//            LinearLayout.LayoutParams rparams = new LinearLayout.LayoutParams(DisplayWidth, DisplayWidth);
-//            LinearLayout.LayoutParams rparams = new LinearLayout.LayoutParams(CommonUtilities.bitmap.getWidth(), CommonUtilities.bitmap.getHeight());
-//            drawing_view_container.setLayoutParams(rparams);
 
-            imgTemp = (ImageView) rootView.findViewById(R.id.imgTemp);
+            imgTemp = rootView.findViewById(R.id.imgTemp);
 
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth);
-            imgTemp.setLayoutParams(layoutParams);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(PatrickCox.bitmap.getWidth(), PatrickCox.bitmap.getHeight());
+
             imgTemp.setImageBitmap(PatrickCox.bitmap);
 
             ViewTreeObserver vto = imgTemp.getViewTreeObserver();
@@ -265,12 +230,10 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                         int finalHeight = imgTemp.getMeasuredHeight();
                         int finalWidth = imgTemp.getMeasuredWidth();
                         flagimgtemp = false;
-                        //MainGPUImageView.setVisibility(View.VISIBLE);
                         RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth);
                         imageLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                         drawing_view_container.setLayoutParams(imageLayoutParams);
                         imgTemp.setVisibility(View.GONE);
-                        //MainGPUImageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
                         MainGPUImageView.setImage(PatrickCox.bitmap);
                     }
 
@@ -291,16 +254,230 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             dia.dismiss();
         }
 
-
-        //        NATIVE BANNER ADD
-
-// END OF BANNER
-
+        loadBannerAd();
         return rootView;
     }
 
-    public static void AddTextColor(int color) {
-        textbubble.setTextColor(color);
+    public void getFilesFromAssets(String FolderName) {
+        ArrayList<SusienChong> arrayList;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        ABCsCategory.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        ABCFont.setLayoutManager(layoutManager1);
+
+        switch (FolderName) {
+
+            case "ABC":
+                try {
+                    arrayList = new ArrayList<>();
+                    AssetManager assetManager = getActivity().getResources().getAssets();
+
+                    String[] files = assetManager.list(FolderName.toLowerCase());
+                    if (files != null) {
+                        for (String file : files) {
+                            arrayList.add(new SusienChong(FolderName.toLowerCase() + "/" + file));
+                        }
+
+                        JoeSaba adapter = new JoeSaba(arrayList, getActivity());
+                        ABCsCategory.setAdapter(adapter);
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "Sticker":
+                try {
+                    arrayList = new ArrayList<>();
+                    AssetManager assetManager = getActivity().getResources().getAssets();
+
+                    String[] files = assetManager.list(FolderName.toLowerCase());
+                    if (files != null) {
+                        for (String file : files) {
+                            arrayList.add(new SusienChong(FolderName.toLowerCase() + "/" + file));
+                        }
+
+                        SheilaScotter adapter = new SheilaScotter(arrayList, getActivity());
+                        ABCsCategory.setAdapter(adapter);
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "Fonts":
+                try {
+                    arrayList = new ArrayList<>();
+                    AssetManager assetManager = getActivity().getResources().getAssets();
+
+                    String[] files = assetManager.list(FolderName.toLowerCase());
+                    if (files != null) {
+                        for (String file : files) {
+                            arrayList.add(new SusienChong(FolderName.toLowerCase() + "/" + file));
+                        }
+
+                        PaulaStafford adapter = new PaulaStafford(arrayList, getActivity());
+                        ABCFont.setAdapter(adapter);
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+        }
+
+    }
+
+    public void HeaderControl(View view) {
+        imgButtonImage = view.findViewById(R.id.imgButtonImage);
+        imgReset = view.findViewById(R.id.imgReset);
+        imgReset.setVisibility(View.VISIBLE);
+        imgButtonImage.setImageResource(R.drawable.ic_next);
+        imgButtonImage.setOnClickListener(this);
+        imgReset.setOnClickListener(this);
+    }
+
+    private void loadBannerAd() {
+        AdView adView = new AdView(getContext(), AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
+        adViewContainer.addView(adView);
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(getContext(), "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Toast.makeText(getContext(), "Ad Loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+            }
+        };
+        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        adView.loadAd(loadAdConfig);
+    }
+
+    public void FindControls(View view) {
+
+        MainGPUImageView = view.findViewById(R.id.MainGPUImageView);
+        curveList = view.findViewById(R.id.curve_List);
+        MainMenuContainer = view.findViewById(R.id.toolbar_area);
+        adViewContainer = view.findViewById(R.id.adViewContainer);
+        drawing_view_container = view.findViewById(R.id.drawing_view_container);
+        drawing_view_container.setDrawingCacheEnabled(true);
+        drawing_view_container.buildDrawingCache();
+
+        MainContainer = view.findViewById(R.id.MainContainer);
+
+        sticker_view = view.findViewById(R.id.sticker_view);
+        FrameLayoutText = view.findViewById(R.id.FrameLayoutText);
+        imgTextClose = view.findViewById(R.id.imgTextClose);
+        textbubble = view.findViewById(R.id.textbubble);
+
+        FrameLayoutText.setOnTouchListener(new MultiTouchListener());
+        imgTextClose.setOnClickListener(this);
+
+
+    }
+
+    public void CurveImage() {
+
+        smallImageBackgroud = PatrickCox.bitmap;
+
+        initCurveFilterToolBar();
+
+    }
+
+    public void InflateBottomMenuLayout() {
+        try {
+
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            MainMenu = inflater.inflate(R.layout.photoeditor_final_image_menu, MainMenuContainer, false);
+            MainMenuContainer.addView(MainMenu);
+
+            LL_MainMenu = MainMenu.findViewById(R.id.LL_MainMenu);
+            fragment_Blur = MainMenu.findViewById(R.id.fragment_Blur);
+
+            LL_Sharpness = MainMenu.findViewById(R.id.LL_Sharpness);
+
+            LL_Brightness = MainMenu.findViewById(R.id.LL_Brightness);
+            LL_Contrast = MainMenu.findViewById(R.id.LL_Contrast);
+            LL_Saturation = MainMenu.findViewById(R.id.LL_Saturation);
+            LL_Vignette = MainMenu.findViewById(R.id.LL_Vignette);
+            LL_hue = MainMenu.findViewById(R.id.LL_hue);
+            LL_Sepia = MainMenu.findViewById(R.id.LL_Sepia);
+
+            LL_Monochrome = MainMenu.findViewById(R.id.LL_Monochrome);
+            LL_WhiteBalance = MainMenu.findViewById(R.id.LL_WhiteBalance);
+            LL_ColorBalance = MainMenu.findViewById(R.id.LL_ColorBalance);
+            LL_Level = MainMenu.findViewById(R.id.LL_Level);
+            LL_Exposure = MainMenu.findViewById(R.id.LL_Exposure);
+
+            LL_Curve = MainMenu.findViewById(R.id.LL_Curve);
+            LL_ABCs = MainMenu.findViewById(R.id.LL_ABCs);
+
+            LL_Sticker = MainMenu.findViewById(R.id.LL_Sticker);
+            LL_Text = MainMenu.findViewById(R.id.LL_Text);
+
+            LL_TextMainLayout = MainMenu.findViewById(R.id.LL_TextMainLayout);
+            LL_AddText = MainMenu.findViewById(R.id.LL_AddText);
+            LL_FontStyle = MainMenu.findViewById(R.id.LL_FontStyle);
+            LL_TextColor = MainMenu.findViewById(R.id.LL_TextColor);
+            LL_TextOpacity = MainMenu.findViewById(R.id.LL_TextOpacity);
+
+            ABCsCategory = MainMenu.findViewById(R.id.ABCsCategory);
+            ABCFont = MainMenu.findViewById(R.id.ABCFont);
+
+            ic_clear = MainMenu.findViewById(R.id.ic_clear);
+            seekbar = MainMenu.findViewById(R.id.seekbar);
+            txtProgressValue = MainMenu.findViewById(R.id.txtProgressValue);
+
+            LL_Curve.setOnClickListener(this);
+            LL_Brightness.setOnClickListener(this);
+            LL_Contrast.setOnClickListener(this);
+            LL_Saturation.setOnClickListener(this);
+            LL_Vignette.setOnClickListener(this);
+            LL_Sharpness.setOnClickListener(this);
+            LL_hue.setOnClickListener(this);
+            LL_Sepia.setOnClickListener(this);
+
+            LL_Text.setOnClickListener(this);
+            LL_FontStyle.setOnClickListener(this);
+            LL_TextColor.setOnClickListener(this);
+            LL_TextOpacity.setOnClickListener(this);
+
+            LL_Monochrome.setOnClickListener(this);
+            LL_WhiteBalance.setOnClickListener(this);
+            LL_ColorBalance.setOnClickListener(this);
+            LL_Level.setOnClickListener(this);
+            LL_Exposure.setOnClickListener(this);
+
+            LL_Sticker.setOnClickListener(this);
+            LL_ABCs.setOnClickListener(this);
+            LL_AddText.setOnClickListener(this);
+
+            ic_clear.setOnClickListener(this);
+
+            seekbar.setOnSeekBarChangeListener(this);
+
+            mBubbleInputDialog = new BubbleInputDialog(getActivity());
+            mBubbleInputDialog.setCompleteCallBack(this);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void viewColorPicker() {
@@ -345,131 +522,26 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 .show();
     }
 
-    //    Set Default Filter Values
-    private void setFilters() {
-        curveFilter = new GPUImageToneCurveFilter();
-        curveFilter.setFromCurveFileInputStream(getResources().openRawResource(filters.get(0).getFilterfileRaw()));
+    private void initCurveFilterToolBar() {
 
-//        filterGroup = new GPUImageFilterGroup();
-//        filterGroup.addFilter(curveFilter);
-
-        MainGPUImageView.setFilter(curveFilter);
-
-    }
-
-    public void FindControls(View view) {
-
-        MainGPUImageView = (GPUImageView) view.findViewById(R.id.MainGPUImageView);
-        curveList = (HListView) view.findViewById(R.id.curve_List);
-        MainMenuContainer = (LinearLayout) view.findViewById(R.id.toolbar_area);
-        drawing_view_container = (RelativeLayout) view.findViewById(R.id.drawing_view_container);
-        drawing_view_container.setDrawingCacheEnabled(true);
-        drawing_view_container.buildDrawingCache();
-
-        MainContainer = (RelativeLayout) view.findViewById(R.id.MainContainer);
-
-        sticker_view = (StickerView) view.findViewById(R.id.sticker_view);
-        FrameLayoutText = (FrameLayout) view.findViewById(R.id.FrameLayoutText);
-        imgTextClose = (ImageView) view.findViewById(R.id.imgTextClose);
-        textbubble = (TextView) view.findViewById(R.id.textbubble);
-
-        FrameLayoutText.setOnTouchListener(new MultiTouchListener());
-        imgTextClose.setOnClickListener(this);
+        final JohnCrittle adapter = new JohnCrittle(getActivity(), filters, smallImageBackgroud);
+        curveList.setAdapter(adapter);
+        curveList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if (adapter.getSelectFilter() != arg2) {
 
 
-        adViewContainer = (RelativeLayout) view.findViewById(R.id.adViewContainer);
+                    adapter.setSelectFilter(arg2);
+                    PrevCurvePosition = arg2;
+                    curveFilter.setFromCurveFileInputStream(getResources().openRawResource(filters.get(arg2).getFilterfileRaw()));
 
-    }
-
-    public void getFilesFromAssets(String FolderName) {
-        ArrayList<SusienChong> arrayList;
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        ABCsCategory.setLayoutManager(layoutManager);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        ABCFont.setLayoutManager(layoutManager1);
-
-        switch (FolderName) {
-
-            case "ABC":
-                try {
-                    arrayList = new ArrayList<>();
-                    AssetManager assetManager = getActivity().getResources().getAssets();
-
-                    String files[] = assetManager.list(FolderName.toLowerCase());
-                    if (files != null) {
-                        for (String file : files) {
-                            arrayList.add(new SusienChong(FolderName.toLowerCase() + "/" + file));
-                        }
-
-                        BowieWong adapter = new BowieWong(arrayList, getActivity());
-                        ABCsCategory.setAdapter(adapter);
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    MainGPUImageView.setFilter(filterGroup);
+                    EditorFragment.displayAds();
                 }
-                break;
-
-            case "Sticker":
-                try {
-                    arrayList = new ArrayList<>();
-                    AssetManager assetManager = getActivity().getResources().getAssets();
-
-                    String files[] = assetManager.list(FolderName.toLowerCase());
-                    if (files != null) {
-                        for (String file : files) {
-                            arrayList.add(new SusienChong(FolderName.toLowerCase() + "/" + file));
-                        }
-
-                        LisaXu adapter = new LisaXu(arrayList, getActivity());
-                        ABCsCategory.setAdapter(adapter);
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "Fonts":
-                try {
-                    arrayList = new ArrayList<>();
-                    AssetManager assetManager = getActivity().getResources().getAssets();
-
-                    String files[] = assetManager.list(FolderName.toLowerCase());
-                    if (files != null) {
-                        for (String file : files) {
-                            arrayList.add(new SusienChong(FolderName.toLowerCase() + "/" + file));
-                        }
-
-                        CarlaZampatti adapter = new CarlaZampatti(arrayList, getActivity());
-                        ABCFont.setAdapter(adapter);
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-        }
-
+            }
+        });
     }
-
-    @Override
-    public void onComplete(View bubbleTextView, String str) {
-        ((TextView) bubbleTextView).setText(str);
-        FrameLayoutText.setVisibility(View.VISIBLE);
-    }
-
-    public static void AddSticker(Bitmap bitmap) {
-        sticker_view.addSticker(bitmap);
-    }
-
-    public static void displayAds() {
-        if (AddCounter == 2) {
-
-        }
-    }
-
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -605,7 +677,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
                 case "Opacity":
                     PrevOpacity = progress;
-                    txtProgressValue.setText("" + ((PrevOpacity * 100)) / 255 + "%");
+                    txtProgressValue.setText("" + ((PrevOpacity * 100)) / seekBar.getMax() + "%");
                     textbubble.setAlpha((float) (seekbar.getProgress()) / (float) (seekBar.getMax()));
 
                     break;
@@ -613,98 +685,64 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
         }
     }
 
-    public void InflateBottomMenuLayout() {
-        try {
+    private void setFilters() {
+        curveFilter = new GPUImageToneCurveFilter();
+        curveFilter.setFromCurveFileInputStream(getResources().openRawResource(filters.get(0).getFilterfileRaw()));
 
-            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            MainMenu = inflater.inflate(R.layout.photofilter_final_image_menu, MainMenuContainer, false);
-            MainMenuContainer.addView(MainMenu);
+        contrastFilter = new GPUImageContrastFilter(1.0f);
+        mContrastFilterAdjuster = new DianaVonGrüning.FilterAdjuster(contrastFilter);
 
-            LL_MainMenu = (LinearLayout) MainMenu.findViewById(R.id.LL_MainMenu);
-            fragment_Blur = (LinearLayout) MainMenu.findViewById(R.id.fragment_Blur);
+        brightnessFilter = new GPUImageBrightnessFilter(0f);
+        mBrightnessFilterAdjuster = new DianaVonGrüning.FilterAdjuster(brightnessFilter);
 
-            LL_Sharpness = (LinearLayout) MainMenu.findViewById(R.id.LL_Sharpness);
+        saturationFilter = new GPUImageSaturationFilter(1.0f);
+        mSaturationFilterAdjuster = new DianaVonGrüning.FilterAdjuster(saturationFilter);
 
-            LL_Brightness = (LinearLayout) MainMenu.findViewById(R.id.LL_Brightness);
-            LL_Contrast = (LinearLayout) MainMenu.findViewById(R.id.LL_Contrast);
-            LL_Saturation = (LinearLayout) MainMenu.findViewById(R.id.LL_Saturation);
-            LL_Vignette = (LinearLayout) MainMenu.findViewById(R.id.LL_Vignette);
-            LL_hue = (LinearLayout) MainMenu.findViewById(R.id.LL_hue);
-            LL_Sepia = (LinearLayout) MainMenu.findViewById(R.id.LL_Sepia);
+        PointF centerPoint = new PointF();
+        centerPoint.x = 0.5f;
+        centerPoint.y = 0.5f;
+        vignetteFilter = new GPUImageVignetteFilter(centerPoint, new float[]{0.0f, 0.0f, 0.0f}, 0.0f, 1.0f);
+        mVignetteFilterAdjuster = new DianaVonGrüning.FilterAdjuster(vignetteFilter);
 
-            LL_Monochrome = (LinearLayout) MainMenu.findViewById(R.id.LL_Monochrome);
-            LL_WhiteBalance = (LinearLayout) MainMenu.findViewById(R.id.LL_WhiteBalance);
-            LL_ColorBalance = (LinearLayout) MainMenu.findViewById(R.id.LL_ColorBalance);
-            LL_Level = (LinearLayout) MainMenu.findViewById(R.id.LL_Level);
-            LL_Exposure = (LinearLayout) MainMenu.findViewById(R.id.LL_Exposure);
+        sharpnessFilter = new GPUImageSharpenFilter(0.0f);
+        mSharpnessFilterAdjuster = new DianaVonGrüning.FilterAdjuster(sharpnessFilter);
 
-            LL_Curve = (LinearLayout) MainMenu.findViewById(R.id.LL_Curve);
-            LL_ABCs = (LinearLayout) MainMenu.findViewById(R.id.LL_ABCs);
-
-            LL_Sticker = (LinearLayout) MainMenu.findViewById(R.id.LL_Sticker);
-            LL_Text = (LinearLayout) MainMenu.findViewById(R.id.LL_Text);
-
-            LL_TextMainLayout = (LinearLayout) MainMenu.findViewById(R.id.LL_TextMainLayout);
-            LL_AddText = (LinearLayout) MainMenu.findViewById(R.id.LL_AddText);
-            LL_FontStyle = (LinearLayout) MainMenu.findViewById(R.id.LL_FontStyle);
-            LL_TextColor = (LinearLayout) MainMenu.findViewById(R.id.LL_TextColor);
-            LL_TextOpacity = (LinearLayout) MainMenu.findViewById(R.id.LL_TextOpacity);
-
-            ABCsCategory = (RecyclerView) MainMenu.findViewById(R.id.ABCsCategory);
-            ABCFont = (RecyclerView) MainMenu.findViewById(R.id.ABCFont);
-
-            ic_clear = (ImageView) MainMenu.findViewById(R.id.ic_clear);
-            seekbar = (SeekBar) MainMenu.findViewById(R.id.seekbar);
-            txtProgressValue = (TextView) MainMenu.findViewById(R.id.txtProgressValue);
-
-            LL_Curve.setOnClickListener(this);
-            LL_Brightness.setOnClickListener(this);
-            LL_Contrast.setOnClickListener(this);
-            LL_Saturation.setOnClickListener(this);
-            LL_Vignette.setOnClickListener(this);
-            LL_Sharpness.setOnClickListener(this);
-            LL_hue.setOnClickListener(this);
-            LL_Sepia.setOnClickListener(this);
-
-            LL_Text.setOnClickListener(this);
-            LL_FontStyle.setOnClickListener(this);
-            LL_TextColor.setOnClickListener(this);
-            LL_TextOpacity.setOnClickListener(this);
-
-            LL_Monochrome.setOnClickListener(this);
-            LL_WhiteBalance.setOnClickListener(this);
-            LL_ColorBalance.setOnClickListener(this);
-            LL_Level.setOnClickListener(this);
-            LL_Exposure.setOnClickListener(this);
-
-            LL_Sticker.setOnClickListener(this);
-            LL_ABCs.setOnClickListener(this);
-            LL_AddText.setOnClickListener(this);
-
-            ic_clear.setOnClickListener(this);
-
-            seekbar.setOnSeekBarChangeListener(this);
-
-            mBubbleInputDialog = new BubbleInputDialog(getActivity());
-            mBubbleInputDialog.setCompleteCallBack(this);
+        hueFilter = new GPUImageHueFilter(0.0f);
+        mHueFilterAdjuster = new DianaVonGrüning.FilterAdjuster(hueFilter);
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+        whiteBalanceFilter = new GPUImageWhiteBalanceFilter(5000.0f, 0.0f);
+        mWhiteBalanceFilterAdjuster = new DianaVonGrüning.FilterAdjuster(whiteBalanceFilter);
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
+        colorBalanceFilter = new GPUImageColorBalanceFilter();
+        mColorBalanceFilterAdjuster = new DianaVonGrüning.FilterAdjuster(colorBalanceFilter);
+
+        exposureFilter = new GPUImageExposureFilter(0.0f);
+        mExposureFilterAdjuster = new DianaVonGrüning.FilterAdjuster(exposureFilter);
+
+        levelsFilter = new GPUImageLevelsFilter();
+        levelsFilter.setMin(0.0f, 3.0f, 1.0f);
+        mLevelsFilterAdjuster = new DianaVonGrüning.FilterAdjuster(levelsFilter);
+
+        filterGroup = new GPUImageFilterGroup();
+        filterGroup.addFilter(curveFilter);
+        filterGroup.addFilter(contrastFilter);
+        filterGroup.addFilter(brightnessFilter);
+        filterGroup.addFilter(saturationFilter);
+        filterGroup.addFilter(vignetteFilter);
+        filterGroup.addFilter(sharpnessFilter);
+        filterGroup.addFilter(hueFilter);
+
+        filterGroup.addFilter(whiteBalanceFilter);
+        filterGroup.addFilter(colorBalanceFilter);
+        filterGroup.addFilter(exposureFilter);
+        MainGPUImageView.setFilter(filterGroup);
 
     }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
+    public static void AddTextColor(int color) {
+        textbubble.setTextColor(color);
     }
-
-    //    Animation
 
     @Override
     public void onClick(View v) {
@@ -716,7 +754,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Curve:
 
-                flyOut((View) MainMenu, (View) curveList);
+                flyOut(MainMenu, curveList);
                 if (mContrastFilterAdjuster != null) {
                     mContrastFilterAdjuster.adjust(PrevContrast);
                 }
@@ -763,7 +801,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Brightness:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Brightness";
 
                 seekbar.setProgress(PrevBrightness);
@@ -774,7 +812,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 break;
             case R.id.LL_Contrast:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Contrast";
 
                 seekbar.setProgress(PrevContrast);
@@ -786,7 +824,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Saturation:
 
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
                 flag = "Saturation";
 
                 seekbar.setProgress(PrevSaturation);
@@ -798,7 +836,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_hue:
                 flag = "Hue";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevHue);
                 seekbar.setMax(100);
@@ -817,7 +855,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_WhiteBalance:
                 flag = "WhiteBalance";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevWhiteBalance);
                 seekbar.setMax(100);
@@ -828,7 +866,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_ColorBalance:
                 flag = "ColorBalance";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevColorBalance);
                 seekbar.setMax(100);
@@ -839,7 +877,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Level:
                 flag = "Level";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevLevels);
                 seekbar.setMax(100);
@@ -849,7 +887,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 break;
             case R.id.LL_Exposure:
                 flag = "Exposure";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevExposure);
                 seekbar.setMax(100);
@@ -860,7 +898,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Vignette:
                 flag = "Vignette";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevVignette);
                 seekbar.setMax(75);
@@ -871,7 +909,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Sharpness:
                 flag = "Sharpness";
-                flyOut((View) LL_MainMenu, (View) fragment_Blur);
+                flyOut(LL_MainMenu, fragment_Blur);
 
                 seekbar.setProgress(PrevSharpness);
                 seekbar.setMax(50);
@@ -880,10 +918,9 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 Counter = 2;
                 break;
 
-//            Bubble text Code
             case R.id.LL_Text:
 
-                flyOut((View) LL_MainMenu, (View) LL_TextMainLayout);
+                flyOut(LL_MainMenu, LL_TextMainLayout);
                 Counter = 4;
 
                 if (!textbubble.getText().toString().equals("")) {
@@ -906,7 +943,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             case R.id.LL_FontStyle:
 
                 getFilesFromAssets("Fonts");
-                flyOut((View) LL_TextMainLayout, (View) ABCFont);
+                flyOut(LL_TextMainLayout, ABCFont);
                 Counter = 5;
                 break;
 
@@ -915,7 +952,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.LL_TextOpacity:
-                flyOut((View) LL_TextMainLayout, (View) fragment_Blur);
+                flyOut(LL_TextMainLayout, fragment_Blur);
                 flag = "Opacity";
                 seekbar.setProgress(PrevOpacity);
                 seekbar.setMax(255);
@@ -931,18 +968,16 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.LL_Sticker:
                 getFilesFromAssets("Sticker");
-                flyOut((View) LL_MainMenu, (View) ABCsCategory);
+                flyOut(LL_MainMenu, ABCsCategory);
                 Counter = 7;
 
                 break;
             case R.id.LL_ABCs:
                 getFilesFromAssets("ABC");
-                flyOut((View) LL_MainMenu, (View) ABCsCategory);
+                flyOut(LL_MainMenu, ABCsCategory);
                 Counter = 10;
 
                 break;
-
-//            End Of text Code
 
             case R.id.ic_clear:
 
@@ -968,11 +1003,11 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                         break;
                     case "Sharpness":
                         seekbar.setProgress(50);
-                        txtProgressValue.setText("50%");
+                        txtProgressValue.setText("50");
                         break;
                     case "Hue":
                         seekbar.setProgress(100);
-                        txtProgressValue.setText("100%");
+                        txtProgressValue.setText("100");
                         break;
                     case "Sepia":
                         seekbar.setProgress(0);
@@ -984,7 +1019,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                         break;
                     case "WhiteBalance":
                         seekbar.setProgress(100);
-                        txtProgressValue.setText("100%");
+                        txtProgressValue.setText("100");
                         break;
                     case "ColorBalance":
                         seekbar.setProgress(0);
@@ -997,7 +1032,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
                     case "Exposure":
                         seekbar.setProgress(50);
-                        txtProgressValue.setText("50%");
+                        txtProgressValue.setText("50");
                         break;
 
                     case "Opacity":
@@ -1014,38 +1049,37 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 imgButtonImage.setImageResource(R.drawable.ic_next);
                 if (Counter != 0) {
                     if (Counter == 1) {
-                        flyOut((View) curveList, (View) MainMenu);
+                        flyOut(curveList, MainMenu);
                         Counter = 0;
                     }
                     if (Counter == 2) {
-                        flyOut((View) fragment_Blur, (View) LL_MainMenu);
+                        flyOut(fragment_Blur, LL_MainMenu);
                         Counter = 0;
                     }
                     if (Counter == 4) {
-                        flyOut((View) LL_TextMainLayout, (View) LL_MainMenu);
+                        flyOut(LL_TextMainLayout, LL_MainMenu);
                         Counter = 0;
-//                        imgTextClose.setVisibility(View.GONE);
                     }
                     if (Counter == 5) {
                         imgButtonImage.setImageResource(R.drawable.ic_true);
-                        flyOut((View) ABCFont, (View) LL_TextMainLayout);
+                        flyOut(ABCFont, LL_TextMainLayout);
                         Counter = 4;
                     }
                     if (Counter == 6) {
                         imgButtonImage.setImageResource(R.drawable.ic_true);
-                        flyOut((View) fragment_Blur, (View) LL_TextMainLayout);
+                        flyOut(fragment_Blur, LL_TextMainLayout);
                         Counter = 4;
                     }
                     if (Counter == 7) {
-                        flyOut((View) ABCsCategory, (View) LL_MainMenu);
+                        flyOut(ABCsCategory, LL_MainMenu);
+                        MainContainer.setVisibility(View.VISIBLE);
                         Counter = 0;
                     }
 
                     if (Counter == 10) {
-                        flyOut((View) ABCsCategory, (View) LL_MainMenu);
+                        flyOut(ABCsCategory, LL_MainMenu);
                         Counter = 0;
                     }
-
                 } else {
                     new SaveImage().execute();
 
@@ -1054,7 +1088,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
             case R.id.imgReset:
 
-                ((Pnanterist) getActivity()).showResetDialog(getActivity(), new LocalBaseActivity.OnResetListner() {
+                ((Tempoll) getActivity()).showResetDialog(getActivity(), new LocalBaseActivity.OnResetListner() {
                     @Override
                     public void onReset() {
                         MainGPUImageView.setImage(PatrickCox.bitmap);
@@ -1081,34 +1115,67 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
         }
     }
 
+
+    public static void AddSticker(Bitmap bitmap) {
+        sticker_view.addSticker(bitmap);
+    }
+
+    @Override
+    public void onComplete(View bubbleTextView, String str) {
+        ((TextView) bubbleTextView).setText(str);
+        FrameLayoutText.setVisibility(View.VISIBLE);
+    }
+
+    public static void displayAds() {
+        if (AddCounter == 2) {
+
+        }
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    GPUImageBrightnessFilter brightnessFilter;
+    GPUImageContrastFilter contrastFilter;
+    GPUImageVignetteFilter vignetteFilter;
+    GPUImageSaturationFilter saturationFilter;
+    GPUImageToneCurveFilter curveFilter;
+    GPUImageSharpenFilter sharpnessFilter;
+
+    GPUImageHueFilter hueFilter;
+    GPUImageSepiaFilter sepiaFilter;
+    GPUImageMonochromeFilter monochromeFilter;
+    GPUImageWhiteBalanceFilter whiteBalanceFilter;
+    GPUImageColorBalanceFilter colorBalanceFilter;
+    GPUImageLevelsFilter levelsFilter;
+    GPUImageExposureFilter exposureFilter;
+
+    GPUImageFilterGroup filterGroup;
+    private DianaVonGrüning.FilterAdjuster mContrastFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mBrightnessFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mVignetteFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mSaturationFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mSharpnessFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mHueFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mSepiaFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mMonochromeFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mWhiteBalanceFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mColorBalanceFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mExposureFilterAdjuster;
+    private DianaVonGrüning.FilterAdjuster mLevelsFilterAdjuster;
+
+
     private static Context mContext;
+
     private static Animation animation;
     static View SecoundView = null;
-
-    public static void SingleflyOut(final View view) {
-
-        animation = AnimationUtils.loadAnimation(mContext, R.anim.holder_bottom_back_fast);
-        view.startAnimation(animation);
-
-        animation.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationStart(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                animation.setAnimationListener(null);
-                view.clearAnimation();
-                view.setVisibility(View.GONE);
-            }
-
-        });
-    }
 
     public static void flyOut(final View view, final View viewFlyIn) {
 
@@ -1163,6 +1230,81 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
     }
 
+    public static void ManageBackPrace() {
+        imgButtonImage.setImageResource(R.drawable.ic_next);
+        if (Counter != 0) {
+            if (Counter == 1) {
+                flyOut(curveList, MainMenu);
+                Counter = 0;
+            }
+            if (Counter == 2) {
+                flyOut(fragment_Blur, LL_MainMenu);
+                Counter = 0;
+            }
+            if (Counter == 4) {
+                flyOut(LL_TextMainLayout, LL_MainMenu);
+                Counter = 0;
+                imgTextClose.setVisibility(View.GONE);
+            }
+
+            if (Counter == 5) {
+                imgButtonImage.setImageResource(R.drawable.ic_true);
+                flyOut(ABCFont, LL_TextMainLayout);
+                Counter = 4;
+            }
+            if (Counter == 6) {
+                imgButtonImage.setImageResource(R.drawable.ic_true);
+                flyOut(fragment_Blur, LL_TextMainLayout);
+                Counter = 4;
+            }
+            if (Counter == 7) {
+                flyOut(ABCsCategory, LL_MainMenu);
+                Counter = 0;
+            }
+            if (Counter == 10) {
+                flyOut(ABCsCategory, LL_MainMenu);
+                Counter = 0;
+            }
+        } else {
+
+            ((Tempoll) mContext).showResetDialog(mContext, new LocalBaseActivity.OnResetListner() {
+                @Override
+                public void onReset() {
+                    Tempoll.activity.finish();
+                    mContext.startActivity(new Intent(mContext, MainActivity.class));
+                    Tempoll.activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
+            });
+
+
+        }
+    }
+
+    public static void SingleflyOut(final View view) {
+
+        animation = AnimationUtils.loadAnimation(mContext, R.anim.holder_bottom_back_fast);
+        view.startAnimation(animation);
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                animation.setAnimationListener(null);
+                view.clearAnimation();
+                view.setVisibility(View.GONE);
+            }
+
+        });
+    }
+
     private static void SingleflyIn(final View view) {
 
         animation = AnimationUtils.loadAnimation(mContext, R.anim.holder_bottom_fast);
@@ -1209,7 +1351,6 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
         protected void onPreExecute() {
             super.onPreExecute();
             showProgress();
-            imgTextClose.setVisibility(View.GONE);
         }
 
         @Override
@@ -1229,44 +1370,22 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             super.onPostExecute(s);
             dia.dismiss();
 
-            ((Pnanterist)getActivity()).showRatingDialog(true, new LocalBaseActivity.OnRateListner() {
-                @Override
-                public void onReminderLater() {
-                    Ads.Loadd(new Ads.Ad_lisoner() {
-                        @Override
-                        public void onSucssec(InterstitialAd mInterstitialAd) {
-                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-                            intent.putExtra("FinalURI", FinalURI);
-                            startActivity(intent);
-                            Pnanterist.activity.finish();
-                        }
-
-                        @Override
-                        public void onun() {
-                            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-                            intent.putExtra("FinalURI", FinalURI);
-                            startActivity(intent);
-                            Pnanterist.activity.finish();
-                        }
-                    });
-                }
-            });
+            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
+            intent.putExtra("FinalURI", FinalURI);
+            startActivity(intent);
+            Tempoll.activity.finish();
 
         }
     }
 
-    // Save Image Code
     public void mergeAndSave() {
 
         imgTextClose.setVisibility(View.GONE);
-        sticker_view.setLooked(true);
 
         Bitmap bmOverlay = Bitmap.createBitmap(drawing_view_container.getWidth(), drawing_view_container.getHeight(), Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bmOverlay);
-        //canvas.drawBitmap(ThirdFinalBitmap, new Matrix(), null);
         canvas.drawBitmap(drawing_view_container.getDrawingCache(), 0, 0, null);
-        //canvas.drawBitmap(bitmapframe, 0, 0, null);
         try {
             Bitmap gpubitmap = MainGPUImageView.capture();
 
@@ -1280,56 +1399,6 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
         Log.i("TAG", "Image Created");
     }
 
-    public static void ManageBackPresd() {
-
-        if (Counter != 0) {
-            imgButtonImage.setImageResource(R.drawable.ic_next);
-            if (Counter == 1) {
-                flyOut((View) curveList, (View) MainMenu);
-                Counter = 0;
-            }
-            if (Counter == 2) {
-                flyOut((View) fragment_Blur, (View) LL_MainMenu);
-                Counter = 0;
-            }
-            if (Counter == 4) {
-                flyOut((View) LL_TextMainLayout, (View) LL_MainMenu);
-                Counter = 0;
-//                imgTextClose.setVisibility(View.GONE);
-            }
-            if (Counter == 5) {
-                imgButtonImage.setImageResource(R.drawable.ic_true);
-                flyOut((View) ABCFont, (View) LL_TextMainLayout);
-                Counter = 4;
-            }
-            if (Counter == 6) {
-                imgButtonImage.setImageResource(R.drawable.ic_true);
-                flyOut((View) fragment_Blur, (View) LL_TextMainLayout);
-                Counter = 4;
-            }
-            if (Counter == 7) {
-                flyOut((View) ABCsCategory, (View) LL_MainMenu);
-                Counter = 0;
-            }
-            if (Counter == 10) {
-                flyOut((View) ABCsCategory, (View) LL_MainMenu);
-                Counter = 0;
-            }
-
-        } else {
-
-            ((Pnanterist) mContext).showResetDialog(mContext, new LocalBaseActivity.OnResetListner() {
-                @Override
-                public void onReset() {
-                    mContext.startActivity(new Intent(mContext, MainActivity.class));
-                    Pnanterist.activity.finish();
-                    Pnanterist.activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                }
-            });
-
-        }
-    }
-
     private int generateRandomName(int LowerLimit, int UpperLimit) {
 
         Random r = new Random();
@@ -1339,7 +1408,6 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
     ProgressDialog dia;
 
     public void showProgress() {
-        //pDialog.show();
 
         dia = new ProgressDialog(getActivity());
         dia.setMessage("Loading ...");
@@ -1352,12 +1420,11 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
     public String saveImageToSD(Bitmap bmp, String filename, Bitmap.CompressFormat format) {
         File file2 = null;
         try {
-            String path1 = Environment.getExternalStorageDirectory()
-                    .toString();
+            String path1 = Environment.getExternalStorageDirectory().toString();
             FileOutputStream fos = null;
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bmp.compress(format, 100, bytes);
-            File file1 = new File(path1 + "/"+getString(R.string.app_name)+"/");
+            File file1 = new File(path1 + "/" + getString(R.string.app_name) + "/");
             if (!file1.exists()) {
                 file1.mkdirs();
             }
@@ -1383,11 +1450,11 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 dia.dismiss();
             }
             PatrickCox.FinalBitmap = bmp;
-            FinalURI = "" + path1 + "/"+getString(R.string.app_name)+"/" + filename;
+            FinalURI = "" + path1 + "/" + getString(R.string.app_name) + "/" + filename;
 
 
             ContentValues image = new ContentValues();
-            String dateStr = "04/05/2010";
+            String dateStr = "07/03/2021";
 
             SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
             Date dateObj = curFormater.parse(dateStr);
@@ -1415,10 +1482,8 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             Uri result = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
 
 
-            return file2.getPath().toString();
+            return file2.getPath();
         } catch (NullPointerException e) {
-            // TODO: handle exception
-            Log.e("error", "SAve to disk");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -1426,4 +1491,5 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
 
         return "";
     }
+
 }

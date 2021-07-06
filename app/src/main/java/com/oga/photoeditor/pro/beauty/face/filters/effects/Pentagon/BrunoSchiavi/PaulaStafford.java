@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.AndyTruong;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.EditorFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class PaulaStafford extends RecyclerView.Adapter<PaulaStafford.MyViewHold
 
                     try {
                         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), fontsaArrayList.get(possion).getDirName());
-                        AndyTruong.textbubble.setTypeface(typeface);
-                        AndyTruong.displayAds();
+                        EditorFragment.textbubble.setTypeface(typeface);
+                        EditorFragment.displayAds();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.AndyTruong;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.EditorFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class JoeSaba extends RecyclerView.Adapter<JoeSaba.MyViewHolder> {
                     int pos = Integer.parseInt(v.getTag().toString());
 
                     Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(pos).getDirName(), mContext);
-                    AndyTruong.AddSticker(bitmap);
+                    EditorFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {
                     e.printStackTrace();

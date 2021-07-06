@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.AndyTruong;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.EditorFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 public class Tempoll extends LocalBaseActivity {
@@ -32,7 +32,7 @@ public class Tempoll extends LocalBaseActivity {
 
         activity = Tempoll.this;
 
-        AndyTruong mainFragment = new AndyTruong();
+        EditorFragment mainFragment = new EditorFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.Container, mainFragment).commit();
 
@@ -42,8 +42,8 @@ public class Tempoll extends LocalBaseActivity {
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.Container);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragment instanceof AndyTruong) {
-            AndyTruong.ManageBackPrace();
+        if (fragment instanceof EditorFragment) {
+            EditorFragment.ManageBackPrace();
         } else {
             super.onBackPressed();
         }

@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -29,13 +28,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
+import com.facebook.ads.AbstractAdListener;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.JohnCrittle;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.LizDavenport;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.WayneCooper;
@@ -48,7 +54,8 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.Ads;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MyWorkActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.multiTouchLib.MultiTouchListener;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.stickerView.StickerView;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.textviewBubble.BubbleInputDialog;
@@ -56,7 +63,7 @@ import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.google.android.gms.ads.InterstitialAd;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -86,6 +93,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
 
     private static final String TAG = "EditImageFragment";
     private String FinalURI;
+    InterstitialAd interstitialAd;
 
     public EditImageFragment() {
         // Required empty public constructor
@@ -282,15 +290,50 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
 
     }
 
+    private void loadInterstitialAd(){
+        interstitialAd = new InterstitialAd(getContext(), AdsUnits.FB_INTERSTITIAL);
+        AbstractAdListener adListener = new AbstractAdListener() {
+            @Override
+            public void onError(Ad ad, AdError error) {
+
+                Toast.makeText(getContext(), "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                super.onError(ad, error);
+            }
+            @Override
+            public void onAdLoaded(Ad ad) {
+                super.onAdLoaded(ad);
+
+                    interstitialAd.show();
+
+            }
+            @Override
+            public void onAdClicked(Ad ad) {
+                super.onAdClicked(ad);
+            }
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                super.onInterstitialDisplayed(ad);
+            }
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+
+            }
+        };
+        InterstitialAd.InterstitialLoadAdConfig interstitialLoadAdConfig = interstitialAd.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        interstitialAd.loadAd(interstitialLoadAdConfig);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.shimmer_fragment_filters, container, false);
-        if(Ads.mInterstitialAd == null){
-            Ads.LoadAd(getContext());
-        }
+
+        loadInterstitialAd();
 
 
 //        End Of FB ADD
@@ -330,8 +373,37 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
         adViewContainer = rootView.findViewById(R.id.adViewContainer);
 
 // END OF BANNER
-
+        loadBannerAd();
         return rootView;
+    }
+
+    private void loadBannerAd() {
+
+        AdView adView = new AdView(getContext(), AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
+        adViewContainer.addView(adView);
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(getContext(), "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Toast.makeText(getContext(), "Ad Loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+            }
+        };
+        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        adView.loadAd(loadAdConfig);
     }
 
     //    Initialize the Curve filter

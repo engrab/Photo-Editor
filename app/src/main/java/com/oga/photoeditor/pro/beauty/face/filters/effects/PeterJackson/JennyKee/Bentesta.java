@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.AnthonyPittorino.NevilleQuist;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.AnthonyPittorino.LightLeaksFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 public class Bentesta extends LocalBaseActivity {
@@ -30,8 +30,8 @@ public class Bentesta extends LocalBaseActivity {
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.MainContainer);
 //        super.onBackPressed();
-        if (fragment instanceof NevilleQuist) {
-            NevilleQuist.ManageBackpraced();
+        if (fragment instanceof LightLeaksFragment) {
+            LightLeaksFragment.ManageBackpraced();
         }
     }
 
@@ -43,7 +43,7 @@ public class Bentesta extends LocalBaseActivity {
         activity = Bentesta.this;
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        NevilleQuist blankFragment = new NevilleQuist();
+        LightLeaksFragment blankFragment = new LightLeaksFragment();
         fragmentManager.beginTransaction().replace(R.id.MainContainer, blankFragment).addToBackStack(null).commit();
 
     }

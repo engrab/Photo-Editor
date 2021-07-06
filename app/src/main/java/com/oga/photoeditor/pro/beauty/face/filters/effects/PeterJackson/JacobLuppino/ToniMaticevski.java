@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.AnthonyPittorino.NevilleQuist;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.AnthonyPittorino.LightLeaksFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 import java.io.IOException;
@@ -66,12 +66,12 @@ public class ToniMaticevski extends RecyclerView.Adapter<ToniMaticevski.MyViewHo
                     try {
                         int po = Integer.parseInt(v.getTag().toString());
                         Bitmap bmpBlend = PatrickCox.getBitmapFromAsset(arrayList.get(position).getDirName(), mContext);
-                        NevilleQuist.blendImage = bmpBlend;
-                        NevilleQuist.seekbar.setMax(255);
-                        NevilleQuist.seekbar.setProgress(255);
-                        NevilleQuist.ApplyFilter(NevilleQuist.Value);
-                        NevilleQuist.displayAds();
-                        NevilleQuist.currentLens = po;
+                        LightLeaksFragment.blendImage = bmpBlend;
+                        LightLeaksFragment.seekbar.setMax(255);
+                        LightLeaksFragment.seekbar.setProgress(255);
+                        LightLeaksFragment.ApplyFilter(LightLeaksFragment.Value);
+                        LightLeaksFragment.displayAds();
+                        LightLeaksFragment.currentLens = po;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

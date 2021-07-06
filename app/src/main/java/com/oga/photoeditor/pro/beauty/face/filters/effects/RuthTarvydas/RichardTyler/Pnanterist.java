@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.VeroniqueBranquinho;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.FilterFragment;
 
 public class Pnanterist extends LocalBaseActivity {
 
@@ -30,8 +30,8 @@ public class Pnanterist extends LocalBaseActivity {
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.Container);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragment instanceof VeroniqueBranquinho) {
-            VeroniqueBranquinho.ManageBackPresd();
+        if (fragment instanceof FilterFragment) {
+            FilterFragment.ManageBackPresd();
         } else {
             super.onBackPressed();
         }
@@ -44,7 +44,7 @@ public class Pnanterist extends LocalBaseActivity {
 
         activity = Pnanterist.this;
 
-        VeroniqueBranquinho mainFragment = new VeroniqueBranquinho();
+        FilterFragment mainFragment = new FilterFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.Container, mainFragment).commit();
 

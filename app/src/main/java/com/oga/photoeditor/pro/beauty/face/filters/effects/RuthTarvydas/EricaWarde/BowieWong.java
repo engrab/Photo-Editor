@@ -14,7 +14,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPref
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.VeroniqueBranquinho;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.FilterFragment;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class BowieWong extends RecyclerView.Adapter<BowieWong.MyViewHolder> {
                     int pos = Integer.parseInt(v.getTag().toString());
 
                     Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(pos).getDirName(), mContext);
-                    VeroniqueBranquinho.AddSticker(bitmap);
+                    FilterFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {
                     e.printStackTrace();

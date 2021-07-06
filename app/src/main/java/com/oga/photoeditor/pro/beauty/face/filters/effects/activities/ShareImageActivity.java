@@ -5,17 +5,31 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.content.FileProvider;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdOptionsView;
+import com.facebook.ads.MediaView;
+import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdLayout;
+import com.facebook.ads.NativeAdListener;
+import com.google.android.material.button.MaterialButton;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Intent.EXTRA_DOCK_STATE_LE_DESK;
 import static android.content.Intent.FILL_IN_CLIP_DATA;
@@ -24,6 +38,8 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 public class ShareImageActivity extends BaseActivity implements View.OnClickListener {
     static final boolean $assertionsDisabled = false;
     private File file;
+    NativeAd nativeAd;
+    NativeAdLayout nativeAdLayout;
 
     private void loadAd() {
     }
@@ -32,6 +48,9 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         super.onCreate(bundle);
         makeFullScreen();
         setContentView((int) R.layout.activity_image_share);
+        nativeAdLayout = findViewById(R.id.native_ad_container);
+
+        loadNativeAd();
 //        String finalURI = getIntent().getExtras().getString("FinalURI");
 //        this.file = new File(finalURI);
 //        Picasso.with(getApplicationContext()).load(this.file).into((ImageView) findViewById(R.id.image_view_preview));
@@ -115,6 +134,74 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         return true;
     }
 
+    private void loadNativeAd() {
+        nativeAd = new NativeAd(this, AdsUnits.FB_NATIVE);
+        NativeAdListener nativeAdListener = new NativeAdListener() {
+            @Override
+            public void onMediaDownloaded(Ad ad) {
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(ShareImageActivity.this, "Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                if (nativeAd == null || nativeAd != ad) {
+                    return;
+                }
+                inflateAd(nativeAd);
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+            }
+        };
+        nativeAd.loadAd(nativeAd.buildLoadAdConfig()
+                .withAdListener(nativeAdListener)
+                .build());
+
+    }
+    private void inflateAd(NativeAd nativeAd) {
+        nativeAd.unregisterView();
+        nativeAdLayout = findViewById(R.id.native_ad_container);
+        LayoutInflater inflater = LayoutInflater.from(ShareImageActivity.this);
+        View adView = inflater.inflate(R.layout.item_native_ad, nativeAdLayout, false);
+        nativeAdLayout.addView(adView);
+
+        LinearLayout adChoicesContainer = findViewById(R.id.ad_choices_container);
+        AdOptionsView adOptionsView = new AdOptionsView(ShareImageActivity.this, nativeAd, nativeAdLayout);
+        adChoicesContainer.removeAllViews();
+        adChoicesContainer.addView(adOptionsView, 0);
+
+        MediaView nativeAdIcon = adView.findViewById(R.id.native_ad_icon);
+        TextView nativeAdTitle = adView.findViewById(R.id.native_ad_title);
+        MediaView nativeAdMedia = adView.findViewById(R.id.native_ad_media);
+        TextView nativeAdSocialContext = adView.findViewById(R.id.native_ad_social_context);
+        TextView nativeAdBody = adView.findViewById(R.id.native_ad_body);
+        TextView sponsoredLabel = adView.findViewById(R.id.native_ad_sponsored_label);
+        MaterialButton nativeAdCallToAction = adView.findViewById(R.id.native_ad_call_to_action);
+
+        nativeAdTitle.setText(nativeAd.getAdvertiserName());
+        nativeAdBody.setText(nativeAd.getAdBodyText());
+        nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+        nativeAdCallToAction.setVisibility(nativeAd.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
+        nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+        sponsoredLabel.setText(nativeAd.getSponsoredTranslation());
+
+        List<View> clickableViews = new ArrayList<>();
+        clickableViews.add(nativeAdTitle);
+        clickableViews.add(nativeAdCallToAction);
+        clickableViews.add(nativeAdIcon);
+
+        nativeAd.registerViewForInteraction(
+                adView, nativeAdMedia, nativeAdIcon, clickableViews);
+    }
     public void onResume() {
         super.onResume();
     }

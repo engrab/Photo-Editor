@@ -15,13 +15,22 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.ads.AbstractAdListener;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -42,7 +51,7 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
     LinearLayout LL_NoDataFound;
     Activity activity;
 
-
+    InterstitialAd interstitialAd;
     int DisplayWidth;
 
     public void showProgress() {
@@ -55,10 +64,50 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
         dia.show();
     }
 
+    private void loadInterstitialAd() {
+        interstitialAd = new InterstitialAd(this, AdsUnits.FB_INTERSTITIAL);
+        AbstractAdListener adListener = new AbstractAdListener() {
+            @Override
+            public void onError(Ad ad, AdError error) {
+
+                Toast.makeText(MyWorkActivity.this, "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                super.onError(ad, error);
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                super.onAdLoaded(ad);
+
+                interstitialAd.show();
+
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                super.onAdClicked(ad);
+            }
+
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                super.onInterstitialDisplayed(ad);
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                super.onInterstitialDismissed(ad);
+
+            }
+        };
+        InterstitialAd.InterstitialLoadAdConfig interstitialLoadAdConfig = interstitialAd.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        interstitialAd.loadAd(interstitialLoadAdConfig);
+    }
+
     private void fillData() {
 
         try {
-            String path = Environment.getExternalStorageDirectory().toString() + "/"+getString(R.string.app_name);
+            String path = Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name);
             File f = new File(path);
             File[] file = f.listFiles();
             String selection = null;
@@ -102,12 +151,41 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
             dia.dismiss();
     }
 
+    private void loadBannerAd() {
+        final FrameLayout adContainer = findViewById(R.id.adView);
+        AdView adView = new AdView(this, AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
+        adContainer.addView(adView);
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(MyWorkActivity.this, "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Toast.makeText(MyWorkActivity.this, "Ad Loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+            }
+        };
+        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+        adView.loadAd(loadAdConfig);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_work);
-
-
+        loadInterstitialAd();
+        loadBannerAd();
         Display display = getWindowManager().getDefaultDisplay();
         DisplayWidth = display.getWidth();
 
