@@ -39,7 +39,7 @@ public class Zeqale extends LocalBaseActivity implements View.OnClickListener, V
         share.setType("*/*");
         share.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
         String path = Environment.getExternalStorageDirectory().toString();
-        File file1 = new File(path + "/RPMovieFXPhoto/Gallery/" + bundle.get("FileName"));
+        File file1 = new File(path + "/"+getString(R.string.app_name)+"/" + bundle.get("FileName"));
         Uri uri = Uri.fromFile(file1);
         share.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(share, "Share Image!"));
@@ -62,9 +62,9 @@ public class Zeqale extends LocalBaseActivity implements View.OnClickListener, V
 
         showProgress();
 
-        LL_Done = (LinearLayout) findViewById(R.id.LL_Done);
-        txtHeaderName = (TextView) findViewById(R.id.txtHeaderName);
-        imgButtonImage = (ImageView) findViewById(R.id.imgButtonImage);
+        LL_Done = findViewById(R.id.LL_Done);
+        txtHeaderName = findViewById(R.id.txtHeaderName);
+        imgButtonImage = findViewById(R.id.imgButtonImage);
 
         LL_Done.setVisibility(View.VISIBLE);
         txtHeaderName.setText("My Gallery ");
@@ -73,9 +73,9 @@ public class Zeqale extends LocalBaseActivity implements View.OnClickListener, V
         imgButtonImage.setImageResource(R.drawable.ic_share);
 
         bundle = getIntent().getExtras();
-        imgMain = (ImageView) findViewById(R.id.imgGallerImageView);
+        imgMain = findViewById(R.id.imgGallerImageView);
 
-        header = (View) findViewById(R.id.header);
+        header = findViewById(R.id.header);
 
         fillData();
 
@@ -101,7 +101,7 @@ public class Zeqale extends LocalBaseActivity implements View.OnClickListener, V
 
     private void fillData() {
         String path = Environment.getExternalStorageDirectory().toString();
-        File file1 = new File(path + "/RPMovieFXPhoto/Gallery/" + bundle.get("FileName"));
+        File file1 = new File(path + "/"+getString(R.string.app_name)+"/" + bundle.get("FileName"));
         if (file1.exists()) {
             imgMain.setImageURI(Uri.fromFile(file1));
         }

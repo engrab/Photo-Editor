@@ -171,4 +171,8 @@
 
     </array>
 
+    <color name="backgroundContentColor">#101010</color>
+    <color name="cardColorDark">#111111</color>
+    <color name="itemColor">#ffffff</color>
+    <color name="mainColor">#007bff</color>
 </resources>

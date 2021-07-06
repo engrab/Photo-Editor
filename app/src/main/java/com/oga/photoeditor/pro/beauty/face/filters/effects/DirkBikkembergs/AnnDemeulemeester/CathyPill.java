@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.OlivierStrelli;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
@@ -40,8 +40,8 @@ public class CathyPill extends RecyclerView.Adapter<CathyPill.MyViewHolder> {
 
                     try {
                         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), fontsaArrayList.get(possion).getDirName());
-                        OlivierStrelli.textbubble.setTypeface(typeface);
-                        OlivierStrelli.displayAds();
+                        EditImageFragment.textbubble.setTypeface(typeface);
+                        EditImageFragment.displayAds();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

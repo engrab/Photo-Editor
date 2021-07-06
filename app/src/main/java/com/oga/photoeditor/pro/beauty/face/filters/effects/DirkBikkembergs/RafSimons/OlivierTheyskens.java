@@ -1359,7 +1359,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
             dismissProgress();
 
             FragmentManager fragmentManager = getFragmentManager();
-            OlivierStrelli photoEditorFiltersFragment = new OlivierStrelli();
+            EditImageFragment photoEditorFiltersFragment = new EditImageFragment();
             fragmentManager.beginTransaction().replace(R.id.Container, photoEditorFiltersFragment).commit();
         }
     }

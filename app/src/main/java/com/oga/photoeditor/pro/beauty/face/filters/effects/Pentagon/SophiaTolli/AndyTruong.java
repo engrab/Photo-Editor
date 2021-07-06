@@ -1365,12 +1365,11 @@ public class AndyTruong extends Fragment implements View.OnClickListener, SeekBa
     public String saveImageToSD(Bitmap bmp, String filename, Bitmap.CompressFormat format) {
         File file2 = null;
         try {
-            String path1 = Environment.getExternalStorageDirectory()
-                    .toString();
+            String path1 = Environment.getExternalStorageDirectory().toString();
             FileOutputStream fos = null;
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bmp.compress(format, 100, bytes);
-            File file1 = new File(path1 + "/RPMovieFXPhoto/Gallery/");
+            File file1 = new File(path1 + "/"+getString(R.string.app_name)+"/");
             if (!file1.exists()) {
                 file1.mkdirs();
             }
@@ -1396,11 +1395,11 @@ public class AndyTruong extends Fragment implements View.OnClickListener, SeekBa
                 dia.dismiss();
             }
             PatrickCox.FinalBitmap = bmp;
-            FinalURI = "" + path1 + "/RPMovieFXPhoto/Gallery/" + filename;
+            FinalURI = "" + path1 + "/"+getString(R.string.app_name)+"/" + filename;
 
 
             ContentValues image = new ContentValues();
-            String dateStr = "04/05/2010";
+            String dateStr = "07/03/2021";
 
             SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
             Date dateObj = curFormater.parse(dateStr);

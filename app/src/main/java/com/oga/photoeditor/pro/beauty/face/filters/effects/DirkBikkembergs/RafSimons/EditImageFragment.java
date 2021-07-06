@@ -82,12 +82,12 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
 import jp.co.cyberagent.android.gpuimage.GPUImageVignetteFilter;
 
 
-public class OlivierStrelli extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, BubbleInputDialog.CompleteCallBack {
+public class EditImageFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, BubbleInputDialog.CompleteCallBack {
 
-
+    private static final String TAG = "EditImageFragment";
     private String FinalURI;
 
-    public OlivierStrelli() {
+    public EditImageFragment() {
         // Required empty public constructor
     }
 
@@ -350,7 +350,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                     curveFilter.setFromCurveFileInputStream(getResources().openRawResource(filters.get(arg2).getFilterfileRaw()));
 
                     MainGPUImageView.setFilter(filterGroup);
-                    OlivierStrelli.displayAds();
+                    EditImageFragment.displayAds();
                 }
             }
         });
@@ -457,12 +457,11 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
     public String saveImageToSD(Bitmap bmp, String filename, Bitmap.CompressFormat format) {
         File file2 = null;
         try {
-            String path1 = Environment.getExternalStorageDirectory()
-                    .toString();
+            String path1 = Environment.getExternalStorageDirectory().toString();
             FileOutputStream fos = null;
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bmp.compress(format, 100, bytes);
-            File file1 = new File(path1 + "/RPMovieFXPhoto/Gallery/");
+            File file1 = new File(path1 + "/"+getString(R.string.app_name)+"/");
             if (!file1.exists()) {
                 file1.mkdirs();
             }
@@ -488,7 +487,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                 dia.dismiss();
             }
             PatrickCox.FinalBitmap = bmp;
-            FinalURI = "" + path1 + "/RPMovieFXPhoto/Gallery/" + filename;
+            FinalURI = "" + path1 + "/"+getString(R.string.app_name)+"/" + filename;
 
 
             ContentValues image = new ContentValues();
@@ -759,28 +758,28 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
                     showProgress();
                     mergeAndSave();
 
-                    ((Dabdea) getActivity()).showRatingDialog(true, new LocalBaseActivity.OnRateListner() {
-                        @Override
-                        public void onReminderLater() {
-                            Ads.Loadd(new Ads.Ad_lisoner() {
-                                @Override
-                                public void onSucssec(InterstitialAd mInterstitialAd) {
-                                    Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-                                    intent.putExtra("FinalURI", FinalURI);
-                                    startActivity(intent);
-                                    Dabdea.activity.finish();
-                                }
-
-                                @Override
-                                public void onun() {
-                                    Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-                                    intent.putExtra("FinalURI", FinalURI);
-                                    startActivity(intent);
-                                    Dabdea.activity.finish();
-                                }
-                            });
-                        }
-                    });
+//                    ((Dabdea) getActivity()).showRatingDialog(true, new LocalBaseActivity.OnRateListner() {
+//                        @Override
+//                        public void onReminderLater() {
+//                            Ads.Loadd(new Ads.Ad_lisoner() {
+//                                @Override
+//                                public void onSucssec(InterstitialAd mInterstitialAd) {
+//                                    Intent intent = new Intent(getActivity(), ShareImageActivity.class);
+//                                    intent.putExtra("FinalURI", FinalURI);
+//                                    startActivity(intent);
+//                                    Dabdea.activity.finish();
+//                                }
+//
+//                                @Override
+//                                public void onun() {
+//                                    Intent intent = new Intent(getActivity(), ShareImageActivity.class);
+//                                    intent.putExtra("FinalURI", FinalURI);
+//                                    startActivity(intent);
+//                                    Dabdea.activity.finish();
+//                                }
+//                            });
+//                        }
+//                    });
                 }
                 break;
 
@@ -1017,7 +1016,7 @@ public class OlivierStrelli extends Fragment implements View.OnClickListener, Se
         }
 
         saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
-        Log.i("TAG", "Image Created");
+        Log.d(TAG, "Image Created");
     }
 
     private int generateRandomName(int LowerLimit, int UpperLimit) {

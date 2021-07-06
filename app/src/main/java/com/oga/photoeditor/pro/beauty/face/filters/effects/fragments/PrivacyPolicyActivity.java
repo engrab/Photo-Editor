@@ -19,11 +19,11 @@ import androidx.fragment.app.Fragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 
-public class StormKeating extends Fragment {
+public class PrivacyPolicyActivity extends Fragment {
 
     private static final String TAG = "Main";
     private ProgressDialog progressBar;
-    public StormKeating() {
+    public PrivacyPolicyActivity() {
     }
 
 
@@ -32,7 +32,7 @@ public class StormKeating extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.privacy_policy, container, false);
+        View rootView = inflater.inflate(R.layout.activity_privacy_policy, container, false);
         getActivity().setTitle("Privacy Policy");
         WebView webview = (WebView)rootView.findViewById(R.id.webView);
 

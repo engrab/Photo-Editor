@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.OlivierStrelli;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
@@ -65,7 +65,7 @@ public class BrunoPieters extends RecyclerView.Adapter<BrunoPieters.MyViewHolder
                     int pos = Integer.parseInt(v.getTag().toString());
 
                     Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext);
-                    OlivierStrelli.AddSticker(bitmap);
+                    EditImageFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {
                     e.printStackTrace();

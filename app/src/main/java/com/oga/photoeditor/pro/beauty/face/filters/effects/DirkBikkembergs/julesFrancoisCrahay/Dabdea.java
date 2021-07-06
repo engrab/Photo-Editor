@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.OlivierStrelli;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.OlivierTheyskens;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
@@ -108,45 +108,45 @@ public class Dabdea extends LocalBaseActivity {
                 }
             });
 
-        } else if (fragment instanceof OlivierStrelli) {
+        } else if (fragment instanceof EditImageFragment) {
             try {
-                if (OlivierStrelli.Counter != 0) {
-                    OlivierStrelli.imgButtonImage.setImageResource(R.drawable.ic_next);
-                    switch (OlivierStrelli.Counter) {
+                if (EditImageFragment.Counter != 0) {
+                    EditImageFragment.imgButtonImage.setImageResource(R.drawable.ic_next);
+                    switch (EditImageFragment.Counter) {
 
                         case 1:
-                            OlivierStrelli.flyOut((View) OlivierStrelli.curveList, (View) OlivierStrelli.MainMenu);
-                            OlivierStrelli.Counter = 0;
+                            EditImageFragment.flyOut((View) EditImageFragment.curveList, (View) EditImageFragment.MainMenu);
+                            EditImageFragment.Counter = 0;
                             break;
 
                         case 2:
-                            OlivierStrelli.flyOut((View) OlivierStrelli.fragment_Blur, (View) OlivierStrelli.LL_MainMenu);
-                            OlivierStrelli.Counter = 0;
+                            EditImageFragment.flyOut((View) EditImageFragment.fragment_Blur, (View) EditImageFragment.LL_MainMenu);
+                            EditImageFragment.Counter = 0;
                             break;
 
                         case 3:
-                            OlivierStrelli.flyOut((View) OlivierStrelli.Sticker_recycler_view, (View) OlivierStrelli.LL_MainMenu);
-                            OlivierStrelli.Counter = 0;
+                            EditImageFragment.flyOut((View) EditImageFragment.Sticker_recycler_view, (View) EditImageFragment.LL_MainMenu);
+                            EditImageFragment.Counter = 0;
                             break;
                         case 4:
-                            OlivierStrelli.flyOut((View) OlivierStrelli.Abc_recycler_view, (View) OlivierStrelli.LL_MainMenu);
-                            OlivierStrelli.Counter = 0;
+                            EditImageFragment.flyOut((View) EditImageFragment.Abc_recycler_view, (View) EditImageFragment.LL_MainMenu);
+                            EditImageFragment.Counter = 0;
                             break;
 
                         case 5:
-                            OlivierStrelli.flyOut((View) OlivierStrelli.LL_TextMainLayout, (View) OlivierStrelli.LL_MainMenu);
-                            OlivierStrelli.Counter = 0;
+                            EditImageFragment.flyOut((View) EditImageFragment.LL_TextMainLayout, (View) EditImageFragment.LL_MainMenu);
+                            EditImageFragment.Counter = 0;
                             break;
 
                         case 7:
-                            OlivierStrelli.imgButtonImage.setImageResource(R.drawable.ic_true);
-                            OlivierStrelli.flyOut((View) OlivierStrelli.fragment_Blur, (View) OlivierStrelli.LL_TextMainLayout);
-                            OlivierStrelli.Counter = 5;
+                            EditImageFragment.imgButtonImage.setImageResource(R.drawable.ic_true);
+                            EditImageFragment.flyOut((View) EditImageFragment.fragment_Blur, (View) EditImageFragment.LL_TextMainLayout);
+                            EditImageFragment.Counter = 5;
                             break;
                         case 8:
-                            OlivierStrelli.imgButtonImage.setImageResource(R.drawable.ic_true);
-                            OlivierStrelli.flyOut((View) OlivierStrelli.ABCFont, (View) OlivierStrelli.LL_TextMainLayout);
-                            OlivierStrelli.Counter = 5;
+                            EditImageFragment.imgButtonImage.setImageResource(R.drawable.ic_true);
+                            EditImageFragment.flyOut((View) EditImageFragment.ABCFont, (View) EditImageFragment.LL_TextMainLayout);
+                            EditImageFragment.Counter = 5;
                             break;
 
                     }

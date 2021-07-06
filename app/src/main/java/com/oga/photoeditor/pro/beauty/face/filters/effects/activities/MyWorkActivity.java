@@ -58,9 +58,9 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
     private void fillData() {
 
         try {
-            String path = Environment.getExternalStorageDirectory().toString() + "/RPMovieFXPhoto/Gallery";
+            String path = Environment.getExternalStorageDirectory().toString() + "/"+getString(R.string.app_name);
             File f = new File(path);
-            File file[] = f.listFiles();
+            File[] file = f.listFiles();
             String selection = null;
             String[] selectionArgs = null;
             String[] projection = {
@@ -111,19 +111,19 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
         Display display = getWindowManager().getDefaultDisplay();
         DisplayWidth = display.getWidth();
 
-        ImageView imgButtonImage = (ImageView) findViewById(R.id.imgButtonImage);
+        ImageView imgButtonImage = findViewById(R.id.imgButtonImage);
         imgButtonImage.setImageResource(R.drawable.ic_home);
         imgButtonImage.setOnClickListener(this);
 
 
         activity = MyWorkActivity.this;
 
-        LL_NoDataFound = (LinearLayout) findViewById(R.id.LL_NoDataFound);
+        LL_NoDataFound = findViewById(R.id.LL_NoDataFound);
         LL_NoDataFound.setOnClickListener(this);
         showProgress();
 
         arListGallery = new ArrayList<ImageDetails>();
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
@@ -175,7 +175,7 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                this.imageViewIcon = (ImageView) itemView.findViewById(R.id.ThemePreviewImage);
+                this.imageViewIcon = itemView.findViewById(R.id.ThemePreviewImage);
 
 
                 this.imageViewIcon.setOnClickListener(new View.OnClickListener() {

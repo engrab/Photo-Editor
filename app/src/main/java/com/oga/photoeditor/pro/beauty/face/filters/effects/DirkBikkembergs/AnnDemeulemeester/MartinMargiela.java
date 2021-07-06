@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.OlivierStrelli;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
@@ -58,7 +58,7 @@ public class MartinMargiela extends RecyclerView.Adapter<MartinMargiela.MyViewHo
                     int pos = Integer.parseInt(v.getTag().toString());
 
                     Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(pos).getDirName(), mContext);
-                    OlivierStrelli.AddSticker(bitmap);
+                    EditImageFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {
                     e.printStackTrace();

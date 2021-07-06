@@ -1357,7 +1357,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
             FileOutputStream fos = null;
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bmp.compress(format, 100, bytes);
-            File file1 = new File(path1 + "/RPMovieFXPhoto/Gallery/");
+            File file1 = new File(path1 + "/"+getString(R.string.app_name)+"/");
             if (!file1.exists()) {
                 file1.mkdirs();
             }
@@ -1383,7 +1383,7 @@ public class VeroniqueBranquinho extends Fragment implements View.OnClickListene
                 dia.dismiss();
             }
             PatrickCox.FinalBitmap = bmp;
-            FinalURI = "" + path1 + "/RPMovieFXPhoto/Gallery/" + filename;
+            FinalURI = "" + path1 + "/"+getString(R.string.app_name)+"/" + filename;
 
 
             ContentValues image = new ContentValues();
