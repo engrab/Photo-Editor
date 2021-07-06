@@ -23,7 +23,7 @@
         tools:replace="android:icon">
 
         <activity android:name="com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.Dabdea" android:screenOrientation="portrait" />
+        <activity android:name="com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.FrameActivity" android:screenOrientation="portrait" />
         <activity android:name="com.oga.photoeditor.pro.beauty.face.filters.effects.activities.StartActivity" android:screenOrientation="portrait" />
         <activity android:name="com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.RichardTyler.Pnanterist" android:screenOrientation="portrait" />
         <activity android:name="com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JennyKee.Bentesta" android:screenOrientation="portrait" />

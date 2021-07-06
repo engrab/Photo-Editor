@@ -27,7 +27,7 @@ import com.facebook.ads.AdView;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.fragments.HomeFragment;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.Dabdea;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.FrameActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
@@ -276,7 +276,7 @@ public class MainActivity extends LocalBaseActivity {
 
             if (Cat == 1) {
                 PatrickCox.Orizanal = PatrickCox.bitmap;
-                Dabdea.startWithUri(MainActivity.this, resultUri);
+                FrameActivity.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
 

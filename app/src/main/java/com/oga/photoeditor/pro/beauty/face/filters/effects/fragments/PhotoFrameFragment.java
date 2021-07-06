@@ -161,7 +161,7 @@ public class PhotoFrameFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView ThemePreviewImage, down_icon;
 
-            Button txtEdit;
+            ImageView txtEdit;
             TextView txtImageName;
 
             public MyViewHolder(final View itemView) {

@@ -49,13 +49,12 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.DianaVonGrüning;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.AnnDemeulemeester.BrunoPieters;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.AnnDemeulemeester.CathyPill;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.AnnDemeulemeester.MartinMargiela;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.Dabdea;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.FrameActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MyWorkActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.multiTouchLib.MultiTouchListener;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.stickerView.StickerView;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.textviewBubble.BubbleInputDialog;
@@ -351,7 +350,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
             Display display = getActivity().getWindowManager().getDefaultDisplay();
             DisplayWidth = display.getWidth();
             DisplayHeight = display.getHeight();
-            Dabdea.recycler_view.setVisibility(View.GONE);
+            FrameActivity.recycler_view.setVisibility(View.GONE);
             RelativeLayout.LayoutParams rparams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth);
             drawing_view_container.setLayoutParams(rparams);
 
@@ -858,7 +857,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
             case R.id.imgReset:
                 imgButtonImage.setImageResource(R.drawable.ic_next);
 
-                ((Dabdea) getActivity()).showResetDialog(getActivity(), new LocalBaseActivity.OnResetListner() {
+                ((FrameActivity) getActivity()).showResetDialog(getActivity(), new LocalBaseActivity.OnResetListner() {
                     @Override
                     public void onReset() {
                         imgButtonImage.setImageResource(R.drawable.ic_true);
