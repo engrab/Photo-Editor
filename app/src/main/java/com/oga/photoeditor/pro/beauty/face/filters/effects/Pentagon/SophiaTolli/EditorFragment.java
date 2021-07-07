@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.InterstitialAd;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.RichardTyler.Pnanterist;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
@@ -73,6 +75,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -197,7 +200,7 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
         View rootView = inflater.inflate(R.layout.photoeditor_fragment_filters, container, false);
 
         loadInterstitialAd();
-        loadBannerAd();
+
 
         try {
             mContext = getActivity();
@@ -1394,9 +1397,53 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        File file = saveImageToExternalStorage(bmOverlay);
+        String absolutePath = file.getAbsolutePath();
 
-        saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
+        Intent intent = new Intent(getActivity(), ShareImageActivity.class);
+        intent.putExtra("FinalURI", absolutePath);
+        startActivity(intent);
+        Pnanterist.activity.finish();
+//        saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
         Log.i("TAG", "Image Created");
+    }
+    private File saveImageToExternalStorage(Bitmap finalBitmap) {
+
+        File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/"+getString(R.string.app_name));
+        if (!myDir.mkdirs()) {
+            myDir.mkdirs();
+
+        }
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fname = "Image-" + n + ".jpg";
+        File file = new File(myDir, fname);
+
+        try {
+            OutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 85, out);
+            out.flush();
+            out.close();
+            Toast.makeText(getContext(), "Save Image Successfully", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("TAG", "saveImageToExternalStorage: Exception: "+e.getMessage());
+        }
+
+
+        // Tell the media scanner about the new file so that it is
+        // immediately available to the user.
+        //MediaStore.Images.Media.insertImage(getContentResolver(), yourBitmap, yourTitle , yourDescription)
+        MediaScannerConnection.scanFile(getContext(), new String[]{file.toString()}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i("ExternalStorage", "Scanned " + path + ":");
+                        Log.i("ExternalStorage", "-> uri=" + uri);
+                    }
+                });
+
+        return file;
     }
 
     private int generateRandomName(int LowerLimit, int UpperLimit) {
@@ -1417,79 +1464,79 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
         dia.show();
     }
 
-    public String saveImageToSD(Bitmap bmp, String filename, Bitmap.CompressFormat format) {
-        File file2 = null;
-        try {
-            String path1 = Environment.getExternalStorageDirectory().toString();
-            FileOutputStream fos = null;
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bmp.compress(format, 100, bytes);
-            File file1 = new File(path1 + "/" + getString(R.string.app_name) + "/");
-            if (!file1.exists()) {
-                file1.mkdirs();
-            }
-            file2 = new File(file1, filename);
-            try {
-                file2.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                fos = new FileOutputStream(file2);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                fos.write(bytes.toByteArray());
-                fos.close();
-                Log.e("Success", "Final Image Saved - " + filename);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (dia.isShowing()) {
-                dia.dismiss();
-            }
-            PatrickCox.FinalBitmap = bmp;
-            FinalURI = "" + path1 + "/" + getString(R.string.app_name) + "/" + filename;
-
-
-            ContentValues image = new ContentValues();
-            String dateStr = "07/03/2021";
-
-            SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-            Date dateObj = curFormater.parse(dateStr);
-            SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
-
-            String newDateStr = postFormater.format(dateObj);
-            image.put(MediaStore.Images.Media.TITLE, filename);
-            image.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
-            image.put(MediaStore.Images.Media.DESCRIPTION, filename);
-            image.put(MediaStore.Images.Media.DATE_ADDED, newDateStr);
-            image.put(MediaStore.Images.Media.DATE_TAKEN, "");
-            image.put(MediaStore.Images.Media.DATE_MODIFIED, "");
-            image.put(MediaStore.Images.Media.MIME_TYPE, "image/*");
-            image.put(MediaStore.Images.Media.ORIENTATION, 0);
-
-            File parent = file2.getParentFile();
-            String path = parent.toString().toLowerCase();
-            String name = parent.getName().toLowerCase();
-            image.put(MediaStore.Images.ImageColumns.BUCKET_ID, path.hashCode());
-            image.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, name);
-            image.put(MediaStore.Images.Media.SIZE, file2.length());
-
-            image.put(MediaStore.Images.Media.DATA, file2.getAbsolutePath());
-
-            Uri result = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
-
-
-            return file2.getPath();
-        } catch (NullPointerException e) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-        return "";
-    }
+//    public String saveImageToSD(Bitmap bmp, String filename, Bitmap.CompressFormat format) {
+//        File file2 = null;
+//        try {
+//            String path1 = Environment.getExternalStorageDirectory().toString();
+//            FileOutputStream fos = null;
+//            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//            bmp.compress(format, 100, bytes);
+//            File file1 = new File(path1 + "/" + getString(R.string.app_name) + "/");
+//            if (!file1.exists()) {
+//                file1.mkdirs();
+//            }
+//            file2 = new File(file1, filename);
+//            try {
+//                file2.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                fos = new FileOutputStream(file2);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                fos.write(bytes.toByteArray());
+//                fos.close();
+//                Log.e("Success", "Final Image Saved - " + filename);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            if (dia.isShowing()) {
+//                dia.dismiss();
+//            }
+//            PatrickCox.FinalBitmap = bmp;
+//            FinalURI = "" + path1 + "/" + getString(R.string.app_name) + "/" + filename;
+//
+//
+//            ContentValues image = new ContentValues();
+//            String dateStr = "07/03/2021";
+//
+//            SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+//            Date dateObj = curFormater.parse(dateStr);
+//            SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
+//
+//            String newDateStr = postFormater.format(dateObj);
+//            image.put(MediaStore.Images.Media.TITLE, filename);
+//            image.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+//            image.put(MediaStore.Images.Media.DESCRIPTION, filename);
+//            image.put(MediaStore.Images.Media.DATE_ADDED, newDateStr);
+//            image.put(MediaStore.Images.Media.DATE_TAKEN, "");
+//            image.put(MediaStore.Images.Media.DATE_MODIFIED, "");
+//            image.put(MediaStore.Images.Media.MIME_TYPE, "image/*");
+//            image.put(MediaStore.Images.Media.ORIENTATION, 0);
+//
+//            File parent = file2.getParentFile();
+//            String path = parent.toString().toLowerCase();
+//            String name = parent.getName().toLowerCase();
+//            image.put(MediaStore.Images.ImageColumns.BUCKET_ID, path.hashCode());
+//            image.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, name);
+//            image.put(MediaStore.Images.Media.SIZE, file2.length());
+//
+//            image.put(MediaStore.Images.Media.DATA, file2.getAbsolutePath());
+//
+//            Uri result = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
+//
+//
+//            return file2.getPath();
+//        } catch (NullPointerException e) {
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        return "";
+//    }
 
 }

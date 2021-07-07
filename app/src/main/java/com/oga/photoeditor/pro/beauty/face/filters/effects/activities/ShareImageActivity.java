@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.content.FileProvider;
 
 import com.facebook.ads.Ad;
@@ -36,7 +37,6 @@ import static android.content.Intent.FILL_IN_CLIP_DATA;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class ShareImageActivity extends BaseActivity implements View.OnClickListener {
-    static final boolean $assertionsDisabled = false;
     private File file;
     NativeAd nativeAd;
     NativeAdLayout nativeAdLayout;
@@ -51,19 +51,21 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         nativeAdLayout = findViewById(R.id.native_ad_container);
 
         loadNativeAd();
-//        String finalURI = getIntent().getExtras().getString("FinalURI");
-//        this.file = new File(finalURI);
-//        Picasso.with(getApplicationContext()).load(this.file).into((ImageView) findViewById(R.id.image_view_preview));
+        String finalURI = getIntent().getExtras().getString("FinalURI");
+
+        this.file = new File(finalURI);
+        Picasso.get().load(this.file).into((ImageView) findViewById(R.id.image_view_preview));
+
         findViewById(R.id.image_view_preview).setOnClickListener(new View.OnClickListener() {
             public final void onClick(View view) {
                 ShareImageActivity.this.onClick(view);
             }
         });
-        findViewById(R.id.image_view_back).setOnClickListener(new View.OnClickListener() {
-            public final void onClick(View view) {
-                ShareImageActivity.this.onClick(view);
-            }
-        });
+//        findViewById(R.id.image_view_back).setOnClickListener(new View.OnClickListener() {
+//            public final void onClick(View view) {
+//                ShareImageActivity.this.onClick(view);
+//            }
+//        });
         findViewById(R.id.image_view_home).setOnClickListener(new View.OnClickListener() {
             public final void onClick(View view) {
                 ShareImageActivity.this.onClick(view);
@@ -121,7 +123,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     public static void lamb(ShareImageActivity saveAndShareActivity, View view) {
         Intent intent = new Intent("android.intent.action.SEND");
         intent.setType("image/*");
-        intent.putExtra("android.intent.extra.STREAM", FileProvider.getUriForFile(saveAndShareActivity.getApplicationContext(), ""+saveAndShareActivity.getPackageName()+".provider", saveAndShareActivity.file));
+        intent.putExtra("android.intent.extra.STREAM", FileProvider.getUriForFile(saveAndShareActivity.getApplicationContext(), "" + saveAndShareActivity.getPackageName() + ".provider", saveAndShareActivity.file));
         intent.addFlags(3);
         saveAndShareActivity.startActivity(Intent.createChooser(intent, "Share"));
     }
@@ -167,6 +169,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
                 .build());
 
     }
+
     private void inflateAd(NativeAd nativeAd) {
         nativeAd.unregisterView();
         nativeAdLayout = findViewById(R.id.native_ad_container);
@@ -202,6 +205,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         nativeAd.registerViewForInteraction(
                 adView, nativeAdMedia, nativeAdIcon, clickableViews);
     }
+
     public void onResume() {
         super.onResume();
     }
@@ -209,9 +213,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     public void onClick(View view) {
         if (view != null) {
             int id = view.getId();
-            if (id == R.id.image_view_back) {
-                super.onBackPressed();
-            } else if (id != R.id.image_view_preview) {
+           if (id != R.id.image_view_preview) {
                 switch (id) {
                     case R.id.image_view_facebook:
                         sharePhoto(Constants.FACE);
@@ -270,7 +272,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
             } else {
                 Intent intent4 = new Intent();
                 intent4.setAction("android.intent.action.VIEW");
-                intent4.setDataAndType(FileProvider.getUriForFile(getApplicationContext(), "com.devchie.photoeditor.provider", this.file), "image/*");
+                intent4.setDataAndType(FileProvider.getUriForFile(getApplicationContext(), ShareImageActivity.this.getPackageName() + ".provider", this.file), "image/*");
                 intent4.addFlags(EXTRA_DOCK_STATE_LE_DESK);
                 startActivity(intent4);
             }
@@ -309,7 +311,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     }
 
     private Uri createCacheFile() {
-        return FileProvider.getUriForFile(getApplicationContext(), ""+getPackageName()+".provider", this.file);
+        return FileProvider.getUriForFile(getApplicationContext(), "" + getPackageName() + ".provider", this.file);
     }
 
 }

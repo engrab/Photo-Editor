@@ -31,17 +31,18 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
 
 public class MyCreationAdapter extends BaseAdapter {
-    private static final String KEY_SELECTED_PHOTOS = "key_selected_photo";
-    private static final String KEY_IMAGE_PATH = "key_image_path";
-    public static ArrayList<String> imagegallary = new ArrayList();
+    public static final String KEY_SELECTED_PHOTOS = "key_selected_photo";
+    public static final String KEY_IMAGE_PATH = "key_image_path";
+    public static List<String> imagegallary = new ArrayList<>();
     private static LayoutInflater inflater = null;
     private Activity activity;
 
-    public MyCreationAdapter(Activity dAct, ArrayList<String> dUrl) {
+    public MyCreationAdapter(Activity dAct, List<String> dUrl) {
         this.activity = dAct;
         imagegallary = dUrl;
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

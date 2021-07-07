@@ -7,10 +7,6 @@
     <string name="over_text_limit" translatable="false">You have exceeded your word limit</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="manifast" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="nativead" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
     <string name="ad_attribution" translatable="false">Ad</string>
 
 
