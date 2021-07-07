@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,9 +30,11 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.InterstitialAd;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.FrameActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.adapters.MyCreationAdapter;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,30 +43,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
-public class MyWorkActivity extends LocalBaseActivity implements View.OnClickListener {
+public class MyWorkActivity extends AppCompatActivity {
 
 
-    private RecyclerView recyclerView;
-    public ArrayList<ImageDetails> arListGallery;
-    private RecyclerView.Adapter mAdapter;
-
-    private GridLayoutManager layoutManager;
-    public static ProgressDialog dia;
-    LinearLayout LL_NoDataFound;
-    Activity activity;
-
+    public static ArrayList<String> IMAGEALLARY = new ArrayList();
+    public static int pos;
+    private ImageView Iv_back_creation;
+    private GridView grid_crea;
+    MyCreationAdapter myCreationAdapter;
     InterstitialAd interstitialAd;
-    int DisplayWidth;
+    private static final String TAG = "MyCreationActivity";
 
-    public void showProgress() {
-
-        dia = new ProgressDialog(this);
-        dia.setMessage("Loading ...");
-        dia.setIndeterminate(false);
-        dia.setCancelable(false);
-        dia.setCanceledOnTouchOutside(false);
-        dia.show();
-    }
 
     private void loadInterstitialAd() {
         interstitialAd = new InterstitialAd(this, AdsUnits.FB_INTERSTITIAL);
@@ -70,7 +61,6 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
             @Override
             public void onError(Ad ad, AdError error) {
 
-                Toast.makeText(MyWorkActivity.this, "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
                 super.onError(ad, error);
             }
 
@@ -104,53 +94,6 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
         interstitialAd.loadAd(interstitialLoadAdConfig);
     }
 
-    private void fillData() {
-
-        try {
-            String path = Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name);
-            File f = new File(path);
-            File[] file = f.listFiles();
-            String selection = null;
-            String[] selectionArgs = null;
-            String[] projection = {
-                    MediaStore.Images.Media.DATA
-            };
-            if (file.length > 0) {
-                for (int i = 0; i < file.length; i++) {
-                    try {
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US);
-                        String time = sdf.format(new Date(file[i].lastModified()));
-
-
-                        ImageDetails object = new ImageDetails();
-                        object.ImageName = file[i].getName();
-                        object.uri = Uri.fromFile(file[i]);
-                        arListGallery.add(object);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (NullPointerException e) {
-            LL_NoDataFound.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-        }
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
-    public void dismissProgress() {
-        if (dia.isShowing())
-            dia.dismiss();
-    }
-
     private void loadBannerAd() {
         final FrameLayout adContainer = findViewById(R.id.adView);
         AdView adView = new AdView(this, AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
@@ -163,7 +106,6 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
 
             @Override
             public void onAdLoaded(Ad ad) {
-                Toast.makeText(MyWorkActivity.this, "Ad Loaded", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -180,127 +122,84 @@ public class MyWorkActivity extends LocalBaseActivity implements View.OnClickLis
         adView.loadAd(loadAdConfig);
     }
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_work);
+
         loadInterstitialAd();
         loadBannerAd();
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayWidth = display.getWidth();
 
-        ImageView imgButtonImage = findViewById(R.id.imgButtonImage);
-        imgButtonImage.setImageResource(R.drawable.ic_home);
-        imgButtonImage.setOnClickListener(this);
-
-
-        activity = MyWorkActivity.this;
-
-        LL_NoDataFound = findViewById(R.id.LL_NoDataFound);
-        LL_NoDataFound.setOnClickListener(this);
-        showProgress();
-
-        arListGallery = new ArrayList<ImageDetails>();
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(this, 3);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        fillData();
-
-        Collections.reverse(arListGallery);
-
-        if (arListGallery.size() == 0) {
-            LL_NoDataFound.setVisibility(View.VISIBLE);
-            dismissProgress();
+        if (MyCreationAdapter.imagegallary.size() == 0) {
+            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
         } else {
-            LL_NoDataFound.setVisibility(View.GONE);
-            mAdapter = new GalleryViewAdapter();
-            recyclerView.setAdapter(mAdapter);
-            dismissProgress();
+            findViewById(R.id.text_noimage).setVisibility(View.GONE);
         }
+        this.grid_crea = findViewById(R.id.grid_crea);
+        this.myCreationAdapter = new MyCreationAdapter(this, IMAGEALLARY);
+        IMAGEALLARY.clear();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(Environment.getExternalStorageDirectory().getPath());
+        stringBuilder.append("/");
+        stringBuilder.append(R.string.app_name);
+        listAllImages(new File(stringBuilder.toString()));
+        this.grid_crea.setAdapter(this.myCreationAdapter);
+        this.Iv_back_creation = findViewById(R.id.back_click_iv);
+        this.Iv_back_creation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyWorkActivity.this.finish();
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.LL_NoDataFound:
-                finish();
-                startActivity(new Intent(MyWorkActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                break;
-            case R.id.imgButtonImage:
-                finish();
-                startActivity(new Intent(this, MainActivity.class));
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                break;
-        }
-    }
-
-
-    class ImageDetails {
-        String ImageName;
-        Uri uri;
-    }
-
-    class GalleryViewAdapter extends RecyclerView.Adapter<GalleryViewAdapter.MyViewHolder> {
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-
-            ImageView imageViewIcon;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                this.imageViewIcon = itemView.findViewById(R.id.ThemePreviewImage);
-
-
-                this.imageViewIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-
-                        Intent intent = new Intent(MyWorkActivity.this, Zeqale.class);
-                        intent.putExtra("FileName", "" + arListGallery.get(Integer.parseInt(v.getTag().toString())).ImageName);
-                        startActivity(intent);
-                        activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
-                    }
-                });
             }
+        });
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+
+    private void listAllImages(File filepath) {
+        File[] files = filepath.listFiles();
+        if (MyCreationAdapter.imagegallary.size() == 0) {
+            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.text_noimage).setVisibility(View.GONE);
         }
-
-        public GalleryViewAdapter() {
-        }
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_view_row, parent, false);
-            MyViewHolder myViewHolder = new MyViewHolder(view);
-            return myViewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-
-            Log.e("position", "" + listPosition);
-
-            holder.imageViewIcon.setLayoutParams(new FrameLayout.LayoutParams(DisplayWidth / 3, DisplayWidth / 3));
-
-            if (listPosition == 4) {
-                holder.imageViewIcon.setImageURI(arListGallery.get(listPosition).uri);
-
-            } else {
-                holder.imageViewIcon.setImageURI(arListGallery.get(listPosition).uri);
+        if (files != null) {
+            for (int j = files.length - 1; j >= 0; j--) {
+                String ss = files[j].toString();
+                File check = new File(ss);
+                StringBuilder stringBuilder = new StringBuilder();
+                String str = "";
+                stringBuilder.append(str);
+                stringBuilder.append(check.length());
+                String stringBuilder2 = stringBuilder.toString();
+                StringBuilder stringBuilder3 = new StringBuilder();
+                stringBuilder3.append(str);
+                stringBuilder3.append(check.length());
+                Log.d(stringBuilder2, stringBuilder3.toString());
+                if (check.toString().contains(".jpg") || check.toString().contains(".png") || check.toString().contains(".jpeg")) {
+                    IMAGEALLARY.add(ss);
+                } else {
+                    Log.d(TAG, "listAllImages: Image Extension not supported");
+                }
+                System.out.println(ss);
             }
-
-            holder.imageViewIcon.setTag("" + listPosition);
-
+            return;
         }
+        System.out.println("Empty Folder");
+    }
 
-        @Override
-        public int getItemCount() {
-            return arListGallery.size();
+    protected void onResume() {
+        super.onResume();
+
+        if (MyCreationAdapter.imagegallary.size() == 0) {
+            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.text_noimage).setVisibility(View.GONE);
         }
     }
+
+
 }

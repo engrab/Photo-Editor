@@ -1,101 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/top_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:layout_height="50.0dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroundset" />
+        <ImageView
+            android:id="@+id/back_click_iv"
+            android:layout_width="35.0dp"
+            android:layout_height="35.0dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8.0dp"
+            android:padding="5.0dp"
+            android:src="@drawable/ic_back"
+            />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/header" />
-
-        <LinearLayout
-            android:id="@+id/LL_NoDataFound"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible">
+            android:text="My Creation"
+            android:textColor="@color/white"
+            android:textSize="20.0dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="bottom|center"
-                android:text="No Data Found\n"
-                android:textColor="#6da71d"
-                android:visibility="visible" />
+    <RelativeLayout
+        android:layout_above="@+id/adView"
+        android:layout_below="@+id/top_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Would You Like To Customize?"
-                android:textColor="#6da71d"
-                android:textSize="20sp"
-                android:visibility="visible" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/ic_inbox_black_24dp"
-                    app:tint="#6da71d" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#6da71d"
-                    android:gravity="center"
-                    android:text="Yes"
-                    android:textColor="#6da71d" />
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/RL_BannerAd"
+        <TextView
+            android:id="@+id/text_noimage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom">
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="No Images Saved "
+            android:textColor="#ff000000"
+            android:visibility="gone" />
 
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <GridView
+            android:id="@+id/grid_crea"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            android:visibility="visible" />
-
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:numColumns="2"
+            android:scrollbarSize="2.0dp"
+            android:scrollbars="vertical" />
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        />
+
 </RelativeLayout>
