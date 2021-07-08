@@ -109,7 +109,6 @@ public class MyWorkActivity extends AppCompatActivity {
         AdListener adListener = new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
-                Toast.makeText(MyWorkActivity.this, "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -138,9 +137,8 @@ public class MyWorkActivity extends AppCompatActivity {
         loadBannerAd();
 
 
-        this.grid_crea = findViewById(R.id.grid_crea);
 
-
+        grid_crea = findViewById(R.id.grid_crea);
         this.Iv_back_creation = findViewById(R.id.back_click_iv);
         this.Iv_back_creation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,29 +149,31 @@ public class MyWorkActivity extends AppCompatActivity {
             }
         });
 
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            if (isReadStoragePermissionGranted()) {
-//
-//                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-//                        == PackageManager.PERMISSION_GRANTED) {
-//                    Log.v(TAG, "Permission is granted1");
-//                    readImageFromFolder();
-//                }
-//            } else {
-//
-//                Log.v(TAG, "Permission is revoked1");
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
-//
-//
-//            }
-//        } else {
-//            readImageFromFolder();
-//        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (isReadStoragePermissionGranted()) {
 
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + getString(R.string.app_name));
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    Log.v(TAG, "Permission is granted1");
+                    readImageFromFolder();
+                }
+            } else {
 
-        imageArray = getFile(file);
-        Log.d(TAG, "onCreate: "+imageArray.size());
+                Log.v(TAG, "Permission is revoked1");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
+
+
+            }
+        } else {
+            readImageFromFolder();
+        }
+
+//        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + getString(R.string.app_name)+"/");
+//
+//        imageArray = getFile(file);
+//        Log.d(TAG, "onCreate: "+imageArray.size());
+//        this.myCreationAdapter = new MyCreationAdapter(this, imageArray);
+//        this.grid_crea.setAdapter(this.myCreationAdapter);
     }
 
     public void onBackPressed() {
@@ -184,11 +184,11 @@ public class MyWorkActivity extends AppCompatActivity {
 
     private void listAllImages(File filepath) {
         File[] files = filepath.listFiles();
-//        if (MyCreationAdapter.imagegallary.size() == 0) {
-//            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
-//        } else {
-//            findViewById(R.id.text_noimage).setVisibility(View.GONE);
-//        }
+        if (MyCreationAdapter.imagegallary.size() == 0) {
+            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.text_noimage).setVisibility(View.GONE);
+        }
         if (files != null) {
             for (int j = files.length - 1; j >= 0; j--) {
                 String ss = files[j].toString();
@@ -204,13 +204,13 @@ public class MyWorkActivity extends AppCompatActivity {
                 Log.d(stringBuilder2, stringBuilder3.toString());
                 if (check.toString().contains(".jpg") || check.toString().contains(".png") || check.toString().contains(".jpeg")) {
                     IMAGEALLARY.add(ss);
-                    myCreationAdapter.notifyDataSetChanged();
-                } else {
+
+                }
+                else {
                     Log.d(TAG, "listAllImages: Image Extension not supported");
                 }
                 System.out.println(ss);
             }
-            Log.d(TAG, "listAllImages: " + files.length);
             return;
         }
         System.out.println("Empty Folder");
@@ -219,11 +219,11 @@ public class MyWorkActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        if (MyCreationAdapter.imagegallary.size() == 0) {
-//            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
-//        } else {
-//            findViewById(R.id.text_noimage).setVisibility(View.GONE);
-//        }
+        if (MyCreationAdapter.imagegallary.size() == 0) {
+            findViewById(R.id.text_noimage).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.text_noimage).setVisibility(View.GONE);
+        }
     }
 
     public boolean isReadStoragePermissionGranted() {
@@ -271,10 +271,9 @@ public class MyWorkActivity extends AppCompatActivity {
     private void readImageFromFolder() {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+        stringBuilder.append(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath());
         stringBuilder.append("/");
-        stringBuilder.append(R.string.app_name);
-        stringBuilder.append("/");
+        stringBuilder.append("Photo Editor Beauty Filters");
         IMAGEALLARY.clear();
         listAllImages(new File(stringBuilder.toString()));
         Log.d(TAG, "readImageFromFolder: "+IMAGEALLARY.size());

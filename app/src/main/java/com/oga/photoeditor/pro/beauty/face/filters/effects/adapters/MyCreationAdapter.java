@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli.EditorFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
@@ -82,10 +83,10 @@ public class MyCreationAdapter extends BaseAdapter {
         holder.imgIcon.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 new Options().inPreferredConfig = Config.ARGB_8888;
-                Intent intent = new Intent(MyCreationAdapter.this.activity, EditorFragment.class);
-                intent.putExtra(KEY_SELECTED_PHOTOS, MyCreationAdapter.imagegallary.get(position));
+                Intent intent = new Intent(MyCreationAdapter.this.activity, ShareImageActivity.class);
+                intent.putExtra("FinalURI", MyCreationAdapter.imagegallary.get(position));
                 MyCreationAdapter.this.activity.startActivity(intent);
-                MyCreationAdapter.this.activity.finish();
+
             }
         });
         holder.imgShare.setOnClickListener(new OnClickListener() {
@@ -93,9 +94,9 @@ public class MyCreationAdapter extends BaseAdapter {
             public void onClick(View v) {
                 new Options().inPreferredConfig = Config.ARGB_8888;
                 Intent intent = new Intent(MyCreationAdapter.this.activity, ShareImageActivity.class);
-                intent.putExtra(KEY_IMAGE_PATH, MyCreationAdapter.imagegallary.get(position));
+                intent.putExtra("FinalURI", MyCreationAdapter.imagegallary.get(position));
                 MyCreationAdapter.this.activity.startActivity(intent);
-                MyCreationAdapter.this.activity.finish();
+
             }
         });
         holder.imgSetAs.setOnClickListener(new OnClickListener() {
@@ -152,7 +153,7 @@ public class MyCreationAdapter extends BaseAdapter {
                 alertDialog.show();
             }
         });
-        Picasso.get().load(imagegallary.get(position)).centerCrop().into(holder.imgIcon);
+        Glide.with(this.activity).load(imagegallary.get(position)).centerCrop().into(holder.imgIcon);
         System.gc();
         return row;
     }
