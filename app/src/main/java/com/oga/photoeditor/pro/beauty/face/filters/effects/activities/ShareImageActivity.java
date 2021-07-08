@@ -280,7 +280,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     }
 
     public void sharePhoto(String str) {
-        if (isPackageInstalled(this, str)) {
+        if (isPackageInstalled(ShareImageActivity.this, str)) {
             Uri createCacheFile = createCacheFile();
             if (createCacheFile != null) {
                 Intent intent = new Intent();
@@ -303,7 +303,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
 
     public static boolean isPackageInstalled(Context context, String str) {
         try {
-            context.getPackageManager().getPackageInfo(str, FILL_IN_CLIP_DATA);
+            context.getApplicationContext().getPackageManager().getPackageInfo(str, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
