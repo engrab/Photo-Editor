@@ -234,7 +234,6 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
             @Override
             public void onError(Ad ad, AdError error) {
 
-                Toast.makeText(getContext(), "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
                 super.onError(ad, error);
             }
             @Override

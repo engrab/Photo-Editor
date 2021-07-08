@@ -132,7 +132,6 @@ public class FrameActivity extends LocalBaseActivity {
         AdListener adListener = new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
-                Toast.makeText(FrameActivity.this, "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

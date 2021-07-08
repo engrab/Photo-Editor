@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -47,6 +48,7 @@ public class MainActivity extends LocalBaseActivity {
     public static AppCompatActivity activity;
     private String TAG = "MainActivity";
     SharedPreferenceManager objPref;
+    boolean doubleBackToExitPressedOnce = false;
 
     public static int Cat = 0;
     public static int counter = 0;
@@ -81,6 +83,7 @@ public class MainActivity extends LocalBaseActivity {
 
         loadBannerAd();
     }
+
     private void loadBannerAd() {
         final FrameLayout adContainer = findViewById(R.id.adView);
         AdView adView = new AdView(this, AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
@@ -88,12 +91,10 @@ public class MainActivity extends LocalBaseActivity {
         AdListener adListener = new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
-                Toast.makeText(MainActivity.this, "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                Toast.makeText(MainActivity.this, "Ad Loaded", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -113,6 +114,8 @@ public class MainActivity extends LocalBaseActivity {
 
     @Override
     public void onBackPressed() {
+
+
         Fragment frag = getSupportFragmentManager().findFragmentById(R.id.MainContainer);
         final FragmentManager fragmentManager = getSupportFragmentManager();
         try {
@@ -121,12 +124,21 @@ public class MainActivity extends LocalBaseActivity {
                 if (HomeFragment.Counter != 0) {
                     HomeFragment.Counter = 0;
                 } else {
-                    showRatingDialog(false, new OnRateListner() {
+                    if (doubleBackToExitPressedOnce) {
+                        super.onBackPressed();
+                        return;
+                    }
+
+                    this.doubleBackToExitPressedOnce = true;
+                    Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+                    new Handler().postDelayed(new Runnable() {
+
                         @Override
-                        public void onReminderLater() {
-                            finish();
+                        public void run() {
+                            doubleBackToExitPressedOnce = false;
                         }
-                    });
+                    }, 2000);
                 }
             } else {
                 HomeFragment homeFragment = new HomeFragment();
@@ -318,6 +330,7 @@ public class MainActivity extends LocalBaseActivity {
             Toast.makeText(MainActivity.this, "Unexpected error", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
 

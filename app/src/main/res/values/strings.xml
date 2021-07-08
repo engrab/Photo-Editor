@@ -9,5 +9,18 @@
 
     <string name="ad_attribution" translatable="false">Ad</string>
 
+    <string name="rating_dialog_feedback_title" translatable="false">Feedback</string>
+    <string name="rating_dialog_submit" translatable="false">Submit</string>
+    <string name="email_feedback" translatable="false">gofflineapps@gmail.com</string>
+    <string name="choose_email" translatable="false">Choose an app</string>
+    <string name="developerId" translatable="false">GPS+Offline+Apps</string>
+    <string name="settings" translatable="false">More app</string>
+    <string name="share_friend" translatable="false">Share app</string>
+    <string name="privacy_policy" translatable="false">Privacy Policy</string>
+    <string name="rate_us" translatable="false">Rate us</string>
+    <string name="feedback" translatable="false">Feed back</string>
+    <string name="rating_promote" translatable="false">If Photo Editor Beauty Filters app makes you happy and satisfy. Please give us 5 stars</string>
+    <string name="rating_dialog_maybe_later" translatable="false">Maybe later</string>
+
 
 </resources>

@@ -159,7 +159,6 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
             @Override
             public void onError(Ad ad, AdError error) {
 
-                Toast.makeText(getContext(), "Error loading ad: " + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
                 super.onError(ad, error);
             }
 
@@ -349,12 +348,10 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
         AdListener adListener = new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
-                Toast.makeText(getContext(), "Ad 50 Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                Toast.makeText(getContext(), "Ad Loaded", Toast.LENGTH_SHORT).show();
             }
 
             @Override

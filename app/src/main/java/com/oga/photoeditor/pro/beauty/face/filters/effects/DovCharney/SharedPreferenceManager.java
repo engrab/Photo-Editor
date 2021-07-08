@@ -28,7 +28,11 @@ public class SharedPreferenceManager {
     public String SaveDirURL = "SaveDirURL";
     public String BIT128 = "BIT128";
 
-
+    public static void setRated(Context context, boolean z) {
+        SharedPreferences.Editor edit = context.getSharedPreferences(USER_PREFS, 0).edit();
+        edit.putBoolean("is_rated_2", z);
+        edit.apply();
+    }
     public String getBIT128() {
         return appSharedPref.getString(BIT128, "");
     }

@@ -1,15 +1,20 @@
 package com.oga.photoeditor.pro.beauty.face.filters.effects.fragments;
 
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -17,6 +22,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MyWorkActi
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.dialoge.RateDialog;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -102,11 +108,56 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void popupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        popupMenu.getMenuInflater().inflate(R.menu.main_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            public final boolean onMenuItemClick(MenuItem menuItem) {
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_feedback) {
+                    Intent intent = new Intent("android.intent.action.SEND");
+                    intent.putExtra("android.intent.extra.EMAIL", new String[]{getResources().getString(R.string.email_feedback)});
+                    intent.putExtra("android.intent.extra.SUBJECT", "MegaShot Feedback: ");
+                    intent.putExtra("android.intent.extra.TEXT", "");
+                    intent.setType("message/rfc822");
+                    startActivity(Intent.createChooser(intent, getString(R.string.choose_email) + " :"));
+                } else if (itemId == R.id.action_privacy_policy) {
+                    try {
+                        startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://sites.google.com/view/gpsofflineapps/home")));
+                    } catch (Exception e) {
+                    }
+                } else if (itemId == R.id.action_rate_us) {
+                    new RateDialog(getActivity(), false).show();
+                } else if (itemId == R.id.action_more_app) {
+                    Log.d("qq", "moreApp");
+                    try {
+                        startActivity(new Intent("android.intent.action.VIEW", Uri.parse("market://search?q=pub:" + getString(R.string.developerId))));
+                    } catch (ActivityNotFoundException e2) {
+                        startActivity(new Intent("android.intent.action.VIEW", Uri.parse("http://play.google.com/store/apps/developer?id=" + getString(R.string.developerId))));
+                    }
+                } else if (itemId == R.id.action_share_friend) {
+                    Intent intent2 = new Intent("android.intent.action.SEND");
+                    intent2.setType("text/plain");
+                    intent2.putExtra("android.intent.extra.SUBJECT", getString(R.string.app_name));
+                    intent2.putExtra("android.intent.extra.TEXT", "https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
+                    startActivity(Intent.createChooser(intent2, "Choose"));
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+        rootView.findViewById(R.id.image_view_about).setOnClickListener(new View.OnClickListener() {
+            public final void onClick(View view) {
+                popupMenu(view);
+            }
+        });
         try {
             FindControls(rootView);
 
