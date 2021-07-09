@@ -81,35 +81,8 @@ public class MainActivity extends LocalBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.MainContainer, mainFragment).commit();
 
-        loadBannerAd();
     }
 
-    private void loadBannerAd() {
-        final FrameLayout adContainer = findViewById(R.id.adView);
-        AdView adView = new AdView(this, AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
-        adContainer.addView(adView);
-        AdListener adListener = new AdListener() {
-            @Override
-            public void onError(Ad ad, AdError adError) {
-            }
-
-            @Override
-            public void onAdLoaded(Ad ad) {
-            }
-
-            @Override
-            public void onAdClicked(Ad ad) {
-            }
-
-            @Override
-            public void onLoggingImpression(Ad ad) {
-            }
-        };
-        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
-                .withAdListener(adListener)
-                .build();
-        adView.loadAd(loadAdConfig);
-    }
 
 
     @Override

@@ -573,6 +573,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         }
     }
 
+
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
 
@@ -817,13 +818,6 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dia.dismiss();
-
-            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-            intent.putExtra("FinalURI", FinalURI);
-            startActivity(intent);
-            Bentesta.activity.finish();
-            getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
 
         }
     }

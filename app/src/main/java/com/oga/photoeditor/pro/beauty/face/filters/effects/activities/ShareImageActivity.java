@@ -2,9 +2,12 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +43,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     private File file;
     NativeAd nativeAd;
     NativeAdLayout nativeAdLayout;
-
+    private static final String TAG = "ShareImageActivity";
     private void loadAd() {
     }
 
@@ -283,7 +286,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         if (isPackageInstalled(ShareImageActivity.this, str)) {
             Uri createCacheFile = createCacheFile();
             if (createCacheFile != null) {
-                Intent intent = new Intent();
+                Intent intent = getPackageManager().getLaunchIntentForPackage(str);
                 intent.setAction("android.intent.action.SEND");
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setDataAndType(createCacheFile, getContentResolver().getType(createCacheFile));
@@ -302,16 +305,59 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     }
 
     public static boolean isPackageInstalled(Context context, String str) {
+        PackageManager pm = context.getPackageManager();
         try {
-            context.getApplicationContext().getPackageManager().getPackageInfo(str, PackageManager.GET_ACTIVITIES);
+            pm.getPackageInfo(str, 0);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
-            return false;
+            Log.d(TAG, "isPackageInstalled: "+e.toString());
         }
+
+        return false;
     }
 
     private Uri createCacheFile() {
         return FileProvider.getUriForFile(getApplicationContext(), "" + getPackageName() + ".provider", this.file);
+    }
+
+    private boolean getInstallAppList(String uri){
+        List<ApplicationInfo> listApplicationInfo = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);
+        String[] stringsList = new String[listApplicationInfo.size()];
+        int i=0;
+        for (ApplicationInfo applicationInfo: listApplicationInfo){
+            stringsList[i] = applicationInfo.packageName;
+            i++;
+            if (applicationInfo.packageName.equals(uri)){
+                return true;
+            }
+        }
+        return false;
+
+
+    }
+
+    public boolean isAppInstalled(Context context, String uri){
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> pkgAppsList = context.getPackageManager().queryIntentActivities( mainIntent, 0);
+        for (ResolveInfo resolveInfo : pkgAppsList) {
+            Log.d(TAG, "__<>"+resolveInfo.activityInfo.packageName);
+            if (resolveInfo.activityInfo.packageName != null
+                    && resolveInfo.activityInfo.packageName.equals(uri)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isPackageAvailable(String name){
+        boolean available = true;
+        try {
+            getPackageManager().getPackageInfo(name,0);
+        }catch (PackageManager.NameNotFoundException e){
+            available = false;
+        }
+        return available;
     }
 
 }

@@ -102,7 +102,7 @@ public class SplashActivity extends Activity {
         } else {
             Log.e("Lower Version","Lower Version");
             this.finish();
-            startActivity(new Intent(SplashActivity.this, StartActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
     }
@@ -161,7 +161,7 @@ public class SplashActivity extends Activity {
 
     private void proceedAfterPermission() {
         this.finish();
-        startActivity(new Intent(SplashActivity.this, StartActivity.class));
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
     }
