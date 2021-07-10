@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
+
+import java.util.Spliterator;
 
 
 public class SplashActivity extends Activity {
@@ -100,10 +103,16 @@ public class SplashActivity extends Activity {
                 proceedAfterPermission();
             }
         } else {
-            Log.e("Lower Version","Lower Version");
-            this.finish();
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("Lower Version","Lower Version");
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    SplashActivity.this.finish();
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
+            },3000);
+
         }
     }
 
@@ -160,9 +169,15 @@ public class SplashActivity extends Activity {
     }
 
     private void proceedAfterPermission() {
-        this.finish();
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("Lower Version","Lower Version");
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                SplashActivity.this.finish();
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
+        },3000);
 
     }
 

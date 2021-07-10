@@ -402,7 +402,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
             try {
                 startActivity(Intent.createChooser(whatsappIntent, "Share Image!"));
             } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "App have not been installed.", Toast.LENGTH_LONG).show();
             }
         }
     }
