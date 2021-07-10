@@ -20,9 +20,10 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/LL_Footer"
             android:layout_below="@+id/header"
-            android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginTop="50dp"
             android:orientation="vertical">
 
             <RelativeLayout

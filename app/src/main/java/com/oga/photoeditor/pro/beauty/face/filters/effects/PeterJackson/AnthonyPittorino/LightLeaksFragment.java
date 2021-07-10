@@ -2,7 +2,6 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.Anthony
 
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -14,7 +13,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -41,10 +38,8 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.InterstitialAd;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.RichardTyler.Pnanterist;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MyWorkActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
@@ -56,16 +51,11 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JacobLup
 import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JennyKee.Bentesta;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageColorBlendFilter;
@@ -209,7 +199,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.fragment_next, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_light_leaks, container, false);
         loadInterstitialAd();
         adContainer = rootView.findViewById(R.id.LL_Ads);
 
@@ -974,6 +964,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         Intent intent = new Intent(getActivity(), ShareImageActivity.class);
         intent.putExtra("FinalURI", absolutePath);
         startActivity(intent);
+        getActivity().finish();
 //        saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
         Log.i("TAG", "Image Created");
     }

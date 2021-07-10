@@ -32,6 +32,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,6 +80,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import it.sephiroth.android.library.widget.AdapterView;
@@ -98,6 +100,8 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
     private static final String TAG = "EditImageFragment";
     private String FinalURI;
     InterstitialAd interstitialAd;
+    public static AppCompatActivity activity;
+
 
     public EditImageFragment() {
         // Required empty public constructor
@@ -336,7 +340,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
 
         View rootView = inflater.inflate(R.layout.shimmer_fragment_filters, container, false);
 
-        loadInterstitialAd();
+
 
 
 //        End Of FB ADD
@@ -372,8 +376,8 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         adViewContainer = rootView.findViewById(R.id.adViewContainer);
+        loadInterstitialAd();
 
 // END OF BANNER
         loadBannerAd();
@@ -828,7 +832,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
                         Counter = 5;
                     }
                 } else {
-                    showProgress();
+//                    showProgress();
                     mergeAndSave();
 
 //                    ((Dabdea) getActivity()).showRatingDialog(true, new LocalBaseActivity.OnRateListner() {
@@ -1094,6 +1098,8 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
         Intent intent = new Intent(getActivity(), ShareImageActivity.class);
         intent.putExtra("FinalURI", absolutePath);
         startActivity(intent);
+        requireActivity().finish();
+
 //        saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
         Log.d(TAG, "Image Created");
     }

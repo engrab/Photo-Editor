@@ -148,7 +148,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
     List<LizDavenport> filters;
 
     public static ImageView imgButtonImage, imgReset;
-
+    ProgressDialog dia;
     // Filter Contols
     GPUImageBrightnessFilter brightnessFilter;
     GPUImageContrastFilter contrastFilter;
@@ -1429,7 +1429,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
         return r.nextInt((UpperLimit - LowerLimit) + 1) + LowerLimit;
     }
 
-    ProgressDialog dia;
+
 
     public void showProgress() {
         //pDialog.show();

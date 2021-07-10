@@ -77,7 +77,7 @@ public class MainActivity extends LocalBaseActivity {
         objPref = new SharedPreferenceManager(this);
         PatrickCox.FinalBitmap = null;
 
-        HomeFragment mainFragment = new HomeFragment();
+        HomeFragment mainFragment = new HomeFragment(MainActivity.this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.MainContainer, mainFragment).commit();
 
@@ -114,7 +114,7 @@ public class MainActivity extends LocalBaseActivity {
                     }, 2000);
                 }
             } else {
-                HomeFragment homeFragment = new HomeFragment();
+                HomeFragment homeFragment = new HomeFragment(MainActivity.this);
                 fragmentManager.beginTransaction().replace(R.id.MainContainer, homeFragment).commit();
             }
         } catch (Exception e) {

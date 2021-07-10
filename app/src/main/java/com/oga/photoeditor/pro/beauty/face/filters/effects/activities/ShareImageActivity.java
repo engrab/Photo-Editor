@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.ACTION_SEND;
 import static android.content.Intent.EXTRA_DOCK_STATE_LE_DESK;
 import static android.content.Intent.FILL_IN_CLIP_DATA;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
@@ -44,17 +45,22 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     NativeAd nativeAd;
     NativeAdLayout nativeAdLayout;
     private static final String TAG = "ShareImageActivity";
+    Bundle bundle;
+
     private void loadAd() {
     }
+
+    String finalURI;
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         makeFullScreen();
-        setContentView((int) R.layout.activity_image_share);
+        setContentView(R.layout.activity_image_share);
         nativeAdLayout = findViewById(R.id.native_ad_container);
 
         loadNativeAd();
-        String finalURI = getIntent().getExtras().getString("FinalURI");
+
+        finalURI = getIntent().getExtras().getString("FinalURI");
 
         this.file = new File(finalURI);
         Picasso.get().load(this.file).into((ImageView) findViewById(R.id.image_view_preview));
@@ -64,11 +70,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
                 ShareImageActivity.this.onClick(view);
             }
         });
-//        findViewById(R.id.image_view_back).setOnClickListener(new View.OnClickListener() {
-//            public final void onClick(View view) {
-//                ShareImageActivity.this.onClick(view);
-//            }
-//        });
+
         findViewById(R.id.image_view_home).setOnClickListener(new View.OnClickListener() {
             public final void onClick(View view) {
                 ShareImageActivity.this.onClick(view);
@@ -123,6 +125,103 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
 
     }
 
+//    @Override
+//    public void onClick(View v) {
+//        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+//        ArrayList<Uri> streamUris = new ArrayList<Uri>();
+//        for (int i = 0; i < 10; i++) {
+//            File tmpFile = new File(finalURI);
+//            String authority = getPackageName() + ".provider";
+//            Uri tmp = FileProvider.getUriForFile(ShareImageActivity.this, authority, tmpFile);
+//            streamUris.add(tmp);
+//        }
+//        switch (v.getId()) {
+//            case R.id.image_view_share_more:
+//                shareImage(streamUris);
+//                break;
+//            case R.id.image_view_gmail:
+//                shareImage(streamUris);
+//                break;
+//            case R.id.image_view_about:
+//                startActivity(new Intent(this, MyWorkActivity.class));
+//                this.finish();
+//                break;
+//            case R.id.imgButtonImage:
+//                startActivity(new Intent(ShareImageActivity.this, MainActivity.class));
+//                finish();
+//                break;
+//            case R.id.image_view_whatsapp:
+//                if (!streamUris.isEmpty()) {
+//                    whatsappIntent.setType("*/*");
+//                    whatsappIntent.setPackage("com.whatsapp");
+//                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
+//                    whatsappIntent.putExtra(Intent.EXTRA_STREAM, streamUris.get(0));
+//                    try {
+//                        startActivity(Intent.createChooser(whatsappIntent, "Share Image!"));
+//                    } catch (android.content.ActivityNotFoundException ex) {
+//                        Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//                break;
+//            case R.id.image_view_insta:
+//                if (!streamUris.isEmpty()) {
+//                    whatsappIntent.setType("*/*");
+//                    whatsappIntent.setPackage("com.instagram.android");
+//                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
+//                    whatsappIntent.putExtra(Intent.EXTRA_STREAM, streamUris.get(0));
+//                    try {
+//                        startActivity(Intent.createChooser(whatsappIntent, "Share Image!"));
+//                    } catch (android.content.ActivityNotFoundException ex) {
+//                        Toast.makeText(this, "Instagram have not been installed.", Toast.LENGTH_LONG).show();
+//                        shareImage(streamUris);
+//                    }
+//                }
+//                break;
+//            case R.id.image_view_messenger:
+//                if (!streamUris.isEmpty()) {
+//                    whatsappIntent.setType("*/*");
+//                    whatsappIntent.setPackage("com.snapchat.android");
+//                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
+//                    whatsappIntent.putExtra(Intent.EXTRA_STREAM, streamUris.get(0));
+//                    try {
+//                        startActivity(Intent.createChooser(whatsappIntent, "Share Image!"));
+//                    } catch (android.content.ActivityNotFoundException ex) {
+//                        Toast.makeText(this, "Snapchat have not been installed.", Toast.LENGTH_LONG).show();
+//                        shareImage(streamUris);
+//                    }
+//                }
+//                break;
+//            case R.id.image_view_facebook:
+//                if (!streamUris.isEmpty()) {
+//                    whatsappIntent.setType("*/*");
+//                    whatsappIntent.setPackage("com.facebook.katana");
+//                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
+//                    whatsappIntent.putExtra(Intent.EXTRA_STREAM, streamUris.get(0));
+//                    try {
+//                        startActivity(Intent.createChooser(whatsappIntent, "Share Image!"));
+//                    } catch (android.content.ActivityNotFoundException ex) {
+//                        Toast.makeText(this, "Snapchat have not been installed.", Toast.LENGTH_LONG).show();
+//                        shareImage(streamUris);
+//                    }
+//                }
+//
+//                break;
+//        }
+//    }
+//
+//    private void shareImage(ArrayList<Uri> uris) {
+//
+//        try {
+//            Intent share = new Intent(Intent.ACTION_SEND);
+//            share.setType("*/*");
+//            share.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
+//            share.putExtra(Intent.EXTRA_STREAM, uris.get(0));
+//            startActivity(Intent.createChooser(share, "Share Image!"));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public static void lamb(ShareImageActivity saveAndShareActivity, View view) {
         Intent intent = new Intent("android.intent.action.SEND");
         intent.setType("image/*");
@@ -148,7 +247,6 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onError(Ad ad, AdError adError) {
-                Toast.makeText(ShareImageActivity.this, "Error: " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -214,21 +312,31 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
     }
 
     public void onClick(View view) {
+
+        ArrayList<Uri> streamUris;
         if (view != null) {
+
+            streamUris = new ArrayList<Uri>();
+            for (int i = 0; i < 10; i++) {
+                File tmpFile = new File(finalURI);
+                String authority = getPackageName() + ".provider";
+                Uri tmp = FileProvider.getUriForFile(ShareImageActivity.this, authority, tmpFile);
+                streamUris.add(tmp);
+            }
             int id = view.getId();
-           if (id != R.id.image_view_preview) {
+            if (id != R.id.image_view_preview) {
                 switch (id) {
                     case R.id.image_view_facebook:
-                        sharePhoto(Constants.FACE);
+                        sharePhoto(Constants.FACE, streamUris);
                         return;
                     case R.id.image_view_gmail:
-                        sharePhoto(Constants.GMAIL);
+                        sharePhoto(Constants.GMAIL, streamUris);
                         return;
                     case R.id.image_view_insta:
-                        sharePhoto(Constants.INSTA);
+                        sharePhoto(Constants.INSTA, streamUris);
                         return;
                     case R.id.image_view_messenger:
-                        sharePhoto(Constants.MESSEGER);
+                        sharePhoto(Constants.MESSEGER, streamUris);
                         return;
                     case R.id.image_view_share_more:
                         Uri createCacheFile = createCacheFile();
@@ -242,6 +350,12 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
                             return;
                         }
                         Toast.makeText(this, "Fail to sharing", Toast.LENGTH_SHORT).show();
+                        return;
+                    case R.id.image_view_twitter:
+                        sharePhoto(Constants.TWITTER, streamUris);
+                        return;
+                    case R.id.image_view_whatsapp:
+                        sharePhoto(Constants.WHATSAPP, streamUris);
                         return;
                     default:
                         switch (id) {
@@ -260,14 +374,10 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
                                 Intent intent3 = new Intent(this, MainActivity.class);
                                 intent3.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent3);
+                                finish();
 
                                 return;
-                            case R.id.image_view_twitter:
-                                sharePhoto(Constants.TWITTER);
-                                return;
-                            case R.id.image_view_whatsapp:
-                                sharePhoto(Constants.WHATSAPP);
-                                return;
+
                             default:
                                 return;
                         }
@@ -282,27 +392,21 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    public void sharePhoto(String str) {
-        if (isPackageInstalled(ShareImageActivity.this, str)) {
-            Uri createCacheFile = createCacheFile();
-            if (createCacheFile != null) {
-                Intent intent = getPackageManager().getLaunchIntentForPackage(str);
-                intent.setAction("android.intent.action.SEND");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(createCacheFile, getContentResolver().getType(createCacheFile));
-                intent.putExtra("android.intent.extra.STREAM", createCacheFile);
-                intent.setPackage(str);
-                startActivity(intent);
-                return;
+    public void sharePhoto(String packageName, ArrayList<Uri> streamUris) {
+        if (!streamUris.isEmpty()) {
+            Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+            whatsappIntent.setType("*/*");
+            whatsappIntent.setPackage(packageName);
+            whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Download App From here : https://play.google.com/store/apps/details?id=" + getPackageName());
+            whatsappIntent.putExtra(Intent.EXTRA_STREAM, streamUris.get(0));
+            try {
+                startActivity(Intent.createChooser(whatsappIntent, "Share Image!"));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(this, "Fail to sharing", Toast.LENGTH_SHORT).show();
-            return;
         }
-        Toast.makeText(this, "Can't find this App, please download and try it again", Toast.LENGTH_SHORT).show();
-        Intent intent2 = new Intent("android.intent.action.VIEW");
-        intent2.setData(Uri.parse("market://details?id=" + str));
-        startActivity(intent2);
     }
+
 
     public static boolean isPackageInstalled(Context context, String str) {
         PackageManager pm = context.getPackageManager();
@@ -310,7 +414,7 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
             pm.getPackageInfo(str, 0);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.d(TAG, "isPackageInstalled: "+e.toString());
+            Log.d(TAG, "isPackageInstalled: " + e.toString());
         }
 
         return false;
@@ -320,14 +424,14 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         return FileProvider.getUriForFile(getApplicationContext(), "" + getPackageName() + ".provider", this.file);
     }
 
-    private boolean getInstallAppList(String uri){
+    private boolean getInstallAppList(String uri) {
         List<ApplicationInfo> listApplicationInfo = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);
         String[] stringsList = new String[listApplicationInfo.size()];
-        int i=0;
-        for (ApplicationInfo applicationInfo: listApplicationInfo){
+        int i = 0;
+        for (ApplicationInfo applicationInfo : listApplicationInfo) {
             stringsList[i] = applicationInfo.packageName;
             i++;
-            if (applicationInfo.packageName.equals(uri)){
+            if (applicationInfo.packageName.equals(uri)) {
                 return true;
             }
         }
@@ -336,12 +440,12 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
 
     }
 
-    public boolean isAppInstalled(Context context, String uri){
+    public boolean isAppInstalled(Context context, String uri) {
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> pkgAppsList = context.getPackageManager().queryIntentActivities( mainIntent, 0);
+        List<ResolveInfo> pkgAppsList = context.getPackageManager().queryIntentActivities(mainIntent, 0);
         for (ResolveInfo resolveInfo : pkgAppsList) {
-            Log.d(TAG, "__<>"+resolveInfo.activityInfo.packageName);
+            Log.d(TAG, "__<>" + resolveInfo.activityInfo.packageName);
             if (resolveInfo.activityInfo.packageName != null
                     && resolveInfo.activityInfo.packageName.equals(uri)) {
                 return true;
@@ -350,11 +454,11 @@ public class ShareImageActivity extends BaseActivity implements View.OnClickList
         return false;
     }
 
-    private boolean isPackageAvailable(String name){
+    private boolean isPackageAvailable(String name) {
         boolean available = true;
         try {
-            getPackageManager().getPackageInfo(name,0);
-        }catch (PackageManager.NameNotFoundException e){
+            getPackageManager().getPackageInfo(name, 0);
+        } catch (PackageManager.NameNotFoundException e) {
             available = false;
         }
         return available;

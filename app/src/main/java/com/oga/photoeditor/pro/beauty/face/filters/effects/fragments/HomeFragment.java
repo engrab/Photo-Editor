@@ -40,6 +40,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.dialoge.RateDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -53,8 +54,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     RelativeLayout rlMain;
     FrameLayout adsFrame;
 
+    Context context;
 
-    public HomeFragment() {
+    public HomeFragment(MainActivity context) {
+        this.context = context;
     }
 
     RelativeLayout RL_Main;
@@ -65,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public static int Counter = 0;
 
     private void loadNativeAd() {
-        nativeAd = new NativeAd(getContext(), AdsUnits.FB_NATIVE);
+        nativeAd = new NativeAd(requireActivity(), AdsUnits.FB_NATIVE);
         NativeAdListener nativeAdListener = new NativeAdListener() {
             @Override
             public void onMediaDownloaded(Ad ad) {
@@ -101,13 +104,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void inflateAd(NativeAd nativeAd) {
         nativeAd.unregisterView();
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(context);
+//        LayoutInflater inflater1 = requireActivity().getLayoutInflater();
         View adView = inflater.inflate(R.layout.item_native_ad, nativeAdLayout, false);
         nativeAdLayout.addView(adView);
 
         LinearLayout adChoicesContainer = adView.findViewById(R.id.ad_choices_container);
 
-        AdOptionsView adOptionsView = new AdOptionsView(getContext(), nativeAd, nativeAdLayout);
+        AdOptionsView adOptionsView = new AdOptionsView(requireActivity(), nativeAd, nativeAdLayout);
         adChoicesContainer.removeAllViews();
         adChoicesContainer.addView(adOptionsView, 0);
 
