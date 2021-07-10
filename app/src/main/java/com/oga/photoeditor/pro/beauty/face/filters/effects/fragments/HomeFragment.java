@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         LinearLayout adChoicesContainer = adView.findViewById(R.id.ad_choices_container);
 
-        AdOptionsView adOptionsView = new AdOptionsView(requireActivity(), nativeAd, nativeAdLayout);
+        AdOptionsView adOptionsView = new AdOptionsView(context, nativeAd, nativeAdLayout);
         adChoicesContainer.removeAllViews();
         adChoicesContainer.addView(adOptionsView, 0);
 

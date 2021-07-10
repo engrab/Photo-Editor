@@ -1368,12 +1368,8 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            dia.dismiss();
 
-            Intent intent = new Intent(getActivity(), ShareImageActivity.class);
-            intent.putExtra("FinalURI", FinalURI);
-            startActivity(intent);
-            Tempoll.activity.finish();
+
 
         }
     }
@@ -1396,7 +1392,7 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
         }
         File file = saveImageToExternalStorage(bmOverlay);
         String absolutePath = file.getAbsolutePath();
-
+        dia.dismiss();
         Intent intent = new Intent(getActivity(), ShareImageActivity.class);
         intent.putExtra("FinalURI", absolutePath);
         startActivity(intent);

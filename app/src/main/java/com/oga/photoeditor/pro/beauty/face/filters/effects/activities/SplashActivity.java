@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
@@ -23,7 +24,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import java.util.Spliterator;
 
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
     private static final int REQUEST_PERMISSION_SETTING = 101;

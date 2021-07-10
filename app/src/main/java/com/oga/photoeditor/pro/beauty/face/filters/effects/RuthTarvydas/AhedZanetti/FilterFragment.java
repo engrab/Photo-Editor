@@ -1329,6 +1329,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
         Intent intent = new Intent(getActivity(), ShareImageActivity.class);
         intent.putExtra("FinalURI", absolutePath);
         startActivity(intent);
+        requireActivity().finish();
 
 //        saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
         Log.i("TAG", "Image Created");

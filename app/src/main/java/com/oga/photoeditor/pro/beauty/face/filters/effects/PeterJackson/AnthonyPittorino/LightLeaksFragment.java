@@ -807,7 +807,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            dia.dismiss();
+
 
         }
     }
@@ -960,11 +960,11 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
 
         File file = saveImageToExternalStorage(bmOverlay);
         String absolutePath = file.getAbsolutePath();
-
+        dia.dismiss();
         Intent intent = new Intent(getActivity(), ShareImageActivity.class);
         intent.putExtra("FinalURI", absolutePath);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
 //        saveImageToSD(bmOverlay, "photox_" + generateRandomName(1000000, 5000000) + ".jpg", Bitmap.CompressFormat.JPEG);
         Log.i("TAG", "Image Created");
     }
