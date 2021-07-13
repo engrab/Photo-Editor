@@ -14,7 +14,7 @@ import java.util.Collections;
 public class LindaBritten {
 
     public String TAG = "DatabaseAdapter";
-    public static String DATABASE_NAME = "Shayari.db";
+    public static String DATABASE_NAME = "mega.db";
 
     private static final String CREATE_AppMaster = "CREATE TABLE IF NOT EXISTS AppMaster(Application_name Text, Short_description Text, Logo Text, Download Text, Rating Text, Package_name Text);";
     private static final String CREATE_TodayTrandingMaster = "CREATE TABLE IF NOT EXISTS TodayTrandingMaster(TTID INTEGER, AMID INTEGER);";

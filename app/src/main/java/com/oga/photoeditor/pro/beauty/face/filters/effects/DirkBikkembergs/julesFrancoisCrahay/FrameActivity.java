@@ -17,7 +17,6 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -35,14 +34,13 @@ import com.facebook.ads.InterstitialAd;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.OlivierTheyskens;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.FragmentMagicMain;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MyWorkActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -164,7 +162,7 @@ public class FrameActivity extends LocalBaseActivity {
         getDownloadCompleted = new GetDownloadCompleted();
 
         getPosterData();
-        OlivierTheyskens mainFragment = new OlivierTheyskens();
+        FragmentMagicMain mainFragment = new FragmentMagicMain();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.Container, mainFragment).commit();
 
@@ -176,7 +174,7 @@ public class FrameActivity extends LocalBaseActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.Container);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (fragment instanceof OlivierTheyskens) {
+        if (fragment instanceof FragmentMagicMain) {
 
             showResetDialog(getActivity(), new OnResetListner() {
                 @Override
@@ -344,7 +342,7 @@ public class FrameActivity extends LocalBaseActivity {
                                 Log.e("Name : ", "" + appPrefs.getPipName());
 
                                 try {
-                                    OlivierTheyskens.RL_MagicEffect.removeAllViews();
+                                    FragmentMagicMain.RL_MagicEffect.removeAllViews();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -355,7 +353,7 @@ public class FrameActivity extends LocalBaseActivity {
                                         try {
 //                                        startDecodingLatestCurveData();
                                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                            OlivierTheyskens mainFragment = new OlivierTheyskens();
+                                            FragmentMagicMain mainFragment = new FragmentMagicMain();
                                             fragmentManager.beginTransaction().replace(R.id.Container, mainFragment).commit();
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -445,7 +443,7 @@ public class FrameActivity extends LocalBaseActivity {
                     Log.e("Name : ", "" + appPrefs.getPipName());
 
                     try {
-                        OlivierTheyskens.RL_MagicEffect.removeAllViews();
+                        FragmentMagicMain.RL_MagicEffect.removeAllViews();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -456,7 +454,7 @@ public class FrameActivity extends LocalBaseActivity {
                             try {
 //                                        startDecodingLatestCurveData();
                                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                OlivierTheyskens mainFragment = new OlivierTheyskens();
+                                FragmentMagicMain mainFragment = new FragmentMagicMain();
                                 fragmentManager.beginTransaction().replace(R.id.Container, mainFragment).commit();
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -2,7 +2,6 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafS
 
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -57,7 +55,6 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.RichardTyler.Pnanterist;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.multiTouchLib.MultiTouchListener;
@@ -69,18 +66,12 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import it.sephiroth.android.library.widget.AdapterView;
@@ -158,7 +149,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
     private DianaVonGrüning.FilterAdjuster mSaturationFilterAdjuster;
 
     private DianaVonGrüning.FilterAdjuster mSharpnessFilterAdjuster;
-    private static RelativeLayout adViewContainer;
+//    private static RelativeLayout adViewContainer;
 
 
     public static RelativeLayout MainContainer;
@@ -338,7 +329,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.shimmer_fragment_filters, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_edit_image, container, false);
 
 
 
@@ -376,40 +367,40 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
         } catch (Exception e) {
             e.printStackTrace();
         }
-        adViewContainer = rootView.findViewById(R.id.adViewContainer);
+//        adViewContainer = rootView.findViewById(R.id.adViewContainer);
         loadInterstitialAd();
 
 // END OF BANNER
-        loadBannerAd();
+//        loadBannerAd();
         return rootView;
     }
 
-    private void loadBannerAd() {
-
-        AdView adView = new AdView(getContext(), AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
-        adViewContainer.addView(adView);
-        AdListener adListener = new AdListener() {
-            @Override
-            public void onError(Ad ad, AdError adError) {
-            }
-
-            @Override
-            public void onAdLoaded(Ad ad) {
-            }
-
-            @Override
-            public void onAdClicked(Ad ad) {
-            }
-
-            @Override
-            public void onLoggingImpression(Ad ad) {
-            }
-        };
-        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
-                .withAdListener(adListener)
-                .build();
-        adView.loadAd(loadAdConfig);
-    }
+//    private void loadBannerAd() {
+//
+//        AdView adView = new AdView(getContext(), AdsUnits.FB_BANNER, AdSize.BANNER_HEIGHT_50);
+//        adViewContainer.addView(adView);
+//        AdListener adListener = new AdListener() {
+//            @Override
+//            public void onError(Ad ad, AdError adError) {
+//            }
+//
+//            @Override
+//            public void onAdLoaded(Ad ad) {
+//            }
+//
+//            @Override
+//            public void onAdClicked(Ad ad) {
+//            }
+//
+//            @Override
+//            public void onLoggingImpression(Ad ad) {
+//            }
+//        };
+//        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
+//                .withAdListener(adListener)
+//                .build();
+//        adView.loadAd(loadAdConfig);
+//    }
 
     //    Initialize the Curve filter
     private void initCurveFilterToolBar() {

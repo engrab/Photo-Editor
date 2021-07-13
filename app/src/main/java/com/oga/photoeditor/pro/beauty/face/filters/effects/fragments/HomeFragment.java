@@ -168,30 +168,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     fragmentManager.beginTransaction().replace(R.id.MainContainer, previewFragment).addToBackStack(null).commit();
                     break;
 
-//                case R.id.iv_share:
-//
-//                    try {
-//                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//                        shareIntent.setType("text/plain");
-//                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name");
-//                        String shareMessage = "\nLet me recommend you this application\n\n";
-//                        shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
-//                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-//                        startActivity(Intent.createChooser(shareIntent, "choose one"));
-//                    } catch (Exception e) {
-//                    }
-//                    break;
-//
-//                case R.id.iv_reta:
-//
-//                    PatrickCox.ratingDialog(getActivity());
-//                    break;
-//
-//                case R.id.iv_privecy:
-//
-//                    StormKeating privacyPolicyFragment = new StormKeating();
-//                    fragmentManager.beginTransaction().replace(R.id.MainContainer, privacyPolicyFragment).addToBackStack(null).commit();
-//                    break;
 
                 case R.id.LL_Mywork:
                     startActivity(new Intent(getActivity(), MyWorkActivity.class));

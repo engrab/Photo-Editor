@@ -79,10 +79,10 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
 import static com.oga.photoeditor.pro.beauty.face.filters.effects.R.id.imgCroppdImage;
 
 
-public class OlivierTheyskens extends Fragment implements View.OnClickListener {
+public class FragmentMagicMain extends Fragment implements View.OnClickListener {
 
 
-    public OlivierTheyskens() {
+    public FragmentMagicMain() {
         // Required empty public constructor
     }
 
@@ -166,7 +166,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
 
                                 //startDecodingLatestCurveData();
                                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                OlivierTheyskens mainFragment = new OlivierTheyskens();
+                                FragmentMagicMain mainFragment = new FragmentMagicMain();
                                 fragmentManager.beginTransaction().replace(R.id.Container, mainFragment).commit();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -1159,6 +1159,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            showProgress();
 
         }
 
@@ -1226,6 +1227,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            dismissProgress();
             counter = 0;
 
             try {
@@ -1281,7 +1283,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
             imgBackMain.setAdjustViewBounds(true);
             imgBackMain.setLayoutParams(params2);
             GPUImageViewCroppedImage.setVisibility(View.GONE);
-            dismissProgress();
+
 
         }
 
@@ -1367,7 +1369,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
     private void FindControls(View rootView) {
         try {
             mContext = getActivity();
-
+            showProgress();
 
             imgBackMain = (ImageView) rootView.findViewById(R.id.imgBackMain);
             imgEdit = (ImageView) rootView.findViewById(R.id.imgEdit);
@@ -1403,7 +1405,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
             appPrefs = new SharedPreferenceManager(getActivity());
             PipName = appPrefs.getPipName().trim();
 
-            showProgress();
+
             startDecodingLatestCurveData();
 
             layoutParams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
@@ -1423,6 +1425,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        dismissProgress();
     }
 
 
@@ -1458,7 +1461,7 @@ public class OlivierTheyskens extends Fragment implements View.OnClickListener {
                     } catch (Exception e) {
                     }
                 }
-            }, 1000);
+            }, 10);
 
         } catch (Exception ex) {
             ex.printStackTrace();
