@@ -2,7 +2,6 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.SophiaTolli
 
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -46,7 +44,6 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.InterstitialAd;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.RichardTyler.Pnanterist;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
@@ -54,7 +51,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.John
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.LizDavenport;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.WayneCooper;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DianaVonGrüning;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.AmberRenae.Tempoll;
@@ -70,16 +67,11 @@ import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -219,9 +211,9 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
 
             imgTemp = rootView.findViewById(R.id.imgTemp);
 
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(PatrickCox.bitmap.getWidth(), PatrickCox.bitmap.getHeight());
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ImageBitmap.bitmap.getWidth(), ImageBitmap.bitmap.getHeight());
 
-            imgTemp.setImageBitmap(PatrickCox.bitmap);
+            imgTemp.setImageBitmap(ImageBitmap.bitmap);
 
             ViewTreeObserver vto = imgTemp.getViewTreeObserver();
             vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -236,7 +228,7 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
                         imageLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                         drawing_view_container.setLayoutParams(imageLayoutParams);
                         imgTemp.setVisibility(View.GONE);
-                        MainGPUImageView.setImage(PatrickCox.bitmap);
+                        MainGPUImageView.setImage(ImageBitmap.bitmap);
                     }
 
                     return true;
@@ -393,7 +385,7 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
 
     public void CurveImage() {
 
-        smallImageBackgroud = PatrickCox.bitmap;
+        smallImageBackgroud = ImageBitmap.bitmap;
 
         initCurveFilterToolBar();
 
@@ -1091,7 +1083,7 @@ public class EditorFragment extends Fragment implements View.OnClickListener, Se
                 ((Tempoll) getActivity()).showResetDialog(getActivity(), new LocalBaseActivity.OnResetListner() {
                     @Override
                     public void onReset() {
-                        MainGPUImageView.setImage(PatrickCox.bitmap);
+                        MainGPUImageView.setImage(ImageBitmap.bitmap);
                         PrevCurvePosition = 0;
                         PrevBrightness = 50;
                         PrevContrast = 50;

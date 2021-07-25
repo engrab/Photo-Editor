@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
 public class BubbleInputDialog extends Dialog {
@@ -65,7 +65,7 @@ public class BubbleInputDialog extends Dialog {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                long textLength = PatrickCox.calculateLength(s);
+                long textLength = ImageBitmap.calculateLength(s);
                 tv_show_count.setText(String.valueOf(MAX_COUNT - textLength));
                 if (textLength > MAX_COUNT) {
                     tv_show_count.setTextColor(mContext.getResources().getColor(R.color.red_e73a3d));

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
@@ -56,7 +56,7 @@ public class BrunoPieters extends RecyclerView.Adapter<BrunoPieters.MyViewHolder
 
         holder.imageViewIcon.setTag("" + listPosition);
 
-        holder.imageViewIcon.setImageBitmap(PatrickCox.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext));
+        holder.imageViewIcon.setImageBitmap(ImageBitmap.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext));
 
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class BrunoPieters extends RecyclerView.Adapter<BrunoPieters.MyViewHolder
                 try {
                     int pos = Integer.parseInt(v.getTag().toString());
 
-                    Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext);
+                    Bitmap bitmap = ImageBitmap.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext);
                     EditImageFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {

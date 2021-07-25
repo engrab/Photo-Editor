@@ -41,7 +41,7 @@ import com.facebook.ads.InterstitialAd;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.ShareImageActivity;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JacobLuppino.DanniiMinogue;
@@ -233,7 +233,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         ButtomMenuControl(rootView);
         HeaderControl(rootView);
 
-        MainGPUImageView.setImage(PatrickCox.bitmap);
+        MainGPUImageView.setImage(ImageBitmap.bitmap);
     }
 
     public void AllBlendFilters() {
@@ -299,11 +299,11 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
                 if (blendImage == null) {
 //                    blendImage = BitmapFactory.decodeResource(mContext.getResources(), ArrayDataList.getIes[0]);
                 }
-                if (PatrickCox.BlurBitmapTemp == null) {
+                if (ImageBitmap.BlurBitmapTemp == null) {
 //                    CommonUtilities.BlurBitmapTemp = BitmapFactory.decodeResource(mContext.getResources(), ArrayDataList.getColor[0]);
                 }
                 screenBlendFilter.setBitmap(blendImage);
-                colorBlendFilter.setBitmap(PatrickCox.BlurBitmapTemp);
+                colorBlendFilter.setBitmap(ImageBitmap.BlurBitmapTemp);
 
                 filterGroup.addFilter(screenBlendFilter);
                 filterGroup.addFilter(colorBlendFilter);
@@ -589,7 +589,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         protected String doInBackground(Object... params) {
 
             try {
-                bmp = adjustOpacity(PatrickCox.BlurBitmapTemp, progress);
+                bmp = adjustOpacity(ImageBitmap.BlurBitmapTemp, progress);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -777,7 +777,7 @@ public class LightLeaksFragment extends Fragment implements View.OnClickListener
         if (seekBar.getId() == R.id.seekbar) {
 
             if (Value.equals("IES"))
-                new BlendOpacityImage(seekBar.getProgress(), PatrickCox.BlurBitmapTemp).execute();
+                new BlendOpacityImage(seekBar.getProgress(), ImageBitmap.BlurBitmapTemp).execute();
             else
                 new BlendOpacityImage(seekBar.getProgress(), blendImage).execute();
         }

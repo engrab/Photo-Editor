@@ -4,7 +4,6 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,7 +21,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.dd.processbutton.iml.ActionProcessButton;
@@ -206,7 +204,7 @@ public class PhotoFrameFragment extends Fragment {
 
             recipeViewHolder.ThemePreviewImage.setTag("" + listPosition);
 
-            recipeViewHolder.ThemePreviewImage.setImageBitmap(PatrickCox.getBitmapFromAsset(shimmerBean.getDirName(), mContext));
+            recipeViewHolder.ThemePreviewImage.setImageBitmap(ImageBitmap.getBitmapFromAsset(shimmerBean.getDirName(), mContext));
 
             recipeViewHolder.txtImageName.setText(shimmerBean.getFileName());
             recipeViewHolder.txtEdit.setBackground(getResources().getDrawable(editImage.get(listPosition)));

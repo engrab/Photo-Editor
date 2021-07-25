@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 
@@ -49,7 +49,7 @@ public class MartinMargiela extends RecyclerView.Adapter<MartinMargiela.MyViewHo
         holder.imageViewIcon.setTag("" + listPosition);
         holder.imageViewIcon.setColorFilter(R.color.black);
 
-        holder.imageViewIcon.setImageBitmap(PatrickCox.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext));
+        holder.imageViewIcon.setImageBitmap(ImageBitmap.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext));
 
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,7 @@ public class MartinMargiela extends RecyclerView.Adapter<MartinMargiela.MyViewHo
                 try {
                     int pos = Integer.parseInt(v.getTag().toString());
 
-                    Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(pos).getDirName(), mContext);
+                    Bitmap bitmap = ImageBitmap.getBitmapFromAsset(dataSet.get(pos).getDirName(), mContext);
                     EditImageFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {

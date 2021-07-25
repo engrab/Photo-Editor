@@ -35,8 +35,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.ChristopherChronis;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.MaskModel;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.MaskableFrameLayout.MaskableFrameLayout;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.multiTouchLib.MultiTouchListener;
@@ -48,7 +48,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageAddBlendFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageColorBlendFilter;
@@ -86,6 +85,9 @@ import static com.oga.photoeditor.pro.beauty.face.filters.effects.R.id.imgCroppd
 public class FragmentMagicMain extends Fragment implements View.OnClickListener {
 
 
+    private static final String TAG = "FragmentMagicMain";
+    public static int counter = 0;
+
     public FragmentMagicMain() {
         // Required empty public constructor
     }
@@ -119,7 +121,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 
     JSONObject jsonObject;
 
-    public static ArrayList<ChristopherChronis> arrayList;
+    public static ArrayList<MaskModel> arrayList;
 
     @Override
     public void onClick(View v) {
@@ -144,13 +146,13 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                     imgReset.setImageResource(R.drawable.ic_true);
                     imgMain.setLayoutParams(new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth));
                     imgMain.setOnTouchListener(new MultiTouchListener());
-                    imgMain.setImageBitmap(PatrickCox.Orizanal);
+                    imgMain.setImageBitmap(ImageBitmap.Orizanal);
                 } else {
                     Counter = 0;
                     imgframe.setVisibility(View.GONE);
                     RL_EditView.setDrawingCacheEnabled(true);
                     RL_EditView.buildDrawingCache();
-                    PatrickCox.bitmap = Bitmap.createBitmap(RL_EditView.getDrawingCache());
+                    ImageBitmap.bitmap = Bitmap.createBitmap(RL_EditView.getDrawingCache());
                     RL_MagicEffect.setVisibility(View.VISIBLE);
                     imgBgMain.setVisibility(View.VISIBLE);
                     imgBackMain.setVisibility(View.VISIBLE);
@@ -184,7 +186,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         }
     }
 
-    public static void doMasking(String PipId) {
+    public static void doMasking(String PipId) throws IOException {
 
         try {
             final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -194,7 +196,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                 @Override
                 public void run() {
                     try {
-                        imgBackMain.setImageBitmap(PatrickCox.bitmap);
+                        imgBackMain.setImageBitmap(ImageBitmap.bitmap);
 
                         new finalGPUAssignAsyncTask().execute();
 
@@ -217,229 +219,234 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
             JSONArray jsonArray = responce.getJSONArray("Masks");
             for (int i = 0; i < jsonArray.length(); i++) {
                 jsonObject = jsonArray.getJSONObject(i);
-                ChristopherChronis Object = new ChristopherChronis();
+                MaskModel maskModel = new MaskModel();
 
                 try {
-                    Object.setBlurStatus(jsonObject.getJSONObject("Blur").getString("Status"));
-                    Object.setBlurValue(jsonObject.getJSONObject("Blur").getString("Value"));
+                    maskModel.setBlurStatus(jsonObject.getJSONObject("Blur").getString("Status"));
+                    maskModel.setBlurValue(jsonObject.getJSONObject("Blur").getString("Value"));
                 } catch (Exception e) {
                 }
 
                 try {
-                    Object.setPixelationStatus(jsonObject.getJSONObject("Pixelation").getString("Status"));
-                    Object.setPixelationValue(jsonObject.getJSONObject("Pixelation").getString("Value"));
+                    maskModel.setPixelationStatus(jsonObject.getJSONObject("Pixelation").getString("Status"));
+                    maskModel.setPixelationValue(jsonObject.getJSONObject("Pixelation").getString("Value"));
                 } catch (Exception e) {
                 }
 
                 try {
-                    Object.setSepiaStatus(jsonObject.getJSONObject("Sepia").getString("Status"));
-                } catch (Exception e) {
-                }
-
-
-                try {
-                    Object.setGrayscaleStatus(jsonObject.getJSONObject("Grayscale").getString("Status"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setInvertStatus(jsonObject.getJSONObject("InvertColor").getString("Status"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setMonochromeStatus(jsonObject.getJSONObject("Monochrome").getString("Status"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setSketchStatus(jsonObject.getJSONObject("Sketch").getString("Status"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setMaskName(jsonObject.getString("MaskName"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setPosterizeStatus(jsonObject.getJSONObject("Posterize").getString("Status"));
-                    Object.setPosterizeValue(jsonObject.getJSONObject("Posterize").getString("Value"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setCurveStatus(jsonObject.getJSONObject("Curve").getString("Status"));
-                    Object.setCurveDefaultFile(jsonObject.getJSONObject("Curve").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setBlendDifferenceStatus(jsonObject.getJSONObject("BlendDifference").getString("Status"));
-                    Object.setBlendDifferenceOpacity(jsonObject.getJSONObject("BlendDifference").getString("Opacity"));
-                    Object.setBlendDifferenceDefaultFile(jsonObject.getJSONObject("BlendDifference").getString("DefaultFile"));
+                    maskModel.setSepiaStatus(jsonObject.getJSONObject("Sepia").getString("Status"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendColorBurnStatus(jsonObject.getJSONObject("BlendColorBurn").getString("Status"));
-                    Object.setBlendColorBurnOpacity(jsonObject.getJSONObject("BlendColorBurn").getString("Opacity"));
-                    Object.setBlendColorBurnDefaultFile(jsonObject.getJSONObject("BlendColorBurn").getString("DefaultFile"));
+                    maskModel.setGrayscaleStatus(jsonObject.getJSONObject("Grayscale").getString("Status"));
                 } catch (Exception e) {
                 }
 
                 try {
-                    Object.setBlendDodgeStatus(jsonObject.getJSONObject("BlendDodge").getString("Status"));
-                    Object.setBlendDodgeOpacity(jsonObject.getJSONObject("BlendDodge").getString("Opacity"));
-                    Object.setBlendDodgeDefaultFile(jsonObject.getJSONObject("BlendDodge").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-
-                try {
-                    Object.setBlendDarkenStatus(jsonObject.getJSONObject("BlendDarken").getString("Status"));
-                    Object.setBlendDarkenOpacity(jsonObject.getJSONObject("BlendDarken").getString("Opacity"));
-                    Object.setBlendDarkenDefaultFile(jsonObject.getJSONObject("BlendDarken").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-
-                try {
-                    Object.setBlendDisolveStatus(jsonObject.getJSONObject("BlendDisolve").getString("Status"));
-                    Object.setBlendDisolveOpacity(jsonObject.getJSONObject("BlendDisolve").getString("Opacity"));
-                    Object.setBlendDisolveDefaultFile(jsonObject.getJSONObject("BlendDisolve").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-
-                try {
-                    Object.setBlendExclusionStatus(jsonObject.getJSONObject("BlendExclusion").getString("Status"));
-                    Object.setBlendExclusionOpacity(jsonObject.getJSONObject("BlendExclusion").getString("Opacity"));
-                    Object.setBlendExclusionDefaultFile(jsonObject.getJSONObject("BlendExclusion").getString("DefaultFile"));
+                    maskModel.setInvertStatus(jsonObject.getJSONObject("InvertColor").getString("Status"));
                 } catch (Exception e) {
                 }
 
                 try {
-                    Object.setBlendHeardLightStatus(jsonObject.getJSONObject("BlendHardLight").getString("Status"));
-                    Object.setBlendHeardLightOpacity(jsonObject.getJSONObject("BlendHardLight").getString("Opacity"));
-                    Object.setBlendHeardLightDefaultFile(jsonObject.getJSONObject("BlendHardLight").getString("DefaultFile"));
+                    maskModel.setMonochromeStatus(jsonObject.getJSONObject("Monochrome").getString("Status"));
                 } catch (Exception e) {
                 }
 
+                try {
+                    maskModel.setSketchStatus(jsonObject.getJSONObject("Sketch").getString("Status"));
+                } catch (Exception e) {
+                }
 
                 try {
-                    Object.setBlendLightenStatus(jsonObject.getJSONObject("BlendLighten").getString("Status"));
-                    Object.setBlendLightenOpacity(jsonObject.getJSONObject("BlendLighten").getString("Opacity"));
-                    Object.setBlendLightenDefaultFile(jsonObject.getJSONObject("BlendLighten").getString("DefaultFile"));
+                    maskModel.setMaskName(jsonObject.getString("MaskName"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setPosterizeStatus(jsonObject.getJSONObject("Posterize").getString("Status"));
+                    maskModel.setPosterizeValue(jsonObject.getJSONObject("Posterize").getString("Value"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setCurveStatus(jsonObject.getJSONObject("Curve").getString("Status"));
+                    maskModel.setCurveDefaultFile(jsonObject.getJSONObject("Curve").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setBlendDifferenceStatus(jsonObject.getJSONObject("BlendDifference").getString("Status"));
+                    maskModel.setBlendDifferenceOpacity(jsonObject.getJSONObject("BlendDifference").getString("Opacity"));
+                    maskModel.setBlendDifferenceDefaultFile(jsonObject.getJSONObject("BlendDifference").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendAddStatus(jsonObject.getJSONObject("BlendAdd").getString("Status"));
-                    Object.setBlendAddOpacity(jsonObject.getJSONObject("BlendAdd").getString("Opacity"));
-                    Object.setBlendAddDefaultFile(jsonObject.getJSONObject("BlendAdd").getString("DefaultFile"));
+                    maskModel.setBlendColorBurnStatus(jsonObject.getJSONObject("BlendColorBurn").getString("Status"));
+                    maskModel.setBlendColorBurnOpacity(jsonObject.getJSONObject("BlendColorBurn").getString("Opacity"));
+                    maskModel.setBlendColorBurnDefaultFile(jsonObject.getJSONObject("BlendColorBurn").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setBlendDodgeStatus(jsonObject.getJSONObject("BlendDodge").getString("Status"));
+                    maskModel.setBlendDodgeOpacity(jsonObject.getJSONObject("BlendDodge").getString("Opacity"));
+                    maskModel.setBlendDodgeDefaultFile(jsonObject.getJSONObject("BlendDodge").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendDivideStatus(jsonObject.getJSONObject("BlendDivide").getString("Status"));
-                    Object.setBlendDivideOpacity(jsonObject.getJSONObject("BlendDivide").getString("Opacity"));
-                    Object.setBlendDivideDefaultFile(jsonObject.getJSONObject("BlendDivide").getString("DefaultFile"));
+                    maskModel.setBlendDarkenStatus(jsonObject.getJSONObject("BlendDarken").getString("Status"));
+                    maskModel.setBlendDarkenOpacity(jsonObject.getJSONObject("BlendDarken").getString("Opacity"));
+                    maskModel.setBlendDarkenDefaultFile(jsonObject.getJSONObject("BlendDarken").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendMultiplyStatus(jsonObject.getJSONObject("BlendMultiply").getString("Status"));
-                    Object.setBlendMultiplyOpacity(jsonObject.getJSONObject("BlendMultiply").getString("Opacity"));
-                    Object.setBlendMultiplyDefaultFile(jsonObject.getJSONObject("BlendMultiply").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setBlendOverlayStatus(jsonObject.getJSONObject("BlendOverlay").getString("Status"));
-                    Object.setBlendOverlayOpacity(jsonObject.getJSONObject("BlendOverlay").getString("Opacity"));
-                    Object.setBlendOverlayDefaultFile(jsonObject.getJSONObject("BlendOverlay").getString("DefaultFile"));
+                    maskModel.setBlendDisolveStatus(jsonObject.getJSONObject("BlendDisolve").getString("Status"));
+                    maskModel.setBlendDisolveOpacity(jsonObject.getJSONObject("BlendDisolve").getString("Opacity"));
+                    maskModel.setBlendDisolveDefaultFile(jsonObject.getJSONObject("BlendDisolve").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendScreenStatus(jsonObject.getJSONObject("BlendScreen").getString("Status"));
-                    Object.setBlendScreenOpacity(jsonObject.getJSONObject("BlendScreen").getString("Opacity"));
-                    Object.setBlendScreenDefaultFile(jsonObject.getJSONObject("BlendScreen").getString("DefaultFile"));
+                    maskModel.setBlendExclusionStatus(jsonObject.getJSONObject("BlendExclusion").getString("Status"));
+                    maskModel.setBlendExclusionOpacity(jsonObject.getJSONObject("BlendExclusion").getString("Opacity"));
+                    maskModel.setBlendExclusionDefaultFile(jsonObject.getJSONObject("BlendExclusion").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setBlendHeardLightStatus(jsonObject.getJSONObject("BlendHardLight").getString("Status"));
+                    maskModel.setBlendHeardLightOpacity(jsonObject.getJSONObject("BlendHardLight").getString("Opacity"));
+                    maskModel.setBlendHeardLightDefaultFile(jsonObject.getJSONObject("BlendHardLight").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendAlphaStatus(jsonObject.getJSONObject("BlendAlpha").getString("Status"));
-                    Object.setBlendAlphaOpacity(jsonObject.getJSONObject("BlendAlpha").getString("Opacity"));
-                    Object.setBlendAlphaDefaultFile(jsonObject.getJSONObject("BlendAlpha").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setBlendColorStatus(jsonObject.getJSONObject("BlendColor").getString("Status"));
-                    Object.setBlendColorOpacity(jsonObject.getJSONObject("BlendColor").getString("Opacity"));
-                    Object.setBlendColorDefaultFile(jsonObject.getJSONObject("BlendColor").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setBlendHueStatus(jsonObject.getJSONObject("BlendHue").getString("Status"));
-                    Object.setBlendHueOpacity(jsonObject.getJSONObject("BlendHue").getString("Opacity"));
-                    Object.setBlendHueDefaultFile(jsonObject.getJSONObject("BlendHue").getString("DefaultFile"));
+                    maskModel.setBlendLightenStatus(jsonObject.getJSONObject("BlendLighten").getString("Status"));
+                    maskModel.setBlendLightenOpacity(jsonObject.getJSONObject("BlendLighten").getString("Opacity"));
+                    maskModel.setBlendLightenDefaultFile(jsonObject.getJSONObject("BlendLighten").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendSaturationStatus(jsonObject.getJSONObject("BlendSaturation").getString("Status"));
-                    Object.setBlendSaturationOpacity(jsonObject.getJSONObject("BlendSaturation").getString("Opacity"));
-                    Object.setBlendSaturationDefaultFile(jsonObject.getJSONObject("BlendSaturation").getString("DefaultFile"));
-                } catch (Exception e) {
-                }
-
-                try {
-                    Object.setBlendLuminosityStatus(jsonObject.getJSONObject("BlendLuminosity").getString("Status"));
-                    Object.setBlendLuminosityOpacity(jsonObject.getJSONObject("BlendLuminosity").getString("Opacity"));
-                    Object.setBlendLuminosityDefaultFile(jsonObject.getJSONObject("BlendLuminosity").getString("DefaultFile"));
+                    maskModel.setBlendAddStatus(jsonObject.getJSONObject("BlendAdd").getString("Status"));
+                    maskModel.setBlendAddOpacity(jsonObject.getJSONObject("BlendAdd").getString("Opacity"));
+                    maskModel.setBlendAddDefaultFile(jsonObject.getJSONObject("BlendAdd").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
 
                 try {
-                    Object.setBlendLinearBurnStatus(jsonObject.getJSONObject("BlendLinearBurn").getString("Status"));
-                    Object.setBlendLinearBurnOpacity(jsonObject.getJSONObject("BlendLinearBurn").getString("Opacity"));
-                    Object.setBlendLinearBurnDefaultFile(jsonObject.getJSONObject("BlendLinearBurn").getString("DefaultFile"));
+                    maskModel.setBlendDivideStatus(jsonObject.getJSONObject("BlendDivide").getString("Status"));
+                    maskModel.setBlendDivideOpacity(jsonObject.getJSONObject("BlendDivide").getString("Opacity"));
+                    maskModel.setBlendDivideDefaultFile(jsonObject.getJSONObject("BlendDivide").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+
+                try {
+                    maskModel.setBlendMultiplyStatus(jsonObject.getJSONObject("BlendMultiply").getString("Status"));
+                    maskModel.setBlendMultiplyOpacity(jsonObject.getJSONObject("BlendMultiply").getString("Opacity"));
+                    maskModel.setBlendMultiplyDefaultFile(jsonObject.getJSONObject("BlendMultiply").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
                 try {
-                    Object.setBlendSoftLightStatus(jsonObject.getJSONObject("BlendSoftLight").getString("Status"));
-                    Object.setBlendSoftLightOpacity(jsonObject.getJSONObject("BlendSoftLight").getString("Opacity"));
-                    Object.setBlendSoftLightDefaultFile(jsonObject.getJSONObject("BlendSoftLight").getString("DefaultFile"));
+                    maskModel.setBlendOverlayStatus(jsonObject.getJSONObject("BlendOverlay").getString("Status"));
+                    maskModel.setBlendOverlayOpacity(jsonObject.getJSONObject("BlendOverlay").getString("Opacity"));
+                    maskModel.setBlendOverlayDefaultFile(jsonObject.getJSONObject("BlendOverlay").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+
+                try {
+                    maskModel.setBlendScreenStatus(jsonObject.getJSONObject("BlendScreen").getString("Status"));
+                    maskModel.setBlendScreenOpacity(jsonObject.getJSONObject("BlendScreen").getString("Opacity"));
+                    maskModel.setBlendScreenDefaultFile(jsonObject.getJSONObject("BlendScreen").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+
+                try {
+                    maskModel.setBlendAlphaStatus(jsonObject.getJSONObject("BlendAlpha").getString("Status"));
+                    maskModel.setBlendAlphaOpacity(jsonObject.getJSONObject("BlendAlpha").getString("Opacity"));
+                    maskModel.setBlendAlphaDefaultFile(jsonObject.getJSONObject("BlendAlpha").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
                 try {
-                    Object.setBlendSubtractStatus(jsonObject.getJSONObject("BlendSubtract").getString("Status"));
-                    Object.setBlendSubtractOpacity(jsonObject.getJSONObject("BlendSubtract").getString("Opacity"));
-                    Object.setBlendSubtractDefaultFile(jsonObject.getJSONObject("BlendSubtract").getString("DefaultFile"));
+                    maskModel.setBlendColorStatus(jsonObject.getJSONObject("BlendColor").getString("Status"));
+                    maskModel.setBlendColorOpacity(jsonObject.getJSONObject("BlendColor").getString("Opacity"));
+                    maskModel.setBlendColorDefaultFile(jsonObject.getJSONObject("BlendColor").getString("DefaultFile"));
                 } catch (Exception e) {
                 }
 
-                arrayList.add(Object);
+                try {
+                    maskModel.setBlendHueStatus(jsonObject.getJSONObject("BlendHue").getString("Status"));
+                    maskModel.setBlendHueOpacity(jsonObject.getJSONObject("BlendHue").getString("Opacity"));
+                    maskModel.setBlendHueDefaultFile(jsonObject.getJSONObject("BlendHue").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+
+                try {
+                    maskModel.setBlendSaturationStatus(jsonObject.getJSONObject("BlendSaturation").getString("Status"));
+                    maskModel.setBlendSaturationOpacity(jsonObject.getJSONObject("BlendSaturation").getString("Opacity"));
+                    maskModel.setBlendSaturationDefaultFile(jsonObject.getJSONObject("BlendSaturation").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setBlendLuminosityStatus(jsonObject.getJSONObject("BlendLuminosity").getString("Status"));
+                    maskModel.setBlendLuminosityOpacity(jsonObject.getJSONObject("BlendLuminosity").getString("Opacity"));
+                    maskModel.setBlendLuminosityDefaultFile(jsonObject.getJSONObject("BlendLuminosity").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+
+                try {
+                    maskModel.setBlendLinearBurnStatus(jsonObject.getJSONObject("BlendLinearBurn").getString("Status"));
+                    maskModel.setBlendLinearBurnOpacity(jsonObject.getJSONObject("BlendLinearBurn").getString("Opacity"));
+                    maskModel.setBlendLinearBurnDefaultFile(jsonObject.getJSONObject("BlendLinearBurn").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setBlendSoftLightStatus(jsonObject.getJSONObject("BlendSoftLight").getString("Status"));
+                    maskModel.setBlendSoftLightOpacity(jsonObject.getJSONObject("BlendSoftLight").getString("Opacity"));
+                    maskModel.setBlendSoftLightDefaultFile(jsonObject.getJSONObject("BlendSoftLight").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                try {
+                    maskModel.setBlendSubtractStatus(jsonObject.getJSONObject("BlendSubtract").getString("Status"));
+                    maskModel.setBlendSubtractOpacity(jsonObject.getJSONObject("BlendSubtract").getString("Opacity"));
+                    maskModel.setBlendSubtractDefaultFile(jsonObject.getJSONObject("BlendSubtract").getString("DefaultFile"));
+                } catch (Exception e) {
+                }
+
+                arrayList.add(maskModel);
             }
+            Log.d(TAG, "startDecodingLatestCurveData: " + arrayList.size());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        doMasking(appPrefs.getPipName());
+        try {
+            doMasking(appPrefs.getPipName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static GPUImageFilterGroup filterGroup;
@@ -497,7 +504,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
     }
 
     public static class finalGPUAssignAsyncTask extends AsyncTask<Void, Void, Void> {
-        ChristopherChronis currentBean;
+        MaskModel currentBean;
 
         public finalGPUAssignAsyncTask() {
 
@@ -506,7 +513,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            showProgress();
         }
 
 
@@ -519,7 +526,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                 public void run() {
                     Bitmap croppedFilteredBitmap = null;
 
-                    GPUImageViewCroppedImage.setImage(Bitmap.createBitmap(PatrickCox.bitmap));
+                    GPUImageViewCroppedImage.setImage(ImageBitmap.bitmap);
                     filterGroup = new GPUImageFilterGroup();
                     //MainGPUImageView.setImage(CommonUtilities.bitmap);
                     currentBean = arrayList.get(counter);
@@ -1065,8 +1072,9 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                         }
 
 
-                        if (flag)
+                        if (flag) {
                             GPUImageViewCroppedImage.setFilter(filterGroup);
+                        }
                         croppedFilteredBitmap = Bitmap.createBitmap(GPUImageViewCroppedImage.capture());
 
                         View inflatedLayout = mContext.getLayoutInflater().inflate(R.layout.clg_layout_mask_raw, null, false);
@@ -1089,14 +1097,14 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 
                         String maskString = readFileAsBase64String(PipName + "/" + currentBean.MaskName + ".txt");
                         byte[] bytes = Base64.decode(maskString, Base64.DEFAULT);
-                        PatrickCox.mBitmapBrush = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+                        ImageBitmap.mBitmapBrush = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
 
-                        PatrickCox.mBitmapBrush = Bitmap.createScaledBitmap(PatrickCox.mBitmapBrush, DisplayWidth, DisplayHeight, false);
+                        ImageBitmap.mBitmapBrush = Bitmap.createScaledBitmap(ImageBitmap.mBitmapBrush, DisplayWidth, DisplayHeight, false);
 
-                        Drawable d = new BitmapDrawable(mContext.getResources(), PatrickCox.mBitmapBrush);
+                        Drawable d = new BitmapDrawable(mContext.getResources(), ImageBitmap.mBitmapBrush);
                         maskableFrameLayout.setMask(d);
 
-                        PatrickCox.mBitmapBrush = null;
+//                        ImageBitmap.mBitmapBrush = null;
 
 
                         //arrayListBitmap.add(Bitmap.createBitmap(maskableFrameLayout.getDrawingCache()));
@@ -1119,18 +1127,18 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (arrayList.size() > (counter + 1)) {
-                counter++;
-                new finalGPUAssignAsyncTask().execute();
-            } else {
-                new finalGPUAssignSketchAsyncTask().execute();
-            }
+//            if (arrayList.size() > (counter + 1)) {
+//                counter++;
+//                new finalGPUAssignAsyncTask().execute();
+//            }
+//            else {
+            new finalGPUAssignSketchAsyncTask().execute();
+//            }
 
         }
 
     }
 
-    public static int counter = 0;
 
     // Save Image Code
     public void mergeAndSave() {
@@ -1143,7 +1151,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         canvas.drawBitmap(RL_MagicEffect.getDrawingCache(), 0, 0, null);
         //canvas.drawBitmap(bitmapframe, 0, 0, null);
 
-        PatrickCox.BlurBitmap = bmOverlay;
+        ImageBitmap.BlurBitmap = bmOverlay;
 
         Log.i("TAG", "Image Created");
     }
@@ -1158,7 +1166,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showProgress();
+
 
         }
 
@@ -1169,7 +1177,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                 @Override
                 public void run() {
 
-                    GPUImageViewCroppedImage.setImage(Bitmap.createBitmap(PatrickCox.bitmap));
+                    GPUImageViewCroppedImage.setImage(ImageBitmap.bitmap);
                     filterGroup = new GPUImageFilterGroup();
                     //MainGPUImageView.setImage(CommonUtilities.bitmap);
                     try {
@@ -1212,7 +1220,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 
                         Bitmap bmp = adjustOpacity(croppedFilteredBitmap, Integer.parseInt("255"));
 
-                        PatrickCox.mBitmapSketch = bmp;
+                        ImageBitmap.mBitmapSketch = bmp;
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1226,63 +1234,64 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            dismissProgress();
+
+//            we test here next time.... uncomment and debug.
             counter = 0;
-
-            try {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-                PatrickCox.FinalBitmap = Bitmap.createBitmap(RL_MagicEffect.getDrawingCache());
-                // GPUImageViewCroppedImage.setImage(CommonUtilities.FinalBitmap);
-
-//                GPUImageOverlayBlendFilter overScreenOverlayFilter = new GPUImageOverlayBlendFilter();
-                //GPUImageSoftLightBlendFilter overScreenOverlayFilter = new GPUImageSoftLightBlendFilter();
-                //overScreenOverlayFilter.setBitmap(CommonUtilities.mBitmapSketch);
-                //GPUImageViewCroppedImage.setFilter(overScreenOverlayFilter);
-
-                PatrickCox.mBitmapSketch = merge(PatrickCox.FinalBitmap, croppedFilteredBitmap);//GPUImageViewCroppedImage.capture();
-
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
-
-                ImageView imgFrame = new ImageView(mContext);
-                imgFrame.setLayoutParams(params);
-                imgFrame.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-                imgFrame.setImageBitmap(PatrickCox.mBitmapSketch);
-
-                RL_MagicEffect.addView(imgFrame);
-
-            } catch (Exception e) {
-            }
-
-            InputStream is = null;
-            try {
-
-                is = mContext.getAssets().open(PipName + "/" + "bg.txt");
-                if (null != is) {
-                    String maskString = readFileAsBase64String(PipName + "/" + "bg.txt");
-                    byte[] bytes = Base64.decode(maskString, Base64.DEFAULT);
-
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-                    Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-                    b = Bitmap.createScaledBitmap(b, DisplayWidth, DisplayHeight, false);
-
-                    imgBgMain.setImageBitmap(b);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
-            RL_MagicEffect.setLayoutParams(params2);
-            imgBackMain.setAdjustViewBounds(true);
-            imgBackMain.setLayoutParams(params2);
-            GPUImageViewCroppedImage.setVisibility(View.GONE);
-
+//
+//            try {
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//
+//                ImageBitmap.FinalBitmap = Bitmap.createBitmap(RL_MagicEffect.getDrawingCache());
+//                // GPUImageViewCroppedImage.setImage(CommonUtilities.FinalBitmap);
+//
+////                GPUImageOverlayBlendFilter overScreenOverlayFilter = new GPUImageOverlayBlendFilter();
+//                //GPUImageSoftLightBlendFilter overScreenOverlayFilter = new GPUImageSoftLightBlendFilter();
+//                //overScreenOverlayFilter.setBitmap(CommonUtilities.mBitmapSketch);
+//                //GPUImageViewCroppedImage.setFilter(overScreenOverlayFilter);
+//
+//                ImageBitmap.mBitmapSketch = merge(ImageBitmap.FinalBitmap, croppedFilteredBitmap);//GPUImageViewCroppedImage.capture();
+//
+//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
+//
+//                ImageView imgFrame = new ImageView(mContext);
+//                imgFrame.setLayoutParams(params);
+//                imgFrame.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//
+//                imgFrame.setImageBitmap(ImageBitmap.mBitmapSketch);
+//
+//                RL_MagicEffect.addView(imgFrame);
+//
+//            } catch (Exception e) {
+//            }
+//
+//            InputStream is = null;
+//            try {
+//
+//                is = mContext.getAssets().open(PipName + "/" + "bg.txt");
+//                if (null != is) {
+//                    String maskString = readFileAsBase64String(PipName + "/" + "bg.txt");
+//                    byte[] bytes = Base64.decode(maskString, Base64.DEFAULT);
+//
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//
+//                    Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+//                    b = Bitmap.createScaledBitmap(b, DisplayWidth, DisplayHeight, false);
+//
+//                    imgBgMain.setImageBitmap(b);
+//                }
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
+//            RL_MagicEffect.setLayoutParams(params2);
+//            imgBackMain.setAdjustViewBounds(true);
+//            imgBackMain.setLayoutParams(params2);
+//            GPUImageViewCroppedImage.setVisibility(View.GONE);
+            dismissProgress();
 
         }
 

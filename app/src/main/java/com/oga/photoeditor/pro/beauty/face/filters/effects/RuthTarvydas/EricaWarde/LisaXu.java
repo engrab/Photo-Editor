@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZanetti.FilterFragment;
@@ -44,7 +44,7 @@ public class LisaXu extends RecyclerView.Adapter<LisaXu.MyViewHolder> {
 
         holder.imageViewIcon.setTag("" + listPosition);
 
-        holder.imageViewIcon.setImageBitmap(PatrickCox.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext));
+        holder.imageViewIcon.setImageBitmap(ImageBitmap.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext));
 
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class LisaXu extends RecyclerView.Adapter<LisaXu.MyViewHolder> {
                 try {
                     int pos = Integer.parseInt(v.getTag().toString());
 
-                    Bitmap bitmap = PatrickCox.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext);
+                    Bitmap bitmap = ImageBitmap.getBitmapFromAsset(dataSet.get(listPosition).getDirName(), mContext);
                     FilterFragment.AddSticker(bitmap);
 
                 } catch (Exception e) {

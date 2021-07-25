@@ -1,6 +1,6 @@
 package com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen;
 
-public class ChristopherChronis {
+public class MaskModel {
 
     //public String Blur, Pixelation, Sepia, Grayscale, Monochrome, Sketch, MaskName;
     public String Effect,Opacity,GrayScale;

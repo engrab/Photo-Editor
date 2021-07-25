@@ -36,7 +36,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.activities.MainActivi
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.EditImageFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafSimons.FragmentMagicMain;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
@@ -87,7 +87,7 @@ public class FrameActivity extends LocalBaseActivity {
                 adapter = new PreviewAdapter(this);
                 recycler_view.setAdapter(adapter);
                 adapter.notifyItemInserted(arrayList.size() - 1);
-                linearLayoutManager.scrollToPosition(PatrickCox.Pos);
+                linearLayoutManager.scrollToPosition(ImageBitmap.Pos);
             }
         } catch (IOException e) {
             e.printStackTrace();

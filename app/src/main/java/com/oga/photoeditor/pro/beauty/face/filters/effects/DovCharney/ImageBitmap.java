@@ -11,7 +11,7 @@ import android.net.Uri;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class PatrickCox {
+public final class ImageBitmap {
 
     public static Bitmap bitmap = null;
 

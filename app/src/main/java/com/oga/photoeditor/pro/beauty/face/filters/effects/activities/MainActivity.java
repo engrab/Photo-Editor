@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,17 +19,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.Util.AdsUnits;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.fragments.HomeFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.FrameActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.Pentagon.AmberRenae.Tempoll;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.JennyKee.Bentesta;
@@ -75,7 +68,7 @@ public class MainActivity extends LocalBaseActivity {
 
         activity = MainActivity.this;
         objPref = new SharedPreferenceManager(this);
-        PatrickCox.FinalBitmap = null;
+        ImageBitmap.FinalBitmap = null;
 
         HomeFragment mainFragment = new HomeFragment(MainActivity.this);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -231,27 +224,27 @@ public class MainActivity extends LocalBaseActivity {
         if (resultUri != null) {
 
             try {
-                PatrickCox.bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
-                PatrickCox.BlurBitmap = Bitmap.createScaledBitmap(PatrickCox.bitmap, PatrickCox.bitmap.getWidth() * 10 / 100, PatrickCox.bitmap.getHeight() * 10 / 100, false);
+                ImageBitmap.bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
+                ImageBitmap.BlurBitmap = Bitmap.createScaledBitmap(ImageBitmap.bitmap, ImageBitmap.bitmap.getWidth() * 10 / 100, ImageBitmap.bitmap.getHeight() * 10 / 100, false);
 
                 Display display = getWindowManager().getDefaultDisplay();
                 int w = display.getWidth();
                 int h = display.getHeight();
 
-                if (PatrickCox.bitmap.getHeight() > PatrickCox.bitmap.getWidth()) {
-                    if (PatrickCox.bitmap.getHeight() > h)
-                        PatrickCox.bitmap = Bitmap.createScaledBitmap(PatrickCox.bitmap, ((PatrickCox.bitmap.getWidth() * h) / PatrickCox.bitmap.getHeight()), h, false);
+                if (ImageBitmap.bitmap.getHeight() > ImageBitmap.bitmap.getWidth()) {
+                    if (ImageBitmap.bitmap.getHeight() > h)
+                        ImageBitmap.bitmap = Bitmap.createScaledBitmap(ImageBitmap.bitmap, ((ImageBitmap.bitmap.getWidth() * h) / ImageBitmap.bitmap.getHeight()), h, false);
 
-                    if (PatrickCox.bitmap.getWidth() > w) {
-                        PatrickCox.bitmap = Bitmap.createScaledBitmap(PatrickCox.bitmap, w, ((PatrickCox.bitmap.getHeight() * w) / PatrickCox.bitmap.getWidth()), false);
+                    if (ImageBitmap.bitmap.getWidth() > w) {
+                        ImageBitmap.bitmap = Bitmap.createScaledBitmap(ImageBitmap.bitmap, w, ((ImageBitmap.bitmap.getHeight() * w) / ImageBitmap.bitmap.getWidth()), false);
                     }
                 } else {
-                    if (PatrickCox.bitmap.getWidth() > w) {
-                        PatrickCox.bitmap = Bitmap.createScaledBitmap(PatrickCox.bitmap, w, ((PatrickCox.bitmap.getHeight() * w) / PatrickCox.bitmap.getWidth()), false);
+                    if (ImageBitmap.bitmap.getWidth() > w) {
+                        ImageBitmap.bitmap = Bitmap.createScaledBitmap(ImageBitmap.bitmap, w, ((ImageBitmap.bitmap.getHeight() * w) / ImageBitmap.bitmap.getWidth()), false);
                     }
 
-                    if (PatrickCox.bitmap.getHeight() > h)
-                        PatrickCox.bitmap = Bitmap.createScaledBitmap(PatrickCox.bitmap, ((PatrickCox.bitmap.getWidth() * h) / PatrickCox.bitmap.getHeight()), h, false);
+                    if (ImageBitmap.bitmap.getHeight() > h)
+                        ImageBitmap.bitmap = Bitmap.createScaledBitmap(ImageBitmap.bitmap, ((ImageBitmap.bitmap.getWidth() * h) / ImageBitmap.bitmap.getHeight()), h, false);
 
                 }
 
@@ -260,23 +253,23 @@ public class MainActivity extends LocalBaseActivity {
             }
 
             if (Cat == 1) {
-                PatrickCox.Orizanal = PatrickCox.bitmap;
+                ImageBitmap.Orizanal = ImageBitmap.bitmap;
                 FrameActivity.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
 
             if (Cat == 2) {
-                PatrickCox.Orizanal = PatrickCox.bitmap;
+                ImageBitmap.Orizanal = ImageBitmap.bitmap;
                 Tempoll.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
             if (Cat == 3) {
-                PatrickCox.Orizanal = PatrickCox.bitmap;
+                ImageBitmap.Orizanal = ImageBitmap.bitmap;
                 Pnanterist.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
             if (Cat == 4) {
-                PatrickCox.Orizanal = PatrickCox.bitmap;
+                ImageBitmap.Orizanal = ImageBitmap.bitmap;
                 Bentesta.startWithUri(MainActivity.this, resultUri);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }

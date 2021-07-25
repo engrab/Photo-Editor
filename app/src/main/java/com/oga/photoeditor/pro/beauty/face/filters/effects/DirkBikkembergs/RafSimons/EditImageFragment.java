@@ -39,9 +39,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.ads.AbstractAdListener;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.facebook.ads.InterstitialAd;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.JohnCrittle;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.LizDavenport;
@@ -51,7 +48,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.AnnDe
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.AnnDemeulemeester.CathyPill;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.AnnDemeulemeester.MartinMargiela;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.julesFrancoisCrahay.FrameActivity;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
@@ -269,7 +266,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
 
     public void CurveImage() {
 
-        smallImageBackgroud = PatrickCox.BlurBitmap;
+        smallImageBackgroud = ImageBitmap.BlurBitmap;
 
         initCurveFilterToolBar();
 
@@ -353,7 +350,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
             RelativeLayout.LayoutParams rparams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth);
             drawing_view_container.setLayoutParams(rparams);
 
-            MainGPUImageView.setImage(PatrickCox.BlurBitmap);
+            MainGPUImageView.setImage(ImageBitmap.mBitmapSketch);
 
             drawing_view_container.setDrawingCacheEnabled(true);
             drawing_view_container.buildDrawingCache();
@@ -858,7 +855,7 @@ public class EditImageFragment extends Fragment implements View.OnClickListener,
                     @Override
                     public void onReset() {
                         imgButtonImage.setImageResource(R.drawable.ic_true);
-                        MainGPUImageView.setImage(PatrickCox.FinalBitmap);
+                        MainGPUImageView.setImage(ImageBitmap.FinalBitmap);
                         PrevCurvePosition = 0;
                         PrevBrightness = 50;
                         PrevContrast = 50;

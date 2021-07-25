@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.PeterJackson.AnthonyPittorino.LightLeaksFragment;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
@@ -29,7 +29,7 @@ public class PeterMorrissey extends RecyclerView.Adapter<PeterMorrissey.MyViewHo
         try {
             final SusienChong item = arrayList.get(position);
 
-            holder.imageViewIcon.setImageBitmap(PatrickCox.getBitmapFromAsset(arrayListPrev.get(position).getDirName(), mContext));
+            holder.imageViewIcon.setImageBitmap(ImageBitmap.getBitmapFromAsset(arrayListPrev.get(position).getDirName(), mContext));
             holder.imageViewIcon.setTag("" + position);
             holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -37,7 +37,7 @@ public class PeterMorrissey extends RecyclerView.Adapter<PeterMorrissey.MyViewHo
 
                     try {
                         int po = Integer.parseInt(v.getTag().toString());
-                        Bitmap bmpBlend = PatrickCox.getBitmapFromAsset(arrayList.get(position).getDirName(), mContext);
+                        Bitmap bmpBlend = ImageBitmap.getBitmapFromAsset(arrayList.get(position).getDirName(), mContext);
                         LightLeaksFragment.blendImage = bmpBlend;
                         LightLeaksFragment.seekbar.setMax(255);
                         LightLeaksFragment.seekbar.setProgress(255);

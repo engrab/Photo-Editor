@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SharedPreferenceManager;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.SimonChang;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.JuliGrbac.FrederickFox.AlannahHill;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
@@ -31,7 +31,7 @@ public class StartActivity extends Activity {
 
 
         objPref = new SharedPreferenceManager(StartActivity.this);
-        PatrickCox.SDCardPath = objPref.getSaveDirURL();
+        ImageBitmap.SDCardPath = objPref.getSaveDirURL();
         cd = new AlannahHill(this);
         objDb = new LindaBritten(StartActivity.this);
 

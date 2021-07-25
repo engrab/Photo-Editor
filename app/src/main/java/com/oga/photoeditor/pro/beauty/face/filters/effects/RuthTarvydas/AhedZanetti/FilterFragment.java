@@ -2,7 +2,6 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.RuthTarvydas.AhedZan
 
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -34,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,7 +50,7 @@ import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.John
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.LizDavenport;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ChristopherEssex.WayneCooper;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.DianaVonGrüning;
-import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.PatrickCox;
+import com.oga.photoeditor.pro.beauty.face.filters.effects.DovCharney.ImageBitmap;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.KayCohen.SusienChong;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.LocalBaseActivity;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.R;
@@ -69,16 +66,11 @@ import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -200,7 +192,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
 
     public void CurveImage() {
 
-        smallImageBackgroud = PatrickCox.bitmap;
+        smallImageBackgroud = ImageBitmap.bitmap;
 
         initCurveFilterToolBar();
 
@@ -296,7 +288,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayWidth);
             imgTemp.setLayoutParams(layoutParams);
-            imgTemp.setImageBitmap(PatrickCox.bitmap);
+            imgTemp.setImageBitmap(ImageBitmap.bitmap);
 
             ViewTreeObserver vto = imgTemp.getViewTreeObserver();
             vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -313,7 +305,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
                         drawing_view_container.setLayoutParams(imageLayoutParams);
                         imgTemp.setVisibility(View.GONE);
                         //MainGPUImageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
-                        MainGPUImageView.setImage(PatrickCox.bitmap);
+                        MainGPUImageView.setImage(ImageBitmap.bitmap);
                     }
 
                     return true;
@@ -1126,7 +1118,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener, Se
                 ((Pnanterist) getActivity()).showResetDialog(getActivity(), new LocalBaseActivity.OnResetListner() {
                     @Override
                     public void onReset() {
-                        MainGPUImageView.setImage(PatrickCox.bitmap);
+                        MainGPUImageView.setImage(ImageBitmap.bitmap);
                         PrevCurvePosition = 0;
                         PrevBrightness = 50;
                         PrevContrast = 50;
