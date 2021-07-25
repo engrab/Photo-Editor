@@ -53,8 +53,20 @@ public class FrameActivity extends LocalBaseActivity {
 
     public static AppCompatActivity activity;
     public static RecyclerView recycler_view;
-    CarlaZampatti adapter;
+    PreviewAdapter adapter;
     ArrayList<SusienChong> arrayList;
+
+    GetDownloadCompleted getDownloadCompleted;
+    private Handler handler;
+    private boolean FrameDownload = false;
+    private final int Ads = -1;
+    ActionProcessButton btnDownload;
+
+    SharedPreferenceManager appPrefs;
+    ArrayList<SusienChong> arrayListprev;
+    String[] effectName = {"Adonias", "Bacchus", "Blackflower", "Boxingstar", "Browndown", "Dacey", "Ealasaid", "Earleen", "Flyingman", "fotospot",
+            "Gotulost", "haddley", "Heriwarm", "jumpket", "kulamt", "librotus", "potruzone", "purpcore", "viscotta", "albormentio"};
+
 
     public void getPosterData() {
 
@@ -72,7 +84,7 @@ public class FrameActivity extends LocalBaseActivity {
                     arrayList.add(new SusienChong("effect/" + file));
                 }
 
-                adapter = new CarlaZampatti(this);
+                adapter = new PreviewAdapter(this);
                 recycler_view.setAdapter(adapter);
                 adapter.notifyItemInserted(arrayList.size() - 1);
                 linearLayoutManager.scrollToPosition(PatrickCox.Pos);
@@ -251,22 +263,12 @@ public class FrameActivity extends LocalBaseActivity {
 //        activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-    GetDownloadCompleted getDownloadCompleted;
-    private Handler handler;
-    private boolean FrameDownload = false;
-    private final int Ads = -1;
-    ActionProcessButton btnDownload;
 
-    SharedPreferenceManager appPrefs;
-    ArrayList<SusienChong> arrayListprev;
-    String[] effectName = {"Adonias", "Bacchus", "Blackflower", "Boxingstar", "Browndown", "Dacey", "Ealasaid", "Earleen", "Flyingman", "fotospot",
-            "Gotulost", "haddley", "Heriwarm", "jumpket", "kulamt", "librotus", "potruzone", "purpcore", "viscotta", "albormentio"};
-
-    class CarlaZampatti extends RecyclerView.Adapter<CarlaZampatti.MyViewHolder> {
+    class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.MyViewHolder> {
 
         Context mContext;
 
-        public CarlaZampatti(Context mcContext) {
+        public PreviewAdapter(Context mcContext) {
 
             this.mContext = mcContext;
 
@@ -480,14 +482,12 @@ public class FrameActivity extends LocalBaseActivity {
 
         public void run() {
 
-            if (FrameDownload && (Ads == 0 || Ads == 1)) {
-                Log.e("GetDownloadCompleted", "FrameDownload " + FrameDownload + " Ads " + Ads);
+            if (FrameDownload) {
                 btnDownload.setProgress(100);
                 btnDownload.setEnabled(true);
                 adapter.notifyDataSetChanged();
                 handler.removeCallbacks(getDownloadCompleted);
             } else {
-                Log.e("GetDownloadCompleted", "FrameDownload " + FrameDownload + " Ads " + Ads);
                 handler.removeCallbacks(getDownloadCompleted);
                 FrameDownload = true;
                 handler.postDelayed(getDownloadCompleted, 3000);

@@ -1,21 +1,26 @@
 package com.oga.photoeditor.pro.beauty.face.filters.effects;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AudienceNetworkAds;
 import com.oga.photoeditor.pro.beauty.face.filters.effects.ClaudiaChanShaw.LindaBritten;
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private static Context mContext;
 
     private static App mInstance;
     LindaBritten objDb;
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        MultiDex.install(this);
+        super.attachBaseContext(base);
+    }
     @Override
     public void onCreate() {
         super.onCreate();

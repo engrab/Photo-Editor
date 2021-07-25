@@ -3,6 +3,7 @@ package com.oga.photoeditor.pro.beauty.face.filters.effects.DirkBikkembergs.RafS
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,6 +20,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -44,7 +46,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageAddBlendFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageColorBlendFilter;
@@ -180,7 +184,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         }
     }
 
-    public static void doMasking(String PipId) throws IOException {
+    public static void doMasking(String PipId) {
 
         try {
             final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -435,11 +439,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            doMasking(appPrefs.getPipName());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        doMasking(appPrefs.getPipName());
     }
 
     public static GPUImageFilterGroup filterGroup;
@@ -459,19 +459,19 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         //kkk
-        String co = appPrefs.getBIT128().toString().trim();//.substring(1, appPrefs.getText().toString().trim().length());
+        String co = appPrefs.getBIT128().trim();//.substring(1, appPrefs.getText().toString().trim().length());
         //String sco = co.substring(0,co.length())+"";
 
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append(co + "\r\n");
-        return json.replaceAll(co.toString(), "");
+        return json.replaceAll(co, "");
     }
 
     int Counter = 0;
@@ -486,7 +486,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -1069,13 +1069,12 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                             GPUImageViewCroppedImage.setFilter(filterGroup);
                         croppedFilteredBitmap = Bitmap.createBitmap(GPUImageViewCroppedImage.capture());
 
-//                        Thread.sleep(2000);
                         View inflatedLayout = mContext.getLayoutInflater().inflate(R.layout.clg_layout_mask_raw, null, false);
-                        ImageView img = (ImageView) inflatedLayout.findViewById(imgCroppdImage);
+                        ImageView img = inflatedLayout.findViewById(imgCroppdImage);
                         FrameLayout.LayoutParams frameparams = new FrameLayout.LayoutParams(DisplayWidth, DisplayHeight);
                         img.setLayoutParams(frameparams);
                         img.setAdjustViewBounds(true);
-                        MaskableFrameLayout maskableFrameLayout = (MaskableFrameLayout) inflatedLayout.findViewById(R.id.imgMaskableFrameLayout);
+                        MaskableFrameLayout maskableFrameLayout = inflatedLayout.findViewById(R.id.imgMaskableFrameLayout);
                         frameparams = new FrameLayout.LayoutParams(DisplayWidth, DisplayHeight);
                         maskableFrameLayout.setLayoutParams(frameparams);
                         maskableFrameLayout.setDrawingCacheEnabled(true);
@@ -1310,8 +1309,8 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 
         View rootView = inflater.inflate(R.layout.magic_fragment_main, container, false);
         try {
-            FindControls(rootView);
             HeaderControls(rootView);
+            FindControls(rootView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1319,15 +1318,15 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
     }
 
     private void HeaderControls(View rootView) {
-        imgButtonImage = (ImageView) rootView.findViewById(R.id.imgButtonImage);
-        imgBgMain = (ImageView) rootView.findViewById(R.id.imgBgMain);
+        imgButtonImage = rootView.findViewById(R.id.imgButtonImage);
+        imgBgMain = rootView.findViewById(R.id.imgBgMain);
         imgButtonImage.setVisibility(View.VISIBLE);
 
-        imgReset = (ImageView) rootView.findViewById(R.id.imgReset);
+        imgReset = rootView.findViewById(R.id.imgReset);
         imgReset.setVisibility(View.VISIBLE);
         imgReset.setImageResource(R.drawable.ic_edit);
         imgReset.setOnClickListener(this);
-        LinearLayout LL_Done = (LinearLayout) rootView.findViewById(R.id.LL_Done);
+        LinearLayout LL_Done = rootView.findViewById(R.id.LL_Done);
         LL_Done.setVisibility(View.VISIBLE);
 
         imgButtonImage.setOnClickListener(this);
@@ -1371,38 +1370,40 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
             mContext = getActivity();
             showProgress();
 
-            imgBackMain = (ImageView) rootView.findViewById(R.id.imgBackMain);
-            imgEdit = (ImageView) rootView.findViewById(R.id.imgEdit);
-            imgMain = (ImageView) rootView.findViewById(R.id.imgMain);
-            imgframe = (ImageView) rootView.findViewById(R.id.imgframe);
+            imgBackMain = rootView.findViewById(R.id.imgBackMain);
+            imgEdit = rootView.findViewById(R.id.imgEdit);
+            imgMain = rootView.findViewById(R.id.imgMain);
+            imgframe = rootView.findViewById(R.id.imgframe);
             imgEdit.setOnClickListener(this);
 
-            RL_MagicEffect = (RelativeLayout) rootView.findViewById(R.id.RL_MagicEffect);
+            RL_MagicEffect = rootView.findViewById(R.id.RL_MagicEffect);
             RL_MagicEffect.setDrawingCacheEnabled(true);
             RL_MagicEffect.buildDrawingCache();
 
-            RL_GPU = (RelativeLayout) rootView.findViewById(R.id.RL_GPU);
+            RL_GPU = rootView.findViewById(R.id.RL_GPU);
             RL_GPU.setDrawingCacheEnabled(true);
             RL_GPU.buildDrawingCache();
 
             arrayList = new ArrayList<>();
-            GPUImageViewCroppedImage = (GPUImageView) rootView.findViewById(R.id.GPUImageViewCroppedImage);
+            GPUImageViewCroppedImage = rootView.findViewById(R.id.GPUImageViewCroppedImage);
 
-            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            WindowManager windowManager = (WindowManager) requireActivity().getSystemService(Context.WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+
             DisplayWidth = display.getWidth();
             DisplayHeight = display.getHeight();
 
 //            DisplayHeight = (DisplayWidth * 125) / 100;
             DisplayHeight = DisplayWidth;
 
-            FL_ImageFinal = (RelativeLayout) rootView.findViewById(R.id.FL_ImageFinal);
-            RL_EditView = (RelativeLayout) rootView.findViewById(R.id.RL_EditView);
+            FL_ImageFinal = rootView.findViewById(R.id.FL_ImageFinal);
+            RL_EditView = rootView.findViewById(R.id.RL_EditView);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
             FL_ImageFinal.setLayoutParams(layoutParams);
             FL_ImageFinal.setDrawingCacheEnabled(true);
             FL_ImageFinal.buildDrawingCache();
 
-            appPrefs = new SharedPreferenceManager(getActivity());
+            appPrefs = new SharedPreferenceManager(requireActivity());
             PipName = appPrefs.getPipName().trim();
 
 
@@ -1412,7 +1413,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
             RL_EditView.setLayoutParams(layoutParams);
             RL_EditView.setVisibility(View.GONE);
 
-            recycler_view = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+            recycler_view = rootView.findViewById(R.id.recycler_view);
             databaseAdapter = new LindaBritten(getActivity());
 
             gridLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);

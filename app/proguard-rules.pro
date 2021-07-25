@@ -114,3 +114,4 @@
 
 
 -keep class com.pierfrancescosoffritti.androidyoutubeplayer.core.** { *; }
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
