@@ -513,7 +513,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showProgress();
+//            showProgress();
         }
 
 
@@ -1126,7 +1126,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
+//            dismissProgress();
 //            if (arrayList.size() > (counter + 1)) {
 //                counter++;
 //                new finalGPUAssignAsyncTask().execute();
@@ -1134,6 +1134,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 //            else {
             new finalGPUAssignSketchAsyncTask().execute();
 //            }
+
 
         }
 
@@ -1166,7 +1167,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+//            showProgress();
 
         }
 
@@ -1234,23 +1235,20 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
+            GPUImageViewCroppedImage.setImage(ImageBitmap.mBitmapSketch);
+//            dismissProgress();
 //            we test here next time.... uncomment and debug.
             counter = 0;
-//
+
 //            try {
 //                BitmapFactory.Options options = new BitmapFactory.Options();
 //                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 //
-//                ImageBitmap.FinalBitmap = Bitmap.createBitmap(RL_MagicEffect.getDrawingCache());
-//                // GPUImageViewCroppedImage.setImage(CommonUtilities.FinalBitmap);
+////                ImageBitmap.FinalBitmap = Bitmap.createBitmap(RL_MagicEffect.getDrawingCache()); // error occure
 //
-////                GPUImageOverlayBlendFilter overScreenOverlayFilter = new GPUImageOverlayBlendFilter();
-//                //GPUImageSoftLightBlendFilter overScreenOverlayFilter = new GPUImageSoftLightBlendFilter();
-//                //overScreenOverlayFilter.setBitmap(CommonUtilities.mBitmapSketch);
-//                //GPUImageViewCroppedImage.setFilter(overScreenOverlayFilter);
 //
-//                ImageBitmap.mBitmapSketch = merge(ImageBitmap.FinalBitmap, croppedFilteredBitmap);//GPUImageViewCroppedImage.capture();
+//
+//                ImageBitmap.mBitmapSketch = merge(ImageBitmap.BlurBitmap, croppedFilteredBitmap);//GPUImageViewCroppedImage.capture();
 //
 //                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
 //
@@ -1264,7 +1262,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 //
 //            } catch (Exception e) {
 //            }
-//
+
 //            InputStream is = null;
 //            try {
 //
@@ -1285,13 +1283,13 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-//
+
 //            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(DisplayWidth, DisplayHeight);
 //            RL_MagicEffect.setLayoutParams(params2);
 //            imgBackMain.setAdjustViewBounds(true);
 //            imgBackMain.setLayoutParams(params2);
 //            GPUImageViewCroppedImage.setVisibility(View.GONE);
-            dismissProgress();
+
 
         }
 
@@ -1377,7 +1375,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
     private void FindControls(View rootView) {
         try {
             mContext = getActivity();
-            showProgress();
+
 
             imgBackMain = rootView.findViewById(R.id.imgBackMain);
             imgEdit = rootView.findViewById(R.id.imgEdit);
@@ -1435,7 +1433,6 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        dismissProgress();
     }
 
 
@@ -1471,7 +1468,7 @@ public class FragmentMagicMain extends Fragment implements View.OnClickListener 
                     } catch (Exception e) {
                     }
                 }
-            }, 10);
+            }, 1000);
 
         } catch (Exception ex) {
             ex.printStackTrace();
