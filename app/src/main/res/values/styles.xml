@@ -11,7 +11,17 @@
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
         <item name="android:maxLines">2</item>
     </style>
-
+    <style name="gallery_tool_text_style">
+        <item name="android:textSize">14.0dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5.0dip</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
     <style name="AVLoadingIndicatorView">
         <item name="minWidth">48dip</item>
         <item name="maxWidth">48dip</item>

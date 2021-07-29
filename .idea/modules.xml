@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Photo-Editor.iml" filepath="$PROJECT_DIR$/.idea/modules/Photo-Editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Photo-Editor.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Photo-Editor.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hlistview/Photo-Editor.hlistview.iml" filepath="$PROJECT_DIR$/.idea/modules/hlistview/Photo-Editor.hlistview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/Photo-Editor.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/Photo-Editor.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ucrop/Photo-Editor.ucrop.iml" filepath="$PROJECT_DIR$/.idea/modules/ucrop/Photo-Editor.ucrop.iml" />
+    </modules>
+  </component>
+</project>

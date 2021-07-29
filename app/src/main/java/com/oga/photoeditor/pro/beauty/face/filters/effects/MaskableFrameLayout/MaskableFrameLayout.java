@@ -12,6 +12,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewTreeObserver;
@@ -77,11 +78,13 @@ public class MaskableFrameLayout extends FrameLayout {
     }
 
     private void construct(Context context, AttributeSet attrs) {
+        if (Looper.myLooper() == null)
+        {
+            Looper.prepare();
+        }
         mHandler = new Handler();
         setDrawingCacheEnabled(true);
-        if (Build.VERSION.SDK_INT >= 11) {
-            setLayerType(LAYER_TYPE_SOFTWARE, null); //Only works for software layers
-        }
+        setLayerType(LAYER_TYPE_SOFTWARE, null); //Only works for software layers
         mPaint = createPaint(false);
         Resources.Theme theme = context.getTheme();
         if (theme != null) {
@@ -221,11 +224,7 @@ public class MaskableFrameLayout extends FrameLayout {
                         aliveObserver = MaskableFrameLayout.this.getViewTreeObserver();
                     }
                     if (aliveObserver != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            aliveObserver.removeOnGlobalLayoutListener(this);
-                        } else {
-                            aliveObserver.removeGlobalOnLayoutListener(this);
-                        }
+                        aliveObserver.removeOnGlobalLayoutListener(this);
                     } else {
                         log("GlobalLayoutListener not removed as ViewTreeObserver is not valid");
                     }
@@ -278,11 +277,7 @@ public class MaskableFrameLayout extends FrameLayout {
         PorterDuff.Mode mode = null;
         switch (index) {
             case MODE_ADD:
-                if (Build.VERSION.SDK_INT >= 11) {
-                    mode = PorterDuff.Mode.ADD;
-                } else {
-                    log("MODE_ADD is not supported on api lvl " + Build.VERSION.SDK_INT);
-                }
+                mode = PorterDuff.Mode.ADD;
             case MODE_CLEAR:
                 mode = PorterDuff.Mode.CLEAR;
                 break;

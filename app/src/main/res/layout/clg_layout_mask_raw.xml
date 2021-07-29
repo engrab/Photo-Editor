@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <com.oga.photoeditor.pro.beauty.face.filters.effects.MaskableFrameLayout.MaskableFrameLayout
         android:id="@+id/imgMaskableFrameLayout"
         android:layout_width="match_parent"

@@ -175,4 +175,6 @@
     <color name="cardColorDark">#111111</color>
     <color name="itemColor">#ffffff</color>
     <color name="mainColor">#007bff</color>
+    <color name="gallery_ok_button_normal">#ff1ea0d7</color>
+    <color name="text_white">#ffffffff</color>
 </resources>

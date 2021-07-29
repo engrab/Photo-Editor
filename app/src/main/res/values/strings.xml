@@ -21,6 +21,8 @@
     <string name="feedback" translatable="false">Feed back</string>
     <string name="rating_promote" translatable="false">If Photo Editor Beauty Filters app makes you happy and satisfy. Please give us 5 stars</string>
     <string name="rating_dialog_maybe_later" translatable="false">Maybe later</string>
-
-
+    <string name="gallery_lib_max" translatable="false">Max %d</string>
+    <string name="gallery_select_an_album" translatable="false">Select Album</string>
+    <string name="gallery_no_more" translatable="false">No More item</string>
+    <string name="gallery_select_one" translatable="false">Select one</string>
 </resources>
